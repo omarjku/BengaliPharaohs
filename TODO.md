@@ -1,6 +1,6 @@
 # TODO — build plan (Omar + Zoha + Claude)
 
-Locked scope: `CLAUDE.md` · demo: `DEMO.md` · rules: `docs/advisor-rules.md` · cards: `docs/action-cards.md` · API: `contract/api.md` (PROPOSED → agree first) · risks: `docs/redteam/README.md`.
+Full plan: `docs/PLAN.md` · Locked scope: `CLAUDE.md` · demo: `DEMO.md` · rules: `docs/advisor-rules.md` · cards: `docs/action-cards.md` · API: `contract/api.md` (PROPOSED → agree first) · risks: `docs/redteam/README.md`.
 Rule: one leaf photo → classifier · taps → field facts · date + context → BRRI rules → fixed card. No LLM on the phone.
 
 ## 0. Now (15 min, together)
