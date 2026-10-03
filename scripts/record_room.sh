@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Records the room in chunks (default 2 h) and transcribes each finished chunk in the background.
+# Records the room in chunks (default 30 min) and transcribes each finished chunk in the background.
 # Audio: notes/audio/<start>.ogg (gitignored) · text: notes/transcripts/<start>.md (commit these).
 # Ctrl+C stops cleanly: the current chunk is saved and transcribed before exiting.
-# Env: CHUNK_SECONDS (default 7200), MIC (macOS device, default ":0", list with `make mics`),
+# Env: CHUNK_SECONDS (default 1800), MIC (macOS device, default ":0", list with `make mics`),
 #      WHISPER_MODEL (default small), WHISPER_LANGUAGE (e.g. en; default auto-detect).
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
-CHUNK_SECONDS="${CHUNK_SECONDS:-7200}"
+CHUNK_SECONDS="${CHUNK_SECONDS:-1800}"
 PY=.venv-rec/bin/python
 [ -x "$PY" ] || { echo "Run 'make record-setup' first."; exit 1; }
 command -v ffmpeg >/dev/null || { echo "ffmpeg missing: brew install ffmpeg"; exit 1; }
@@ -30,7 +30,7 @@ while [ "$STOP" -eq 0 ]; do
   STAMP=$(date +%Y-%m-%d-%H%M%S)
   OUT="notes/audio/$STAMP.ogg"
   echo "[$(date +%H:%M)] recording $OUT"
-  # 16 kHz mono Opus is what Whisper needs and keeps 2 h at ~20 MB.
+  # 16 kHz mono Opus is what Whisper needs and keeps 30 min at ~5 MB.
   ffmpeg -hide_banner -loglevel error -nostdin "${INPUT[@]}" -t "$CHUNK_SECONDS" \
     -ac 1 -ar 16000 -c:a libopus -b:a 24k "$OUT"
   if [ ! -s "$OUT" ]; then

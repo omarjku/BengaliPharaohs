@@ -1,33 +1,35 @@
 # Room transcripts
 
-The laptop records the room and turns every 2 h of talk into a text file Claude can read.
-Audio stays on the laptop (gitignored); only the text in `notes/transcripts/` is committed (repo is private).
+The laptop listens in the room and saves a text transcript every 30 minutes for Claude.
+Audio stays on the laptop; only the text is pushed (the repo is private).
 
-## Setup (once, ~10 min, needs Wi-Fi for the downloads)
-```bash
-brew install ffmpeg      # skip if `ffmpeg -version` works
-make record-setup        # Python venv + faster-whisper + the Whisper model (~500 MB)
-make mics                # optional: list microphones; default is device :0
-```
-First `make record` asks for microphone access: allow it for your terminal app
-(System Settings → Privacy & Security → Microphone), then run `make record` again.
+## Set up (once, 10 minutes, on the Mac that stays in the room)
+1. Open Terminal and go to the repo: `cd BengaliPharaohs` then `git pull`
+2. Install ffmpeg: `brew install ffmpeg`
+3. Install the transcriber: `make record-setup` (downloads ~500 MB, needs Wi-Fi)
+4. Test it: `CHUNK_SECONDS=60 make record`
+   - A popup asks for microphone access → **Allow**. If no popup or it fails: System Settings → Privacy & Security → Microphone → turn on Terminal, then run the command again.
+   - Talk for a minute, press **Ctrl+C**, then open the newest file in `notes/transcripts/`. If you see your words, it works.
 
-## Use
-```bash
-make record                                   # 2 h chunks, Ctrl+C to stop (last chunk is still transcribed)
-MIC=":1" make record                          # another mic, from `make mics`
-WHISPER_LANGUAGE=en make record               # force English (default: auto-detect per chunk)
-CHUNK_SECONDS=3600 make record                # 1 h chunks
-make transcribe                               # catch up on any chunk without a transcript (e.g. after a crash)
-```
-Keep the lid open and the charger in (`caffeinate` keeps the Mac awake). Put the laptop between the two of you.
-Transcription runs in the background after each chunk; progress is in `notes/audio/transcribe.log`.
+## Every session
+1. Start: `make record` and leave the Terminal window open.
+2. Keep the lid open, charger plugged in, laptop between the two of you.
+3. Stop any time with **Ctrl+C** (the last part is still saved).
 
-## Hand it to Claude
+## Every 30 min or so, send it to Claude
 ```bash
 git add notes/transcripts && git commit -m "Transcript $(date +%H:%M)" && git push
 ```
-Then tell Claude: "new transcript". Claude extracts decisions, open questions and TODOs into
-`CLAUDE.md` ("Current status", "Decisions made") and `TODO.md` — don't paste raw transcripts into those files.
+Then tell Claude: **"new transcript"**.
 
-Limits: speakers are not labelled; noisy rooms and other teams' voices reduce accuracy; tell people at your table you are recording.
+## If something goes wrong
+| Problem | Fix |
+|---|---|
+| "Run 'make record-setup' first" | Run step 3 of setup |
+| "No audio written" | Allow the microphone (setup step 4), or try another mic: `make mics`, then `MIC=":1" make record` |
+| A transcript is missing after a crash | `make transcribe` |
+| Transcripts are wrong language | `WHISPER_LANGUAGE=en make record` |
+| Transcription falls behind or the laptop gets hot | `WHISPER_MODEL=base make record` |
+
+Progress of the background transcription: `notes/audio/transcribe.log`.
+Speakers are not labelled. Tell people at your table you are recording.
