@@ -1,6 +1,7 @@
 """Shared constants for the rice-leaf model. The class order here IS the model's output order."""
 
 import json
+import re
 from pathlib import Path
 
 # Final classes (docs/redteam/README.md §2). Add "leaf_scald" only if it has >= 300 clean images.
@@ -19,7 +20,7 @@ PREPROCESS = {
 
 # Every dataset label we know → our class (None = drop). Extend when a new dataset appears.
 LABEL_MAP = {
-    "healthy": "healthy", "healthy_leaf": "healthy", "normal": "healthy",
+    "healthy": "healthy", "healthy_leaf": "healthy", "healthy_rice_leaf": "healthy", "normal": "healthy",
     "blast": "blast", "leaf_blast": "blast", "leafblast": "blast", "rice_blast": "blast",
     "brown_spot": "brown_spot", "brownspot": "brown_spot", "brown spot": "brown_spot",
     "sheath_blight": "sheath_blight", "sheathblight": "sheath_blight", "sheath blight": "sheath_blight",
@@ -35,7 +36,7 @@ LABEL_MAP = {
 
 
 def normalise_label(raw: str) -> str | None:
-    key = raw.strip().lower().replace("-", "_")
+    key = re.sub(r"[\s_]*\(.*?\)", "", raw).strip().lower().replace("-", "_")  # "Bacterial Leaf Blight (BLB)"
     if key in LABEL_MAP:
         return LABEL_MAP[key]
     key = key.replace(" ", "_")
