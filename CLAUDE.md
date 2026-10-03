@@ -67,7 +67,7 @@ When told "new transcript": `git pull`, read the new files in `notes/transcripts
 
 ## Current status
 - Starter repo: placeholder streaming demo works end to end (mock LLM), `make smoke` green, tagged `demo-ok`.
-- Briefs received (Sat 17:00): 3 challenges, full text in `docs/challenges/`: 02 Rental Housing Law Navigator (RealPage, auto-scored), 03 Agentic Scientific Discovery (Databricks Omnigent required), 04 Small AI for Development (World Bank, offline/local-language). Challenge, idea and demo path: not chosen yet.
+- Briefs received (Sat 17:00): 5 challenges, full text in `docs/challenges/`: 01 AI Apprentice (ElevenLabs voice + screen), 02 Rental Housing Law Navigator (RealPage, auto-scored), 03 Agentic Scientific Discovery (Databricks Omnigent required), 04 Small AI for Development (World Bank, offline/local-language), 05 Rare Disease Atlas (OpenAI, knowledge graph). Challenge, idea and demo path: not chosen yet.
 
 ## Decisions made (don't silently reverse; add the reason)
 - SQLite via SQLModel, no database server — simplest thing Omar can debug.
