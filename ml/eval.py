@@ -18,7 +18,7 @@ from pathlib import Path
 
 import numpy as np
 
-from common import CLASSES
+from common import CLASSES, NOT_RICE
 
 
 def softmax(logits: np.ndarray, t: float = 1.0) -> np.ndarray:
@@ -61,8 +61,12 @@ def macro_f1(labels: np.ndarray, preds: np.ndarray) -> float:
 
 
 def answered_mask(probs: np.ndarray, min_prob: float, min_margin: float) -> np.ndarray:
+    """True where the app would show a diagnosis; a confident "not_rice" also counts as NOT answered."""
     top2 = np.sort(probs, axis=1)[:, -2:]
-    return (top2[:, 1] >= min_prob) & (top2[:, 1] - top2[:, 0] >= min_margin)
+    confident = (top2[:, 1] >= min_prob) & (top2[:, 1] - top2[:, 0] >= min_margin)
+    if NOT_RICE in CLASSES:
+        confident &= probs.argmax(1) != CLASSES.index(NOT_RICE)
+    return confident
 
 
 def choose_thresholds(probs: np.ndarray, labels: np.ndarray, target: float):

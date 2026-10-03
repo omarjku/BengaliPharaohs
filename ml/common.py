@@ -5,7 +5,9 @@ import re
 from pathlib import Path
 
 # Final classes (docs/redteam/README.md §2). Add "leaf_scald" only if it has >= 300 clean images.
-CLASSES = ["healthy", "blast", "brown_spot", "sheath_blight", "tungro", "blb"]
+CLASSES = ["healthy", "blast", "brown_spot", "sheath_blight", "tungro", "blb", "not_rice"]
+# "not_rice" = other plants' leaves (BD jackfruit/banana/chilli/bean/lemon, CC BY 4.0); the app treats it as NOT SURE.
+NOT_RICE = "not_rice"
 
 # Must match what the model was trained with; the app reads this file to prepare photos.
 PREPROCESS = {
@@ -31,6 +33,7 @@ LABEL_MAP = {
     "browon_spot": "brown_spot", "rice_turgro": "tungro", "shath_blight": "sheath_blight",
     "leaf_scald": None, "scald": None, "leaf_scaled": None,  # set to "leaf_scald" if you add the class
     "bacterial_leaf_streak": None, "narrow_brown_spot": None, "leaf_smut": None,
+    "not_rice": "not_rice",
     "hispa": None, "leaf_folder": None, "insect_damage": None, "stripes": None,
 }
 
