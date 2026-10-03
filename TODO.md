@@ -1,22 +1,33 @@
-# TODO — Challenge 04 Agriculture, Bangladesh rice
+# TODO — build plan (Omar + Zoha + Claude)
 
-Read `docs/redteam/README.md` first. Keep this list short. Team = **Omar + Zoha**; research/drafting tasks are done by Claude and reviewed by Zoha (agronomy, Bangla) or Omar (data).
+Locked scope: `CLAUDE.md` · demo: `DEMO.md` · rules: `docs/advisor-rules.md` · cards: `docs/action-cards.md` · API: `contract/api.md` (PROPOSED → agree first) · risks: `docs/redteam/README.md`.
+Rule: one leaf photo → classifier · taps → field facts · date + context → BRRI rules → fixed card. No LLM on the phone.
 
-## Tonight, first 2 hours (GO/NO-GO at ~23:00)
-- [ ] **Omar:** start ALL dataset downloads in parallel now (resume-capable: `aria2c`/`curl -C -`): RiceLeafDiseaseBD, BanglaRiceLeaf, BRRI Disease & Pest, RiceLeafBD, SIP, Dhan-Shomadhan (field half), HF Project-AgML BD (held-out). Record licence + size per dataset in `docs/data.md`.
-- [ ] **Omar:** fix the class map (Healthy, Blast, Brown spot, Sheath blight, Tungro, BLB, [+Leaf scald]) + "not rice"; preprocessing script: resize 256 px, pHash dedup + clusters, manifest CSV (source, class, cluster).
-- [ ] **Zoha:** stub PWA on a **real cheap Android**: `<input capture>`, service worker offline, onnxruntime-web WASM with a dummy model, `storage.persist()`, audio after first tap. Report latency. Decide PWA vs native once.
-- [ ] **Claude → Zoha reviews:** advisor rule table (`docs/advisor-rules.md`): every row with BRRI/DAE primary source + year; resolve the [VERIFY] items; "too late" logic; never a survival %.
-- [ ] **Claude:** prior-art comparison (`docs/prior-art.md`) from public sources. **Zoha:** install BRRI Rice Solution + Dr.Chashi on her phone and screenshot (10 min).
-- [ ] **Omar:** confirm both ages 18–35, registration, exact submission portal + deadline.
+## 0. Now (15 min, together)
+- [ ] Agree `contract/api.md` (context + sync + cases) → mark it AGREED.
+- [ ] Agree the class list: Healthy, Blast, Brown spot, Sheath blight, Tungro, BLB (+ Leaf scald if data) + NOT_SURE.
+- [ ] Pick the test phone: the cheapest Android you can borrow (1–2 GB RAM).
 
-## Night (to ~04:00)
-- [ ] **Omar:** frozen-backbone baseline + leave-one-dataset-out table → fine-tune MobileNetV3-Small (strong augmentation, class weights) → temperature scaling on a held-out dataset → threshold → "not rice" test (30 photos) → export ONNX → measure size/latency. FastAPI `/sync` endpoint.
-- [ ] **Zoha:** result card, not-sure state, advisor screens, consent screen, offline self-check; record 25–40 Bangla clips from D's card texts (manifest).
-- [ ] **Claude → Zoha reviews/translates:** action cards in the safe template (EN + Bangla text) for each class + advisor outcomes; privacy/consent/data-flow page. **Zoha:** message ≥1 agronomist/SAAO/farmer she knows for a comment.
-- [ ] **Claude:** primary-source evidence (cheap-Android + farmer phone ownership, BBS 2019 census, 2024 flood damage, SAAO ratio + year) → `PITCH.md` draft; problem sentence; preconditions slide; "does not cover" slide. **Zoha** owns the final pitch.
+## Omar — model + backend
+- [ ] **T+0:** start all dataset downloads (resume-capable); record licence + size in `docs/data.md`.
+- [ ] **T+0–2h:** `ml/prepare.py`: map labels → common classes, crop YOLO boxes (time-box 2 h, else skip that set), resize 256 px, pHash dedup + clusters, `manifest.csv` (path, class, source, cluster).
+- [ ] **T+2h:** baseline: frozen MobileNetV3-Small + linear head; leave-one-dataset-out table → **first ONNX to Zoha** (even if weak).
+- [ ] **T+2–4h:** full fine-tune (augmentation, class weights, cap per source); temperature scaling on a held-out dataset; threshold (max-prob + margin); 30 non-rice photos test.
+- [ ] **T+4–5h:** export ONNX (fp16/int8, ≤ 5 MB), check accuracy didn't drop; write numbers to `docs/results.md` (LODO macro-F1, risk-coverage, size, latency).
+- [ ] Backend: `GET /api/context` from seeded JSON in `backend/mocks/` (labelled `seeded: true`), `POST /api/sync`, `GET /api/cases`; tests; `make smoke`.
 
-## Sun 04:00–07:00 (freeze at 07:00)
-- [ ] Integrate, airplane-mode drills ×3, `make smoke`, `make tag`; README numbers.
-## Sun 07:00–13:00
-- [ ] Record video (structure in `docs/redteam/README.md` §6), rehearse 3×, upload by 13:00; submit by 15:00.
+## Zoha — app + Bangla + pitch
+- [ ] **T+0–1.5h:** stub PWA on the cheap phone: camera (`<input capture>`) + gallery, service worker offline, onnxruntime-web WASM with a dummy model, `storage.persist()`. **Report latency → GO/NO-GO (native app only if >1.5 s or crash).**
+- [ ] **T+1.5–4h:** screens: photo → result card (confidence bar, not-sure state) · advisor taps (stage, days under water, full/partial, Sub1?, date picker labelled "simulated") · card view with audio · "share with SAAO" consent → offline queue → sync · offline ✓ self-check.
+- [ ] Rule engine in the frontend: load the JSON from `docs/advisor-rules.md`, run its 18 test cases.
+- [ ] **Bangla:** translate the 15 cards, record the 33 clips (opus, ~40 KB each); one call to 16123 to confirm hours; message one SAAO/farmer for a quote.
+- [ ] Install BAMIS + BRRI Rice Solution + Dr.Chashi, test in airplane mode, screenshot.
+- [ ] Simple SAAO dashboard page (list of synced cases) + simulated SMS preview.
+
+## Claude (on request)
+- [ ] Write `ml/prepare.py`, `ml/train.py`, `ml/eval.py`, `ml/export.py` skeletons for Omar.
+- [ ] Rule-engine TypeScript + tests from the JSON; seeded context JSON for Sirajganj.
+- [ ] `PITCH.md` draft + video script (brief's required structure), README with data/licence table and "does not cover".
+
+## Checkpoints
+- **~23:30** phone GO/NO-GO · **01:00** first real model running in the app · **03:00** golden path end-to-end, `make smoke`, `make tag` · **05:00** numbers final · **07:00 FREEZE** → record demo (airplane mode) · **13:00** video uploaded · **15:00** submit.
