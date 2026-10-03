@@ -1,9 +1,9 @@
 {
-  "version": "2026-10-03-draft1",
+  "version": "2026-10-03-factchecked1",
   "note": "DRAFT from docs/knowledge/rice-leaf-health.md. Rules may only re-rank within classifier top-2 or move to NOT_SURE; never invent a class.",
   "classes": {
     "healthy": {"favours": [], "unlikely_if": ["pattern_patches", "insects_hoppers_base"], "confusers": ["n_def", "blast"], "ask": ["q_old_leaves_near_harvest"], "sources": ["irri_ndef", "brri_rkb"]},
-    "blast": {"favours": ["cold_nights", "urea_high", "season_boro", "stage_seedling", "stage_tillering", "field_dry"], "unlikely_if": ["symptom_sheath"], "confusers": ["brown_spot"], "ask": ["q_eye_shaped_grey_centre"], "sources": ["irri_blast", "brri_rkb"]},
+    "blast": {"favours": ["cold_nights", "urea_high", "season_boro", "stage_seedling", "stage_tillering", "field_dry"], "unlikely_if": ["symptom_sheath"], "confusers": ["brown_spot"], "ask": ["q_eye_shaped_grey_centre"], "sources": ["irri_blast", "irri_blast_neck", "bd_blast_varieties", "brri_rkb"]},
     "brown_spot": {"favours": ["urea_none", "field_dry", "pattern_whole_field"], "unlikely_if": ["urea_high"], "confusers": ["blast", "k_def", "zn_def"], "ask": ["q_eye_shaped_grey_centre", "q_tips_edges_old_leaves"], "sources": ["irri_brownspot"]},
     "sheath_blight": {"favours": ["urea_high", "stage_tillering", "stage_heading", "symptom_sheath", "pattern_patches", "flooded_recent"], "unlikely_if": ["stage_seedling", "pattern_whole_field"], "confusers": ["blast"], "ask": ["q_spots_near_water_on_stem"], "sources": ["irri_sheathblight"]},
     "tungro": {"favours": ["insects_leafhoppers", "pattern_patches", "pattern_one_hill", "new_leaves_first", "stage_seedling", "stage_tillering", "season_aman"], "unlikely_if": ["pattern_whole_field", "old_leaves_first", "cold_nights", "salt_water"], "confusers": ["n_def", "s_def", "zn_def", "cold", "salt"], "ask": ["q_some_hills_green_insects", "q_whole_field_old_leaves"], "sources": ["irri_tungro"]},
@@ -18,7 +18,7 @@
     "s_def": {"favours": ["pattern_whole_field", "new_leaves_first"], "ask": ["q_whole_field_old_leaves"], "sources": ["irri_sdef"]},
     "bph": {"favours": ["insects_hoppers_base", "pattern_patches", "urea_high", "stage_heading"], "ask": ["q_tap_base_hoppers"], "sources": ["irri_bph"]},
     "stem_borer": {"favours": ["symptom_base", "symptom_panicle"], "ask": ["q_deadheart_pulls_out"], "sources": ["irri_stemborer"]},
-    "cold": {"favours": ["cold_nights", "season_boro", "stage_seedling", "pattern_whole_field"], "ask": ["q_cold_spell"], "sources": ["irri_cold", "brri_rkb"]},
+    "cold": {"favours": ["cold_nights", "season_boro", "stage_seedling", "pattern_whole_field"], "ask": ["q_cold_spell"], "sources": ["irri_cold", "bd_cold_review", "brri_rkb"]},
     "salt": {"favours": ["salt_water", "region_coastal", "season_boro"], "ask": ["q_salty_water"], "sources": ["irri_salinity"]},
     "fe_tox": {"favours": ["waterlogged", "old_leaves_first"], "ask": ["q_orange_film"], "sources": ["irri_fetox"]}
   },
@@ -84,11 +84,22 @@
     "irri_zndef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/zinc-deficiency",
     "irri_sdef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/sulfur-deficiency",
     "irri_fetox": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/iron-toxicity",
-    "irri_salinity": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/salinity",
+    "irri_salinity": "http://www.knowledgebank.irri.org/decision-tools/rice-doctor/rice-doctor-fact-sheets/item/salinity",
     "irri_bph": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper",
     "irri_stemborer": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer",
-    "irri_cold": "http://www.knowledgebank.irri.org/training/fact-sheets/crop-health/abiotic-disorders",
-    "brri_rkb": "http://knowledgebank-brri.org/",
+    "irri_cold": "https://onlinelibrary.wiley.com/doi/full/10.1002/fes3.25",
+    "bd_cold_review": "https://www.researchgate.net/publication/326355540_Cold_Injury_and_Flash_Flood_Damage_in_Boro_Rice_Cultivation_in_Bangladesh_A_Review",
+    "irri_blast_neck": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-node-neck",
+    "bd_blast_varieties": "https://www.dhakatribune.com/bangladesh/268683/mega-rice-varieties-becoming-less-productive-pest",
+    "bd_blast_resistance": "https://zenodo.org/records/10398279",
+    "bd_salt_varieties": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10810675/",
+    "bd_carbofuran_ban": "https://businesspostbd.com/front/govt-bans-harmful-carbofuran-pesticides-2023-01-21",
+    "bd_carbofuran_enforcement": "https://www.thedailystar.net/news/bangladesh/crime-justice/news/carbofuran-toxic-tale-3534321",
+    "brri_rkb": "http://knowledgebank-brri.org/photo-rice-diseases/",
     "dae_ipm": "https://dae.gov.bd/"
+  },
+  "sources_status": {
+    "note": "2026-10-03: knowledgebank.irri.org is blocked from the build sandbox, so IRRI pages were confirmed by web-search listings/snippets, not opened. Open each once on a normal connection.",
+    "needs_check": ["irri_kdef", "irri_stemborer", "dae_ipm"]
   }
 }
