@@ -1,143 +1,127 @@
 "use client";
 
-// Placeholder demo screen: proves the full path (input → backend → streamed answer → saved run).
-// Replace the copy and layout once the challenge is picked; keep streamRun.
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, MotionConfig, motion } from "motion/react";
-import { listRuns, streamRun, type Run } from "@/lib/api";
+import { ChevronRight, ClipboardList, FolderOpen, Leaf, MapPin, Settings2, Waves } from "lucide-react";
+import { motion } from "motion/react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { OfflineCheck } from "@/components/app/offline-check";
+import { AppShell } from "@/components/app/shell";
+import { formatDate, useLang } from "@/lib/i18n";
+import { upazilaByCode, varietyById } from "@/lib/places";
+import { setDemoDate, useEffectiveDate } from "@/lib/settings";
+import { getProfile, listCases, type Profile } from "@/lib/store/db";
+import { APP_NAME } from "@/lib/strings";
 
-type Status = "idle" | "streaming" | "done" | "error";
+// Demo dates that make each advisor rule fire (advisor-rules.md: replanting only works before mid-September).
+const DEMO_DATES = ["2026-08-20", "2026-09-05", "2026-09-18"];
 
 export default function Home() {
-  const [input, setInput] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [status, setStatus] = useState<Status>("idle");
-  const [error, setError] = useState("");
-  const [runs, setRuns] = useState<Run[]>([]);
-  const abort = useRef<AbortController | null>(null);
-  // Tokens collect here and reach React once per animation frame, not once per token.
-  const pending = useRef("");
-  const frame = useRef<number | null>(null);
+  const { t, tx, lang } = useLang();
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [queued, setQueued] = useState(0);
+  const { date, simulated } = useEffectiveDate();
 
   useEffect(() => {
-    listRuns().then(setRuns).catch(() => {});
-    return () => {
-      abort.current?.abort();
-      if (frame.current) cancelAnimationFrame(frame.current);
-    };
+    getProfile().then(setProfile);
+    listCases().then((cs) => setQueued(cs.filter((c) => c.share === "queued" || c.share === "failed").length));
   }, []);
 
-  function flush() {
-    frame.current = null;
-    const text = pending.current;
-    pending.current = "";
-    if (text) setAnswer((prev) => prev + text);
-  }
+  const place = upazilaByCode(profile?.upazila);
+  const variety = varietyById(profile?.variety);
 
-  async function submit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!input.trim()) return;
-    abort.current?.abort();
-    abort.current = new AbortController();
-    pending.current = "";
-    setAnswer("");
-    setError("");
-    setStatus("streaming");
-    try {
-      await streamRun(
-        input,
-        {
-          onToken: (t) => {
-            pending.current += t;
-            frame.current ??= requestAnimationFrame(flush);
-          },
-          onDone: () => {
-            flush();
-            setStatus("done");
-            listRuns().then(setRuns).catch(() => {});
-          },
-          onError: (m) => {
-            flush();
-            setError(m);
-            setStatus("error");
-          },
-        },
-        abort.current.signal,
-      );
-    } finally {
-      setStatus((s) => (s === "streaming" ? "idle" : s));
-    }
-  }
+  const tiles = [
+    { href: "/check/", icon: Leaf, title: t("home_check"), sub: t("home_check_sub"), tone: "bg-primary text-primary-foreground" },
+    { href: "/flood/", icon: Waves, title: t("home_flood"), sub: t("home_flood_sub"), tone: "bg-[oklch(0.45_0.09_230)] text-white" },
+    { href: "/cases/", icon: FolderOpen, title: t("home_cases"), sub: t("home_cases_sub"), tone: "border-2 bg-card text-foreground", badge: queued },
+  ];
 
   return (
-    <MotionConfig reducedMotion="user">
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-8 px-4 py-16">
-        <motion.header
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex flex-col gap-2"
-        >
-          <span className="font-mono text-xs uppercase tracking-widest opacity-60">Hack-Nation · Vienna</span>
-          <h1 className="text-4xl font-semibold tracking-tight text-balance">Project name goes here</h1>
-          <p className="opacity-70">One sentence: who has the problem, and what this does for them.</p>
-        </motion.header>
+    <AppShell>
+      <section className="mb-5">
+        <h2 className="text-3xl font-bold tracking-tight text-primary">{tx(APP_NAME)}</h2>
+        <p className="mt-1 text-base text-muted-foreground">{t("tagline")}</p>
+      </section>
 
-        <form onSubmit={submit} className="flex flex-col gap-3 sm:flex-row">
-          <input
-            id="demo-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Try the demo input…"
-            className="flex-1 rounded-xl border border-black/15 bg-transparent px-4 py-3 outline-none focus:border-black/50 dark:border-white/20 dark:focus:border-white/60"
-          />
-          <motion.button
-            whileTap={{ scale: 0.96 }}
-            disabled={status === "streaming"}
-            className="rounded-xl bg-foreground px-5 py-3 font-medium text-background disabled:opacity-50"
-          >
-            {status === "streaming" ? "Thinking…" : "Run"}
-          </motion.button>
-        </form>
-
-        <motion.section
-          layout
-          aria-live="polite"
-          className="min-h-32 whitespace-pre-wrap rounded-2xl border border-black/10 p-5 leading-relaxed dark:border-white/15"
-        >
-          {status === "idle" && !answer && <p className="opacity-50">The answer streams in here.</p>}
-          {answer}
-          {status === "streaming" && (
-            <motion.span
-              aria-hidden
-              className="ml-0.5 inline-block h-4 w-2 translate-y-0.5 bg-current"
-              animate={{ opacity: [1, 0] }}
-              transition={{ repeat: Infinity, duration: 0.6 }}
-            />
+      <Link
+        href="/profile/"
+        className="mb-4 flex items-center gap-3 rounded-2xl border-2 border-dashed border-primary/30 bg-secondary/60 px-4 py-3 active:bg-secondary"
+      >
+        <MapPin className="size-6 shrink-0 text-primary" />
+        <span className="min-w-0 flex-1">
+          {place ? (
+            <>
+              <span className="block truncate font-semibold">{tx(place)}</span>
+              <span className="block truncate text-sm text-muted-foreground">
+                {[variety && tx(variety), profile?.season && t(`season_${profile.season}`)].filter(Boolean).join(" · ")}
+              </span>
+            </>
+          ) : (
+            <span className="font-semibold">{t("home_profile_empty")}</span>
           )}
-          {status === "error" && <p className="mt-2 text-red-600 dark:text-red-400">{error}</p>}
-        </motion.section>
+        </span>
+        <span className="text-sm font-semibold text-primary">{t("home_profile_edit")}</span>
+      </Link>
 
-        <section className="flex flex-col gap-3">
-          <h2 className="font-mono text-xs uppercase tracking-widest opacity-60">Recent runs</h2>
-          <ul className="flex flex-col gap-2">
-            <AnimatePresence initial={false}>
-              {runs.slice(0, 5).map((r) => (
-                <motion.li
-                  key={r.id}
-                  layout
-                  initial={{ opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="truncate rounded-lg border border-black/10 px-3 py-2 text-sm dark:border-white/15"
-                >
-                  <span className="font-mono opacity-50">#{r.id}</span> {r.input}
-                </motion.li>
-              ))}
-            </AnimatePresence>
-          </ul>
-        </section>
-      </main>
-    </MotionConfig>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {tiles.map(({ href, icon: Icon, title, sub, tone, badge }, i) => (
+          <motion.div
+            key={href}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.06, duration: 0.3 }}
+            className={i === 0 ? "sm:col-span-2" : undefined}
+          >
+            <Link href={href} className={`flex min-h-24 items-center gap-4 rounded-3xl px-5 py-4 shadow-sm transition-transform active:scale-[0.98] ${tone}`}>
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-white/15">
+                <Icon className="size-8" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-xl font-bold leading-tight">{title}</span>
+                <span className="mt-0.5 block text-sm opacity-85">{sub}</span>
+              </span>
+              {!!badge && <span className="rounded-full bg-accent px-2.5 py-0.5 text-sm font-bold text-accent-foreground">{badge}</span>}
+              <ChevronRight className="size-6 opacity-70" />
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="mt-5">
+        <OfflineCheck />
+      </div>
+
+      <Link href="/saao/" className="mt-5 flex items-center gap-3 rounded-2xl px-1 py-2 text-muted-foreground hover:text-foreground">
+        <ClipboardList className="size-5" />
+        <span className="flex-1 text-sm font-medium">{t("home_saao")}</span>
+        <ChevronRight className="size-4" />
+      </Link>
+
+      <details className="mt-2 rounded-2xl border bg-card px-4 py-2 text-sm">
+        <summary className="flex cursor-pointer items-center gap-2 py-1 font-medium text-muted-foreground">
+          <Settings2 className="size-4" /> {t("demo_set")}
+          {simulated && <span className="ml-auto rounded-full bg-accent px-2 text-xs font-bold text-accent-foreground">{formatDate(date, lang)}</span>}
+        </summary>
+        <div className="flex flex-wrap gap-2 py-2">
+          {DEMO_DATES.map((d) => (
+            <button
+              key={d}
+              onClick={() => setDemoDate(d)}
+              className={`rounded-full border px-3 py-1.5 ${simulated && date === d ? "border-primary bg-secondary font-semibold" : ""}`}
+            >
+              {formatDate(d, lang)}
+            </button>
+          ))}
+          <input
+            type="date"
+            aria-label={t("demo_set")}
+            className="rounded-full border bg-transparent px-3 py-1"
+            onChange={(e) => e.target.value && setDemoDate(e.target.value)}
+          />
+          <button onClick={() => setDemoDate(null)} className="rounded-full px-3 py-1.5 text-muted-foreground underline">
+            {t("demo_off")}
+          </button>
+        </div>
+      </details>
+    </AppShell>
   );
 }

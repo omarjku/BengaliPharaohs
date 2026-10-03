@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated: onnxruntime-web copied from node_modules by scripts/copy-ort.mjs
+/public/ort/
+/out/
+
+# voice samples for choosing a voice (not shipped)
+/audio/samples/
+
+# ElevenLabs API key for scripts/tts.py — never commit
+/.env.elevenlabs

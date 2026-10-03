@@ -1,105 +1,453 @@
 {
-  "version": "2026-10-03-factchecked1",
-  "note": "DRAFT from docs/knowledge/rice-leaf-health.md. Rules may only re-rank within classifier top-2 or move to NOT_SURE; never invent a class.",
-  "classes": {
-    "healthy": {"favours": [], "unlikely_if": ["pattern_patches", "insects_hoppers_base"], "confusers": ["n_def", "blast"], "ask": ["q_old_leaves_near_harvest"], "sources": ["irri_ndef", "brri_rkb"]},
-    "blast": {"favours": ["cold_nights", "urea_high", "season_boro", "stage_seedling", "stage_tillering", "field_dry"], "unlikely_if": ["symptom_sheath"], "confusers": ["brown_spot"], "ask": ["q_eye_shaped_grey_centre"], "sources": ["irri_blast", "irri_blast_neck", "bd_blast_varieties", "brri_rkb"]},
-    "brown_spot": {"favours": ["urea_none", "field_dry", "pattern_whole_field"], "unlikely_if": ["urea_high"], "confusers": ["blast", "k_def", "zn_def"], "ask": ["q_eye_shaped_grey_centre", "q_tips_edges_old_leaves"], "sources": ["irri_brownspot"]},
-    "sheath_blight": {"favours": ["urea_high", "stage_tillering", "stage_heading", "symptom_sheath", "pattern_patches", "flooded_recent"], "unlikely_if": ["stage_seedling", "pattern_whole_field"], "confusers": ["blast"], "ask": ["q_spots_near_water_on_stem"], "sources": ["irri_sheathblight"]},
-    "tungro": {"favours": ["insects_leafhoppers", "pattern_patches", "pattern_one_hill", "new_leaves_first", "stage_seedling", "stage_tillering", "season_aman"], "unlikely_if": ["pattern_whole_field", "old_leaves_first", "cold_nights", "salt_water"], "confusers": ["n_def", "s_def", "zn_def", "cold", "salt"], "ask": ["q_some_hills_green_insects", "q_whole_field_old_leaves"], "sources": ["irri_tungro"]},
-    "blb": {"favours": ["storm_recent", "flooded_recent", "rain_heavy_7d", "urea_high", "season_aman", "symptom_tip_edge"], "unlikely_if": ["field_dry", "cold_nights"], "confusers": ["bls", "leaf_scald", "k_def"], "ask": ["q_tip_edge_after_storm", "q_thin_streaks_translucent"], "sources": ["irri_blb", "irri_bls"]},
-    "leaf_scald": {"favours": ["urea_high", "rain_heavy_7d", "symptom_tip_edge"], "unlikely_if": ["field_dry"], "confusers": ["blb"], "ask": ["q_zonate_bands"], "sources": ["irri_scald"]}
+ "version": "2026-10-03-factchecked1",
+ "note": "DRAFT from docs/knowledge/rice-leaf-health.md. Rules may only re-rank within classifier top-2 or move to NOT_SURE; never invent a class.",
+ "classes": {
+  "healthy": {
+   "favours": [],
+   "unlikely_if": [
+    "pattern_patches",
+    "insects_hoppers_base"
+   ],
+   "confusers": [
+    "n_def",
+    "blast"
+   ],
+   "ask": [
+    "q_old_leaves_near_harvest"
+   ],
+   "sources": [
+    "irri_ndef",
+    "brri_rkb"
+   ]
   },
-  "lookalikes": {
-    "bls": {"favours": ["storm_recent", "rain_heavy_7d"], "ask": ["q_thin_streaks_translucent"], "sources": ["irri_bls"]},
-    "n_def": {"favours": ["pattern_whole_field", "old_leaves_first", "urea_none", "flooded_recent"], "ask": ["q_whole_field_old_leaves"], "sources": ["irri_ndef"]},
-    "k_def": {"favours": ["old_leaves_first", "symptom_tip_edge"], "ask": ["q_tips_edges_old_leaves"], "sources": ["irri_kdef"]},
-    "zn_def": {"favours": ["season_boro", "stage_tillering", "new_leaves_first"], "ask": ["q_khaira_after_transplant"], "sources": ["irri_zndef", "brri_rkb"]},
-    "s_def": {"favours": ["pattern_whole_field", "new_leaves_first"], "ask": ["q_whole_field_old_leaves"], "sources": ["irri_sdef"]},
-    "bph": {"favours": ["insects_hoppers_base", "pattern_patches", "urea_high", "stage_heading"], "ask": ["q_tap_base_hoppers"], "sources": ["irri_bph"]},
-    "stem_borer": {"favours": ["symptom_base", "symptom_panicle"], "ask": ["q_deadheart_pulls_out"], "sources": ["irri_stemborer"]},
-    "cold": {"favours": ["cold_nights", "season_boro", "stage_seedling", "pattern_whole_field"], "ask": ["q_cold_spell"], "sources": ["irri_cold", "bd_cold_review", "brri_rkb"]},
-    "salt": {"favours": ["salt_water", "region_coastal", "season_boro"], "ask": ["q_salty_water"], "sources": ["irri_salinity"]},
-    "fe_tox": {"favours": ["waterlogged", "old_leaves_first"], "ask": ["q_orange_film"], "sources": ["irri_fetox"]}
+  "blast": {
+   "favours": [
+    "cold_nights",
+    "urea_high",
+    "season_boro",
+    "stage_seedling",
+    "stage_tillering",
+    "field_dry"
+   ],
+   "unlikely_if": [
+    "symptom_sheath"
+   ],
+   "confusers": [
+    "brown_spot"
+   ],
+   "ask": [
+    "q_eye_shaped_grey_centre"
+   ],
+   "sources": [
+    "irri_blast",
+    "irri_blast_neck",
+    "bd_blast_varieties",
+    "brri_rkb"
+   ]
   },
-  "location_guard": ["symptom_sheath", "symptom_panicle", "symptom_base", "pattern_whole_field_dying"],
-  "conditions": {
-    "rain_heavy_7d": "Weather.rain = heavy (last 7 days)",
-    "field_dry": "Weather.rain = none and field not flooded / drought stress",
-    "flooded_recent": "Weather.flooded = yes (any days, full or partial) in last 7 days",
-    "waterlogged": "Field flooded > 7 days or poorly drained (flooded days > 7)",
-    "storm_recent": "Weather.storm = yes",
-    "cold_nights": "Weather.cold_nights = yes",
-    "salt_water": "Farmer reports salty/tidal water entered field (NEEDS new context field or derived from storm_recent + region_coastal)",
-    "region_coastal": "Where.region_type = coastal (district table)",
-    "urea_none": "Inputs.urea = none",
-    "urea_high": "Inputs.urea = a lot",
-    "season_aus": "Crop.season = Aus",
-    "season_aman": "Crop.season = Aman",
-    "season_boro": "Crop.season = Boro",
-    "stage_seedling": "Crop age -> seedling / seedbed (<~25 days after sowing)",
-    "stage_tillering": "Crop age -> tillering",
-    "stage_heading": "Crop age -> panicle initiation to heading/flowering",
-    "symptom_tip_edge": "Symptom.where = leaf tip/edge",
-    "symptom_middle": "Symptom.where = leaf middle",
-    "symptom_sheath": "Symptom.where = sheath near water (location guard)",
-    "symptom_panicle": "Symptom.where = panicle/neck (location guard)",
-    "symptom_base": "Symptom.where = base of plant (location guard)",
-    "pattern_one_hill": "Symptom.pattern = one hill",
-    "pattern_patches": "Symptom.pattern = patches",
-    "pattern_whole_field": "Symptom.pattern = whole field",
-    "pattern_whole_field_dying": "Symptom.pattern = whole field AND plants dying/drying (location guard)",
-    "old_leaves_first": "Symptom.first = old leaves",
-    "new_leaves_first": "Symptom.first = new leaves",
-    "insects_hoppers_base": "Symptom.insects = hoppers at base (brown planthopper)",
-    "insects_leafhoppers": "Symptom.insects = green leafhoppers on leaves (NEEDS separate option from base hoppers)"
+  "brown_spot": {
+   "favours": [
+    "urea_none",
+    "field_dry",
+    "pattern_whole_field"
+   ],
+   "unlikely_if": [
+    "urea_high"
+   ],
+   "confusers": [
+    "blast",
+    "k_def",
+    "zn_def"
+   ],
+   "ask": [
+    "q_eye_shaped_grey_centre",
+    "q_tips_edges_old_leaves"
+   ],
+   "sources": [
+    "irri_brownspot"
+   ]
   },
-  "questions": {
-    "q_old_leaves_near_harvest": {"en": "Is the crop near harvest and only the oldest bottom leaves turning yellow?", "bn": "(Zoha)"},
-    "q_eye_shaped_grey_centre": {"en": "Do the spots have a grey-white centre and pointed ends, like an eye?", "bn": "(Zoha)"},
-    "q_tips_edges_old_leaves": {"en": "Is the browning mainly on the tips and edges of the old leaves?", "bn": "(Zoha)"},
-    "q_spots_near_water_on_stem": {"en": "Did the first spots appear on the stem near the water?", "bn": "(Zoha)"},
-    "q_some_hills_green_insects": {"en": "Are only some hills yellow-orange and short, and have you seen small green jumping insects?", "bn": "(Zoha)"},
-    "q_whole_field_old_leaves": {"en": "Is the whole field evenly pale, starting from the old bottom leaves?", "bn": "(Zoha)"},
-    "q_tip_edge_after_storm": {"en": "Did the yellowing start at the leaf tip and edge, after a storm or flood?", "bn": "(Zoha)"},
-    "q_thin_streaks_translucent": {"en": "Are the lines thin, between the veins, and see-through against the sun?", "bn": "(Zoha)"},
-    "q_zonate_bands": {"en": "Do you see bands of light and dark brown in the dried part?", "bn": "(Zoha)"},
-    "q_khaira_after_transplant": {"en": "Did brown dusty patches appear 2-4 weeks after transplanting, on young leaves?", "bn": "(Zoha)"},
-    "q_tap_base_hoppers": {"en": "Tap the plant base: do many small brown insects jump onto the water?", "bn": "(Zoha)"},
-    "q_deadheart_pulls_out": {"en": "Does the dead centre shoot or white panicle pull out easily?", "bn": "(Zoha)"},
-    "q_cold_spell": {"en": "Were there several very cold nights just before this?", "bn": "(Zoha)"},
-    "q_salty_water": {"en": "Did salty or tidal water enter the field?", "bn": "(Zoha)"},
-    "q_orange_film": {"en": "Is there an oily orange film on the field water?", "bn": "(Zoha)"}
+  "sheath_blight": {
+   "favours": [
+    "urea_high",
+    "stage_tillering",
+    "stage_heading",
+    "symptom_sheath",
+    "pattern_patches",
+    "flooded_recent"
+   ],
+   "unlikely_if": [
+    "stage_seedling",
+    "pattern_whole_field"
+   ],
+   "confusers": [
+    "blast"
+   ],
+   "ask": [
+    "q_spots_near_water_on_stem"
+   ],
+   "sources": [
+    "irri_sheathblight"
+   ]
   },
-  "sources": {
-    "irri_blast": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar",
-    "irri_brownspot": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot",
-    "irri_sheathblight": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight",
-    "irri_tungro": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro",
-    "irri_blb": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight",
-    "irri_bls": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-leaf-streak",
-    "irri_scald": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/leaf-scald",
-    "irri_ndef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/nitrogen-deficiency",
-    "irri_kdef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/potassium-deficiency",
-    "irri_zndef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/zinc-deficiency",
-    "irri_sdef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/sulfur-deficiency",
-    "irri_fetox": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/iron-toxicity",
-    "irri_salinity": "http://www.knowledgebank.irri.org/decision-tools/rice-doctor/rice-doctor-fact-sheets/item/salinity",
-    "irri_bph": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper",
-    "irri_stemborer": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer",
-    "irri_cold": "https://onlinelibrary.wiley.com/doi/full/10.1002/fes3.25",
-    "bd_cold_review": "https://www.researchgate.net/publication/326355540_Cold_Injury_and_Flash_Flood_Damage_in_Boro_Rice_Cultivation_in_Bangladesh_A_Review",
-    "irri_blast_neck": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-node-neck",
-    "bd_blast_varieties": "https://www.dhakatribune.com/bangladesh/268683/mega-rice-varieties-becoming-less-productive-pest",
-    "bd_blast_resistance": "https://zenodo.org/records/10398279",
-    "bd_salt_varieties": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10810675/",
-    "bd_carbofuran_ban": "https://businesspostbd.com/front/govt-bans-harmful-carbofuran-pesticides-2023-01-21",
-    "bd_carbofuran_enforcement": "https://www.thedailystar.net/news/bangladesh/crime-justice/news/carbofuran-toxic-tale-3534321",
-    "brri_rkb": "http://knowledgebank-brri.org/photo-rice-diseases/",
-    "dae_ipm": "https://dae.gov.bd/"
+  "tungro": {
+   "favours": [
+    "insects_leafhoppers",
+    "pattern_patches",
+    "pattern_one_hill",
+    "new_leaves_first",
+    "stage_seedling",
+    "stage_tillering",
+    "season_aman"
+   ],
+   "unlikely_if": [
+    "pattern_whole_field",
+    "old_leaves_first",
+    "cold_nights",
+    "salt_water"
+   ],
+   "confusers": [
+    "n_def",
+    "s_def",
+    "zn_def",
+    "cold",
+    "salt"
+   ],
+   "ask": [
+    "q_some_hills_green_insects",
+    "q_whole_field_old_leaves"
+   ],
+   "sources": [
+    "irri_tungro"
+   ]
   },
-  "sources_status": {
-    "note": "2026-10-03: knowledgebank.irri.org is blocked from the build sandbox, so IRRI pages were confirmed by web-search listings/snippets, not opened. Open each once on a normal connection.",
-    "needs_check": ["irri_kdef", "irri_stemborer", "dae_ipm"]
+  "blb": {
+   "favours": [
+    "storm_recent",
+    "flooded_recent",
+    "rain_heavy_7d",
+    "urea_high",
+    "season_aman",
+    "symptom_tip_edge"
+   ],
+   "unlikely_if": [
+    "field_dry",
+    "cold_nights"
+   ],
+   "confusers": [
+    "bls",
+    "leaf_scald",
+    "k_def"
+   ],
+   "ask": [
+    "q_tip_edge_after_storm",
+    "q_thin_streaks_translucent"
+   ],
+   "sources": [
+    "irri_blb",
+    "irri_bls"
+   ]
+  },
+  "leaf_scald": {
+   "favours": [
+    "urea_high",
+    "rain_heavy_7d",
+    "symptom_tip_edge"
+   ],
+   "unlikely_if": [
+    "field_dry"
+   ],
+   "confusers": [
+    "blb"
+   ],
+   "ask": [
+    "q_zonate_bands"
+   ],
+   "sources": [
+    "irri_scald"
+   ]
   }
+ },
+ "lookalikes": {
+  "bls": {
+   "favours": [
+    "storm_recent",
+    "rain_heavy_7d"
+   ],
+   "ask": [
+    "q_thin_streaks_translucent"
+   ],
+   "sources": [
+    "irri_bls"
+   ]
+  },
+  "n_def": {
+   "favours": [
+    "pattern_whole_field",
+    "old_leaves_first",
+    "urea_none",
+    "flooded_recent"
+   ],
+   "ask": [
+    "q_whole_field_old_leaves"
+   ],
+   "sources": [
+    "irri_ndef"
+   ]
+  },
+  "k_def": {
+   "favours": [
+    "old_leaves_first",
+    "symptom_tip_edge"
+   ],
+   "ask": [
+    "q_tips_edges_old_leaves"
+   ],
+   "sources": [
+    "irri_kdef"
+   ]
+  },
+  "zn_def": {
+   "favours": [
+    "season_boro",
+    "stage_tillering",
+    "new_leaves_first"
+   ],
+   "ask": [
+    "q_khaira_after_transplant"
+   ],
+   "sources": [
+    "irri_zndef",
+    "brri_rkb"
+   ]
+  },
+  "s_def": {
+   "favours": [
+    "pattern_whole_field",
+    "new_leaves_first"
+   ],
+   "ask": [
+    "q_whole_field_old_leaves"
+   ],
+   "sources": [
+    "irri_sdef"
+   ]
+  },
+  "bph": {
+   "favours": [
+    "insects_hoppers_base",
+    "pattern_patches",
+    "urea_high",
+    "stage_heading"
+   ],
+   "ask": [
+    "q_tap_base_hoppers"
+   ],
+   "sources": [
+    "irri_bph"
+   ]
+  },
+  "stem_borer": {
+   "favours": [
+    "symptom_base",
+    "symptom_panicle"
+   ],
+   "ask": [
+    "q_deadheart_pulls_out"
+   ],
+   "sources": [
+    "irri_stemborer"
+   ]
+  },
+  "cold": {
+   "favours": [
+    "cold_nights",
+    "season_boro",
+    "stage_seedling",
+    "pattern_whole_field"
+   ],
+   "ask": [
+    "q_cold_spell"
+   ],
+   "sources": [
+    "irri_cold",
+    "bd_cold_review",
+    "brri_rkb"
+   ]
+  },
+  "salt": {
+   "favours": [
+    "salt_water",
+    "region_coastal",
+    "season_boro"
+   ],
+   "ask": [
+    "q_salty_water"
+   ],
+   "sources": [
+    "irri_salinity"
+   ]
+  },
+  "fe_tox": {
+   "favours": [
+    "waterlogged",
+    "old_leaves_first"
+   ],
+   "ask": [
+    "q_orange_film"
+   ],
+   "sources": [
+    "irri_fetox"
+   ]
+  }
+ },
+ "location_guard": [
+  "symptom_sheath",
+  "symptom_panicle",
+  "symptom_base",
+  "pattern_whole_field_dying"
+ ],
+ "conditions": {
+  "rain_heavy_7d": "Weather.rain = heavy (last 7 days)",
+  "field_dry": "Weather.rain = none and field not flooded / drought stress",
+  "flooded_recent": "Weather.flooded = yes (any days, full or partial) in last 7 days",
+  "waterlogged": "Field flooded > 7 days or poorly drained (flooded days > 7)",
+  "storm_recent": "Weather.storm = yes",
+  "cold_nights": "Weather.cold_nights = yes",
+  "salt_water": "Farmer reports salty/tidal water entered field (NEEDS new context field or derived from storm_recent + region_coastal)",
+  "region_coastal": "Where.region_type = coastal (district table)",
+  "urea_none": "Inputs.urea = none",
+  "urea_high": "Inputs.urea = a lot",
+  "season_aus": "Crop.season = Aus",
+  "season_aman": "Crop.season = Aman",
+  "season_boro": "Crop.season = Boro",
+  "stage_seedling": "Crop age -> seedling / seedbed (<~25 days after sowing)",
+  "stage_tillering": "Crop age -> tillering",
+  "stage_heading": "Crop age -> panicle initiation to heading/flowering",
+  "symptom_tip_edge": "Symptom.where = leaf tip/edge",
+  "symptom_middle": "Symptom.where = leaf middle",
+  "symptom_sheath": "Symptom.where = sheath near water (location guard)",
+  "symptom_panicle": "Symptom.where = panicle/neck (location guard)",
+  "symptom_base": "Symptom.where = base of plant (location guard)",
+  "pattern_one_hill": "Symptom.pattern = one hill",
+  "pattern_patches": "Symptom.pattern = patches",
+  "pattern_whole_field": "Symptom.pattern = whole field",
+  "pattern_whole_field_dying": "Symptom.pattern = whole field AND plants dying/drying (location guard)",
+  "old_leaves_first": "Symptom.first = old leaves",
+  "new_leaves_first": "Symptom.first = new leaves",
+  "insects_hoppers_base": "Symptom.insects = hoppers at base (brown planthopper)",
+  "insects_leafhoppers": "Symptom.insects = green leafhoppers on leaves (NEEDS separate option from base hoppers)"
+ },
+ "questions": {
+  "q_old_leaves_near_harvest": {
+   "en": "Is the crop near harvest and only the oldest bottom leaves turning yellow?",
+   "bn": "ফসল কি কাটার কাছাকাছি, আর শুধু নিচের পুরনো পাতাগুলো হলুদ হচ্ছে?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_eye_shaped_grey_centre": {
+   "en": "Do the spots have a grey-white centre and pointed ends, like an eye?",
+   "bn": "দাগগুলোর মাঝখান কি ছাই-সাদা আর দুই মাথা সরু, চোখের মতো?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_tips_edges_old_leaves": {
+   "en": "Is the browning mainly on the tips and edges of the old leaves?",
+   "bn": "বাদামি ভাবটা কি মূলত পুরনো পাতার আগা আর কিনারায়?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_spots_near_water_on_stem": {
+   "en": "Did the first spots appear on the stem near the water?",
+   "bn": "প্রথম দাগগুলো কি পানির কাছে কাণ্ডে দেখা দিয়েছিল?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_some_hills_green_insects": {
+   "en": "Are only some hills yellow-orange and short, and have you seen small green jumping insects?",
+   "bn": "শুধু কিছু গোছা কি হলদে-কমলা আর খাটো, আর ছোট সবুজ লাফানো পোকা দেখেছেন?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_whole_field_old_leaves": {
+   "en": "Is the whole field evenly pale, starting from the old bottom leaves?",
+   "bn": "পুরো জমি কি সমানভাবে ফ্যাকাশে, নিচের পুরনো পাতা থেকে শুরু?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_tip_edge_after_storm": {
+   "en": "Did the yellowing start at the leaf tip and edge, after a storm or flood?",
+   "bn": "ঝড় বা বন্যার পরে কি পাতার আগা আর কিনারা থেকে হলুদ হওয়া শুরু হয়েছে?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_thin_streaks_translucent": {
+   "en": "Are the lines thin, between the veins, and see-through against the sun?",
+   "bn": "দাগগুলো কি সরু, শিরার মাঝে, আর রোদের দিকে ধরলে আলো দেখা যায়?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_zonate_bands": {
+   "en": "Do you see bands of light and dark brown in the dried part?",
+   "bn": "শুকনো অংশে কি হালকা আর গাঢ় বাদামি ডোরা দেখা যায়?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_khaira_after_transplant": {
+   "en": "Did brown dusty patches appear 2-4 weeks after transplanting, on young leaves?",
+   "bn": "রোপণের ২-৪ সপ্তাহ পরে কচি পাতায় কি মরিচার মতো বাদামি ছোপ এসেছে (খৈরা)?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_tap_base_hoppers": {
+   "en": "Tap the plant base: do many small brown insects jump onto the water?",
+   "bn": "গাছের গোড়ায় টোকা দিন: অনেক ছোট বাদামি পোকা কি পানিতে লাফিয়ে পড়ে?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_deadheart_pulls_out": {
+   "en": "Does the dead centre shoot or white panicle pull out easily?",
+   "bn": "মরা মাঝের ডগা বা সাদা শীষ কি টান দিলে সহজে উঠে আসে?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_cold_spell": {
+   "en": "Were there several very cold nights just before this?",
+   "bn": "এর আগে কি কয়েক রাত খুব ঠান্ডা পড়েছিল?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_salty_water": {
+   "en": "Did salty or tidal water enter the field?",
+   "bn": "জমিতে কি লোনা বা জোয়ারের পানি ঢুকেছিল?",
+   "bn_review": "Claude draft, Zoha to check"
+  },
+  "q_orange_film": {
+   "en": "Is there an oily orange film on the field water?",
+   "bn": "জমির পানিতে কি তেলতেলে কমলা রঙের আস্তরণ আছে?",
+   "bn_review": "Claude draft, Zoha to check"
+  }
+ },
+ "sources": {
+  "irri_blast": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-leaf-collar",
+  "irri_brownspot": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/brown-spot",
+  "irri_sheathblight": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight",
+  "irri_tungro": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/tungro",
+  "irri_blb": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-blight",
+  "irri_bls": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/bacterial-leaf-streak",
+  "irri_scald": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/leaf-scald",
+  "irri_ndef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/nitrogen-deficiency",
+  "irri_kdef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/potassium-deficiency",
+  "irri_zndef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/zinc-deficiency",
+  "irri_sdef": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/sulfur-deficiency",
+  "irri_fetox": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/deficiencies-and-toxicities-fact-sheet/item/iron-toxicity",
+  "irri_salinity": "http://www.knowledgebank.irri.org/decision-tools/rice-doctor/rice-doctor-fact-sheets/item/salinity",
+  "irri_bph": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper",
+  "irri_stemborer": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer",
+  "irri_cold": "https://onlinelibrary.wiley.com/doi/full/10.1002/fes3.25",
+  "bd_cold_review": "https://www.researchgate.net/publication/326355540_Cold_Injury_and_Flash_Flood_Damage_in_Boro_Rice_Cultivation_in_Bangladesh_A_Review",
+  "irri_blast_neck": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/blast-node-neck",
+  "bd_blast_varieties": "https://www.dhakatribune.com/bangladesh/268683/mega-rice-varieties-becoming-less-productive-pest",
+  "bd_blast_resistance": "https://zenodo.org/records/10398279",
+  "bd_salt_varieties": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10810675/",
+  "bd_carbofuran_ban": "https://businesspostbd.com/front/govt-bans-harmful-carbofuran-pesticides-2023-01-21",
+  "bd_carbofuran_enforcement": "https://www.thedailystar.net/news/bangladesh/crime-justice/news/carbofuran-toxic-tale-3534321",
+  "brri_rkb": "http://knowledgebank-brri.org/photo-rice-diseases/",
+  "dae_ipm": "https://dae.gov.bd/"
+ },
+ "sources_status": {
+  "note": "2026-10-03: knowledgebank.irri.org is blocked from the build sandbox, so IRRI pages were confirmed by web-search listings/snippets, not opened. Open each once on a normal connection.",
+  "needs_check": [
+   "irri_kdef",
+   "irri_stemborer",
+   "dae_ipm"
+  ]
+ }
 }
