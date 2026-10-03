@@ -1,0 +1,7 @@
+{
+  "temperature": 1.0,
+  "min_prob": 0.7,
+  "min_margin": 0.2,
+  "dummy": true,
+  "metrics": {}
+}
