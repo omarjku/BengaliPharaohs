@@ -72,9 +72,13 @@ When told "new transcript": `git pull`, read the new files in `notes/transcripts
 
 ## Current status
 - Starter repo: placeholder streaming demo works end to end (mock LLM), `make smoke` green, tagged `demo-ok`.
-- Briefs received (Sat 17:00): 5 challenges, full text in `docs/challenges/`: 01 AI Apprentice (ElevenLabs voice + screen), 02 Rental Housing Law Navigator (RealPage, auto-scored), 03 Agentic Scientific Discovery (Databricks Omnigent required), 04 Small AI for Development (World Bank, offline/local-language), 05 Rare Disease Atlas (OpenAI, knowledge graph). **Challenge chosen: 04 Agriculture** (see top). Country: **Bangladesh, Bangla voice** (Zoha native speaker). Crop recommendation: **rice** — photo diagnosis + offline after-flood/drought advisor (`docs/research-bangladesh-crops.md`); team to confirm. Demo path: not written yet.
+- Briefs received (Sat 17:00): 5 challenges, full text in `docs/challenges/`: 01 AI Apprentice (ElevenLabs voice + screen), 02 Rental Housing Law Navigator (RealPage, auto-scored), 03 Agentic Scientific Discovery (Databricks Omnigent required), 04 Small AI for Development (World Bank, offline/local-language), 05 Rare Disease Atlas (OpenAI, knowledge graph). **Challenge chosen: 04 Agriculture** (see top). Country: **Bangladesh, Bangla voice** (Zoha native speaker). Crop: **rice**. Product: offline after-flood advisor (BRRI rules) + on-device leaf classifier + hand-off to SAAO. Spec: `DEMO.md`; red-team must-fixes: `docs/redteam/README.md`; tasks: `TODO.md`.
 
 ## Decisions made (don't silently reverse; add the reason)
+- Bangladesh + Bangla + rice — Zoha is a native speaker; ~20k BD field rice photos; 2024 Aman flood losses.
+- **No LLM in the farmer's path** (overrides rule 5's "LLM for language" for this challenge) — brief demands a fixed answer list and no hallucinations; advisor = deterministic BRRI rules.
+- Train our own MobileNetV3-Small (no usable ready-made BD model); onnxruntime-web WASM in a PWA; native only if the real-phone test fails.
+- Cut: offline ASR, in-browser TTS, iOS, hispa class, pesticide names/doses, any mention of India/dams on stage.
 - Challenge 04 Agriculture over 04 Health and 05 Rare Disease — most demo-able offline story (photo → answer in airplane mode), measurable accuracy, lower medical-safety risk; Seoul prize.
 - SQLite via SQLModel, no database server — simplest thing Omar can debug.
 - SSE streaming for LLM output — the answer appearing live is part of the demo's feel.
