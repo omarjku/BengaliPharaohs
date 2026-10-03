@@ -34,6 +34,7 @@ Not announced yet (kickoff Sat 17:00). **First action after kickoff:** save the 
 ## Commands
 - `make setup` install everything · `make dev` run both · `make smoke` backend tests + live end-to-end stream + frontend type-check and build
 - `make tag` tags the current commit `demo-ok` (only after `make smoke` is green)
+- `make record` records the room in 2 h chunks → `notes/transcripts/*.md` (setup: `notes/README.md`)
 - Recovery: `git switch -c recover demo-ok` when an iteration breaks the demo
 - Sync: `git pull --rebase` before you start, `make smoke` then `git push` after every working change
 
@@ -60,6 +61,9 @@ Not announced yet (kickoff Sat 17:00). **First action after kickoff:** save the 
 - `/review` refactor + efficiency review via the `reviewer` agent, then smoke test
 - `/demo-check` runs the demo path and reports what would fail on stage
 - `/cut-scope` lists what to drop to hit the next deadline
+
+## Room transcripts
+When told "new transcript": `git pull`, read the new files in `notes/transcripts/`, then update "Current status", "Decisions made" (with the reason) and `TODO.md`. Flag contradictions with earlier decisions instead of silently changing them. Speakers are unlabelled and Whisper mishears names and numbers: ask before acting on anything unclear.
 
 ## Current status
 - Starter repo: placeholder streaming demo works end to end (mock LLM), `make smoke` green, tagged `demo-ok`.

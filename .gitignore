@@ -8,3 +8,6 @@ node_modules/
 .next/
 .DS_Store
 demo/*.mp4
+.venv-rec/
+notes/audio/
+*.md.part
