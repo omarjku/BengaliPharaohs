@@ -1,5 +1,12 @@
 # PROGRESS
 
+## 2026-10-04 ~02:30
+- **v2 shipped** to `frontend/public/model/` (commit ea3addc): fine-tuned MobileNetV3-Small, 7 classes incl. not_rice, fp32 6.1 MB, min_prob 0.80 (95% rule on validation), T 0.85.
+  Val macro-F1 0.912 · held-out AgML_BD 57% top-1, answers 63%, 74% right when answering · unseen bean leaves 100% NOT SURE.
+- LODO done (`runs/lodo_*`, `runs/lodo.sh`); table + interpretation in `docs/results.md`.
+- int8 quantisation rejected (agreement 15–25%) → ship fp32.
+- Next: phone latency test with Zoha; Omar's own ~30 non-rice photos in `data/nonrice/own/` → rerun `eval.py --nonrice`; backend endpoints (context/sync/cases); README numbers.
+
 ## 2026-10-04 ~00:50
 - All datasets downloaded (aria2c + `ml/unpack_zip.py`; zips deleted). 14,134 rice + 747 not_rice images after `prepare.py` (`data/manifest.csv`, gitignored). Licences + counts: `docs/data.md`.
 - Label fixes in `ml/common.py` (typos, "(BLB)" suffix, "Healthy Rice Leaf").
