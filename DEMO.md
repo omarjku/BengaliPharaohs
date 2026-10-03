@@ -2,7 +2,7 @@
 
 **One-liner:** _[name TBD]_ helps a smallholder rice farmer in a flood-prone Bangladeshi upazila decide what to do after a flood or disease — offline, in Bangla voice — by recognising rice leaf problems from a photo and applying BRRI's own rules, and hands off to her agriculture officer whenever it isn't sure.
 
-**Persona (Noor-equivalent, constraints from the brief):** Rahim, 42, grows Aman rice on ~1 ha in Sirajganj (Jamuna floodplain). In rice the field work is mostly done by men (team knowledge; one study puts women's labour share in rice/wheat at only 11–18%). He owns a **cheap Android (~Tk 6,000 class)** and the family also uses keypad phones; mobile internet reaches the village but is patchy and costs data. One SAAO serves ~900–2,000 families [verify year]; 16123 is open 9–5, closed Friday. Aug 2024 floods damaged ~200,000 ha of Aman (USDA GAIN).
+**Persona (Noor-equivalent, constraints from the brief):** Rahim, 42, grows Aman rice on ~1 ha in Sirajganj (Jamuna floodplain). In rice the field work is mostly done by men (team knowledge; one study puts women's labour share in rice/wheat at only 11–18%). He owns a **cheap Android (~Tk 6,000 class)** and the family also uses keypad phones; mobile internet reaches the village but is patchy and costs data. One SAAO serves ~900–2,000 families [verify year]; 16123 is staffed 08:00–20:00, closed Fri, Sat and government holidays (ais.gov.bd). Aug 2024 floods damaged ~200,000 ha of Aman (USDA GAIN).
 
 ## Golden path (phone in airplane mode the whole time)
 1. **Open the app** (installed PWA, offline self-check shows green ✓). Bangla UI, tap-first, audio on first tap.

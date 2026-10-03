@@ -25,7 +25,7 @@ Verdict: **GO**, with the scope and wording changes below. Nothing is disqualify
 - Advisor inputs: standing variety (Sub1 or not), full vs partial submergence, days, growth stage, date. Non-Sub1 ≈ 4–7 days; Sub1 (dhan51/52/79, BINA 11/12) ≈ 10–14 days, vegetative stage only, not stagnant/deep or repeated floods; flooding at flowering = unrecoverable. Output "usually survives / usually fails / not sure" — never a %. Check recovery 5–7 days after water recedes; gap-fill if losses are partial; seedlings/seed via SAAO/upazila office/BADC. [VERIFY items in the agronomy report before the demo: dhan83 season, dhan97/99 season, survival days, replant threshold.]
 - **Pesticides: no brand names, no doses, ever.** Carbofuran is banned (and still sold under other names). Tungro is a virus (no cure; leafhopper control, remove infected hills). BLB: no effective chemical (drain, stop extra urea). BPH: spraying broad-spectrum insecticides makes it worse. Fungicide only for blast/brown spot/sheath blight, and only "a DAE-registered product, ask your SAAO".
 - Look-alikes: tungro ↔ N/Zn/S deficiency, cold, salt; brown spot ↔ Zn/K deficiency; BLB ↔ bacterial leaf streak, scald, scorch; hopperburn ↔ drought/stem borer. Sheath blight, neck blast, false smut, stem borer, BPH need a sheath/panicle/base/field photo → ask for it, else "not sure".
-- Always route to the SAAO: any spraying, suspected BPH/tungro, replant/abandon decisions, seed sourcing, panicle-stage problems, poisoning (→ doctor). 16123 is 9–5, closed Friday — don't promise "anytime".
+- Always route to the SAAO: any spraying, suspected BPH/tungro, replant/abandon decisions, seed sourcing, panicle-stage problems, poisoning (→ doctor). 16123 is 08:00–20:00, closed Fri, Sat and govt holidays — don't promise "anytime".
 
 ### Safe action-card template (every card, Bangla voice + text)
 1. **What we see** — "Looks like X (not certain)"; "could also be A or B" where relevant.
@@ -33,7 +33,7 @@ Verdict: **GO**, with the scope and wording changes below. Nothing is disqualify
 3. **Do now (no chemicals)** — water level, remove infected hills, no extra urea, scout again in 2–3 days.
 4. **Do not** — e.g. "Do not spray before talking to your SAAO."
 5. **If spraying is needed** — "Only a DAE-registered product, read the label, gloves and mask, never banned products like carbofuran." No names, no doses.
-6. **Ask a person** — SAAO / union agriculture office; 16123 (9–5, closed Fri).
+6. **Ask a person** — SAAO / union agriculture office; 16123 (08:00–20:00, closed Fri, Sat, holidays).
 7. **Honesty footer** — "Computer advice from a photo. It can be wrong. It does not replace your agriculture officer."
 Advisor cards add: the inputs used, "rule from BRRI/DAE advice, [year/region]", the cut-off date, seedling sourcing, "check recovery after 5–7 days".
 
@@ -52,7 +52,7 @@ Advisor cards add: the inputs used, "rule from BRRI/DAE advice, [year/region]", 
 30 more Q&A with answers: ask Claude to regenerate from the judge report if needed (kept in session); top ones are covered above.
 
 ## 6. Video outline (~3:45, brief's required structure)
-- 0:00–0:25 Problem sentence: "Because of this tool, a smallholder rice farmer in a flood-hit upazila will decide whether to wait, re-plant or switch variety within a day, which she would otherwise decide late or by guesswork; we know because one SAAO serves ~900–2,000 families and the 16123 helpline runs 9–5, closed Fridays [verify]."
+- 0:00–0:25 Problem sentence: "Because of this tool, a smallholder rice farmer in a flood-hit upazila will decide whether to wait, re-plant or switch variety within a day, which she would otherwise decide late or by guesswork; we know because one SAAO serves ~900–2,000 families and the 16123 helpline is closed on Fridays, Saturdays and holidays (ais.gov.bd)."
 - 0:25–1:05 AI and why not simpler + guardrails.
 - 1:05–2:25 Demo in airplane mode: photo → result + Bangla voice; bad photo → "not sure"; advisor (simulated date, labelled); "share with SAAO" queued → syncs → dashboard; SMS preview (labelled simulated).
 - 2:25–3:00 Evidence: held-out table, abstention curve, "does not cover", licence table.
