@@ -84,6 +84,21 @@ export async function streamRun(input: string, h: RunHandlers, signal?: AbortSig
   if (!signal?.aborted) fail("The stream ended before the answer finished.");
 }
 
+export type Health = { ok: boolean; provider: "anthropic" | "openai" | "mock" };
+
+/** GET /api/health. Throws on network failure or a non-2xx status, so callers can show an error state. */
+export async function getHealth(signal?: AbortSignal): Promise<Health> {
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}/api/health`, { signal });
+  } catch (e) {
+    if (signal?.aborted) throw e;
+    throw new Error(`Can't reach the backend at ${API_URL}. Is it running?`);
+  }
+  if (!res.ok) throw new Error(`Backend returned ${res.status}.`);
+  return res.json();
+}
+
 export type Run = { id: number; input: string; output: string; provider: string; created_at: string };
 
 export async function listRuns(): Promise<Run[]> {
