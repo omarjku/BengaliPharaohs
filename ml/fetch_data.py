@@ -46,6 +46,14 @@ def save_small(data: bytes, target: Path) -> None:
     img.save(target.with_suffix(".jpg"), quality=92)
 
 
+def safe_target(base: Path, relative: str) -> Path:
+    """Join a remote (untrusted) name onto base, refusing anything that escapes it (e.g. '../')."""
+    target = (base / relative).resolve()
+    if not target.is_relative_to(base.resolve()):
+        raise ValueError(f"unsafe path from remote listing: {relative!r}")
+    return target
+
+
 def get_json(url: str):
     r = requests.get(url, timeout=TIMEOUT, headers=HEADERS)
     r.raise_for_status()
@@ -80,7 +88,7 @@ def fetch_remote_zip(url: str, out: Path, skip: list[str], limit: int) -> int:
             members = [m for m in members if not any(s in m.filename.lower() for s in skip)]
         for m in members:
             name = m.filename
-            target = out / name
+            target = safe_target(out, name)
             if name.lower().endswith(IMAGE_EXT):
                 if limit and count >= limit:
                     continue
@@ -107,7 +115,7 @@ def fetch_mendeley(source: str, dataset: str, version: int, skip: list[str], lim
 
     def one(item):
         p, f = item
-        target = out / p
+        target = safe_target(out, p)
         if target.with_suffix(".jpg").exists():
             return
         r = requests.get(f["content_details"]["download_url"], timeout=TIMEOUT)
@@ -118,7 +126,7 @@ def fetch_mendeley(source: str, dataset: str, version: int, skip: list[str], lim
         list(pool.map(one, images))
     n = len(images)
     for p, f in zips:
-        n += fetch_remote_zip(f["content_details"]["download_url"], out / Path(p).stem, skip, limit)
+        n += fetch_remote_zip(f["content_details"]["download_url"], safe_target(out, Path(p).stem), skip, limit)
     print(f"{source}: {n} images")
 
 
@@ -127,11 +135,11 @@ def fetch_dataverse(source: str, doi: str, limit: int) -> None:
     meta = get_json(f"https://dataverse.harvard.edu/api/datasets/:persistentId/?persistentId={doi}")
     for f in meta["data"]["latestVersion"]["files"]:
         df = f["dataFile"]
-        folder = out / Path(df["filename"]).stem
+        folder = safe_target(out, Path(df["filename"]).stem)
         if folder.exists() and any(folder.rglob("*.jpg")):
             continue
         with tempfile.TemporaryDirectory() as tmp:
-            archive = Path(tmp) / df["filename"]
+            archive = safe_target(Path(tmp), Path(df["filename"]).name)
             with requests.get(f"https://dataverse.harvard.edu/api/access/datafile/{df['id']}", stream=True,
                               timeout=TIMEOUT, headers=HEADERS) as r:
                 r.raise_for_status()
@@ -165,7 +173,7 @@ def fetch_hf(source: str, repo: str, limit: int) -> None:
                 if limit and i >= limit:
                     break
                 label = names[int(row[label_col])].strip() if names else str(row[label_col])
-                save_small(row[image_col]["bytes"], out / label / f"{i:05d}.jpg")
+                save_small(row[image_col]["bytes"], safe_target(out, f"{label}/{i:05d}.jpg"))
     print(f"{source}: done")
 
 
