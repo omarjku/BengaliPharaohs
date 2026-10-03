@@ -11,7 +11,9 @@ make smoke     # tests + live end-to-end stream + frontend build
 No API key? It runs on a mock LLM. Add `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` to `backend/.env` for a real model.
 
 ## Files that matter
-- `CLAUDE.md` — rules and the event clock, loaded by Claude Code every session
+- `CLAUDE.md` — rules, team, event clock, status and decisions; loaded by Claude Code every session
+- `LESSONS.md` — what won Hack-Nation 6 and how to repeat it
+- `docs/challenge.md` — paste the official brief here at kickoff
 - `DEMO.md` — the golden path; fill in by Sat 20:00
 - `PITCH.md` — pitch template, video shot list, sources
 - `contract/api.md` — the backend/frontend contract
