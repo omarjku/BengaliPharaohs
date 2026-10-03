@@ -9,7 +9,7 @@ Licences read from each repository's API on 2026-10-04. Images shrunk to 512 px 
 | SIP | Rice Leaf Bacterial and Fungal Disease Dataset (`Original` only) | https://data.mendeley.com/datasets/hx6f852hw4/2 | CC BY 4.0 | 1,180 / 1,701 | blast 305, blb 180, brown_spot 267, healthy 157, sheath_blight 271 | Sirajganj–Pabna | train/val |
 | DhanShomadhan | Dhan-Shomadhan (field-background half only) | https://data.mendeley.com/datasets/znsxdctwtt/1 | CC BY 4.0 | 263 / 337 | blast 74, brown_spot 49, sheath_blight 64, tungro 76 | Bangladesh field | train/val |
 | AgML_BD | Project-AgML rice_leaf_disease_classification_bd | https://huggingface.co/datasets/Project-AgML/rice_leaf_disease_classification_bd | CC BY 4.0 | 549 / 773 | blast 133, blb 116, brown_spot 190, healthy 110 | Bangladesh field, iPhone 12 | **held-out test only** |
-| nonrice/beans | iBean (bean leaves, Uganda) — 60 test images | https://huggingface.co/datasets/AI-Lab-Makerere/beans | see repo (MIT per GitHub) | 60 | — | Uganda field | "not rice" → must say *not sure* |
+| nonrice/beans | iBean (bean leaves, Uganda) — 60 test images | https://huggingface.co/datasets/AI-Lab-Makerere/beans | MIT | 60 | — | Uganda field | "not rice" → must say *not sure* |
 
 Totals: **14,134 images** (13,585 train/val + 549 held-out), 11,832 unique after grouping 2,302 near-duplicates.
 Dropped on purpose: bacterial leaf streak, leaf smut, leaf scald, narrow brown spot, hispa (not in our classes / too few images).

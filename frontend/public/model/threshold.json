@@ -1,7 +1,129 @@
 {
-  "temperature": 1.0,
-  "min_prob": 0.7,
-  "min_margin": 0.2,
-  "dummy": true,
-  "metrics": {}
+  "temperature": 0.75,
+  "min_prob": 0.6,
+  "min_margin": 0.5,
+  "dummy": false,
+  "metrics": {
+    "variant": "rice_fp32.onnx",
+    "int8_agreement": 0.215,
+    "size_mb": 6.11,
+    "val": {
+      "macro_f1": 0.7952,
+      "ece_before": 0.055,
+      "ece_after": 0.0216,
+      "coverage": 0.695,
+      "accuracy_when_answering": 0.905,
+      "risk_coverage": [
+        {
+          "min_prob": 0.0,
+          "coverage": 1.0,
+          "accuracy_when_answering": 0.783
+        },
+        {
+          "min_prob": 0.5,
+          "coverage": 0.875,
+          "accuracy_when_answering": 0.829
+        },
+        {
+          "min_prob": 0.6,
+          "coverage": 0.778,
+          "accuracy_when_answering": 0.872
+        },
+        {
+          "min_prob": 0.7,
+          "coverage": 0.694,
+          "accuracy_when_answering": 0.908
+        },
+        {
+          "min_prob": 0.8,
+          "coverage": 0.586,
+          "accuracy_when_answering": 0.937
+        },
+        {
+          "min_prob": 0.9,
+          "coverage": 0.442,
+          "accuracy_when_answering": 0.972
+        }
+      ]
+    },
+    "test_heldout_source": {
+      "macro_f1": 0.3531,
+      "coverage": 0.63,
+      "accuracy_when_answering": 0.645,
+      "confusion": [
+        [
+          110,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          12,
+          91,
+          4,
+          17,
+          5,
+          4
+        ],
+        [
+          34,
+          64,
+          57,
+          11,
+          22,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          41,
+          29,
+          6,
+          7,
+          4,
+          29
+        ]
+      ],
+      "classes": [
+        "healthy",
+        "blast",
+        "brown_spot",
+        "sheath_blight",
+        "tungro",
+        "blb"
+      ]
+    },
+    "nonrice": {
+      "n": 60,
+      "not_sure_rate": 0.667,
+      "wrongly_answered": [
+        "../data/nonrice/beans/bean_024.jpg",
+        "../data/nonrice/beans/bean_031.jpg",
+        "../data/nonrice/beans/bean_032.jpg",
+        "../data/nonrice/beans/bean_023.jpg",
+        "../data/nonrice/beans/bean_035.jpg",
+        "../data/nonrice/beans/bean_053.jpg",
+        "../data/nonrice/beans/bean_046.jpg",
+        "../data/nonrice/beans/bean_044.jpg",
+        "../data/nonrice/beans/bean_050.jpg",
+        "../data/nonrice/beans/bean_051.jpg"
+      ]
+    }
+  }
 }
