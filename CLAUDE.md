@@ -6,7 +6,12 @@ Read this first in every session. Keep it under 200 lines and **keep "Current st
 Other files: `LESSONS.md` (what won Hack-Nation 6 for Omar's team, read once) · `PITCH.md` (pitch, video, sources) · `DEMO.md` (golden path) · `contract/api.md` (API contract) · `TODO.md`.
 
 ## The challenge
-Not announced yet (kickoff Sat 17:00). **First action after kickoff:** save the full official brief to `docs/challenge.md`, then summarize here in 5 lines: the problem, required inputs/outputs, judging criteria, what's out of scope, required sponsor tech.
+**Chosen: Challenge 04, Small AI for Development (World Bank), Agriculture sector.** Full brief: `docs/challenges/04-small-ai-for-development-worldbank.md` (read pages 1–12 + Annex B).
+- **Problem:** Noor, smallholder coffee farmer (2 ha, co-op member, basic phone; daughter's smartphone at weekends; no Wi-Fi, 3G bundles), sees falling yields and has no independent price reference; extension officer visits ~2×/year.
+- **Build:** a Small AI tool that helps her make, communicate or act on one better agricultural decision. Must run on a device she already has, core feature **offline**, model small enough to side-load, ≥1 interaction in a **named local language** (voice or text).
+- **Judging:** working prototype within limits 25% · development relevance 20% · data grounding 15% · evidence it works 15% · clarity + "why AI, not SMS/spreadsheet/search" 15% · scalability 10% · **responsible AI pass/fail** ("not sure — ask a person", human decides).
+- **Out of scope / penalised:** online-only core, unlabelled synthetic data, AI acting on the user's behalf, confident wrong answers, uncited data. Must state what the data does **not** cover (scored).
+- **Submit by Sun 15:00:** prototype (code/link) + **2–5 min video** (problem sentence, AI + why not simpler, demo, where it sits in Noor's day + tech stack, "what localizing AI means to us"). Shortlist 5–6 Oct; winner per sector presents in Seoul 21 Oct. Entrants must be 18–35.
 
 ## Event facts
 - 24 h build. Judges have backgrounds at OpenAI, Meta, Apple and AI startups. Top 3 per challenge give a 3-minute virtual pitch on 10 Oct; the top ~1% are invited to the Hack-Nation Venture Lab (selects for "working prototype, sharp thesis").
@@ -67,9 +72,10 @@ When told "new transcript": `git pull`, read the new files in `notes/transcripts
 
 ## Current status
 - Starter repo: placeholder streaming demo works end to end (mock LLM), `make smoke` green, tagged `demo-ok`.
-- Briefs received (Sat 17:00): 5 challenges, full text in `docs/challenges/`: 01 AI Apprentice (ElevenLabs voice + screen), 02 Rental Housing Law Navigator (RealPage, auto-scored), 03 Agentic Scientific Discovery (Databricks Omnigent required), 04 Small AI for Development (World Bank, offline/local-language), 05 Rare Disease Atlas (OpenAI, knowledge graph). Challenge, idea and demo path: not chosen yet.
+- Briefs received (Sat 17:00): 5 challenges, full text in `docs/challenges/`: 01 AI Apprentice (ElevenLabs voice + screen), 02 Rental Housing Law Navigator (RealPage, auto-scored), 03 Agentic Scientific Discovery (Databricks Omnigent required), 04 Small AI for Development (World Bank, offline/local-language), 05 Rare Disease Atlas (OpenAI, knowledge graph). **Challenge chosen: 04 Agriculture** (see top). Idea and demo path: being defined.
 
 ## Decisions made (don't silently reverse; add the reason)
+- Challenge 04 Agriculture over 04 Health and 05 Rare Disease — most demo-able offline story (photo → answer in airplane mode), measurable accuracy, lower medical-safety risk; Seoul prize.
 - SQLite via SQLModel, no database server — simplest thing Omar can debug.
 - SSE streaming for LLM output — the answer appearing live is part of the demo's feel.
 - Feature freeze Sun 07:00 — last time the pitch and video got the final minutes.

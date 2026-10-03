@@ -1,3 +1,4 @@
 # Challenge brief
 
-Paste the full official challenge text here right after kickoff (Sat 17:00), plus links to any sponsor docs and datasets.
+Chosen: **Challenge 04 – Small AI for Development (World Bank), Agriculture sector.**
+Full text: [`challenges/04-small-ai-for-development-worldbank.md`](challenges/04-small-ai-for-development-worldbank.md) (PDF alongside). Read sections 01–09 and Annex B.
