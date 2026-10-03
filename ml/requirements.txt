@@ -1,0 +1,8 @@
+torch>=2.3
+torchvision>=0.18
+onnx>=1.16
+onnxruntime>=1.18
+numpy
+pillow
+imagehash
+pyyaml

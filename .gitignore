@@ -11,3 +11,6 @@ demo/*.mp4
 .venv-rec/
 notes/audio/
 *.md.part
+data/
+runs/
+.venv-ml/
