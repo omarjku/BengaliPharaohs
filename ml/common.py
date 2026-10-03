@@ -26,7 +26,9 @@ LABEL_MAP = {
     "tungro": "tungro", "rice_tungro": "tungro",
     "bacterial_leaf_blight": "blb", "bacterial leaf blight": "blb", "bacterialblight": "blb",
     "bacterial_blight": "blb", "blb": "blb",
-    "leaf_scald": None, "scald": None,  # set to "leaf_scald" if you add the class
+    # Typos as they appear in the dataset folders (Dhan-Shomadhan)
+    "browon_spot": "brown_spot", "rice_turgro": "tungro", "shath_blight": "sheath_blight",
+    "leaf_scald": None, "scald": None, "leaf_scaled": None,  # set to "leaf_scald" if you add the class
     "bacterial_leaf_streak": None, "narrow_brown_spot": None, "leaf_smut": None,
     "hispa": None, "leaf_folder": None, "insect_damage": None, "stripes": None,
 }
