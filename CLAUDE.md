@@ -72,7 +72,7 @@ When told "new transcript": `git pull`, read the new files in `notes/transcripts
 
 ## Current status
 - Starter repo: placeholder streaming demo works end to end (mock LLM), `make smoke` green, tagged `demo-ok`.
-- Briefs received (Sat 17:00): 5 challenges, full text in `docs/challenges/`: 01 AI Apprentice (ElevenLabs voice + screen), 02 Rental Housing Law Navigator (RealPage, auto-scored), 03 Agentic Scientific Discovery (Databricks Omnigent required), 04 Small AI for Development (World Bank, offline/local-language), 05 Rare Disease Atlas (OpenAI, knowledge graph). **Challenge chosen: 04 Agriculture** (see top). Idea and demo path: being defined.
+- Briefs received (Sat 17:00): 5 challenges, full text in `docs/challenges/`: 01 AI Apprentice (ElevenLabs voice + screen), 02 Rental Housing Law Navigator (RealPage, auto-scored), 03 Agentic Scientific Discovery (Databricks Omnigent required), 04 Small AI for Development (World Bank, offline/local-language), 05 Rare Disease Atlas (OpenAI, knowledge graph). **Challenge chosen: 04 Agriculture** (see top). Country: **Bangladesh, Bangla voice** (Zoha native speaker). Crop recommendation: **rice** — photo diagnosis + offline after-flood/drought advisor (`docs/research-bangladesh-crops.md`); team to confirm. Demo path: not written yet.
 
 ## Decisions made (don't silently reverse; add the reason)
 - Challenge 04 Agriculture over 04 Health and 05 Rare Disease — most demo-able offline story (photo → answer in airplane mode), measurable accuracy, lower medical-safety risk; Seoul prize.
