@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, Ban, CheckCircle2, ChevronDown, ChevronLeft, CircleHelp, Eye, FlaskConical, Home, Loader2, Phone, Send, ShieldCheck, Square, Volume2, Leaf } from "lucide-react";
+import { AlertTriangle, Ban, CalendarDays, CheckCircle2, ChevronDown, ChevronLeft, CircleHelp, Eye, FlaskConical, Home, Loader2, Phone, Send, ShieldCheck, Square, Volume2, Leaf } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -204,6 +204,13 @@ function ResultView() {
           {card.parts[3]}
         </Part>
       </section>
+
+      {c.card === "C1" && (
+        <Link href="/calendar/" className="flex items-center gap-3 rounded-3xl bg-secondary/70 px-4 py-3 font-semibold text-secondary-foreground">
+          <CalendarDays className="size-6 shrink-0 text-primary" />
+          <span className="flex-1">{t("cal_from_healthy")}</span>
+        </Link>
+      )}
 
       {c.cross && c.cross.ask.length > 0 && (
         <section className="rounded-3xl border-2 border-dashed border-unsure/40 bg-unsure-soft/50 p-4">

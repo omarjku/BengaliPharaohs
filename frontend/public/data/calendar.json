@@ -1,0 +1,87 @@
+{
+  "version": "2026-10-04.1",
+  "review": "Bangla = CLAUDE DRAFT (Zoha to review). Every tip names its source id; ids are in docs/advisor-rules.md §3 and docs/knowledge/rice-leaf-health.md. No doses, ever. NEEDS-CHECK items say so.",
+  "stages": [
+    {
+      "id": "seedbed",
+      "days": "before transplanting",
+      "do": [
+        { "en": "Use only healthy seedlings. Do not take seedlings from a seedbed with yellow, stunted plants.", "bn": "শুধু সুস্থ চারা নিন। যে বীজতলায় হলুদ, খাটো চারা আছে, সেখান থেকে চারা নেবেন না।", "src": "irri_tungro", "season": "any" },
+        { "en": "Aman seedlings are ready to transplant at about 25 to 35 days old.", "bn": "আমনের চারা সাধারণত ২৫ থেকে ৩৫ দিন বয়সে রোপণের উপযুক্ত হয়।", "src": "S_BARC", "season": "aman" },
+        { "en": "Boro seedbeds: very cold nights in December–January can yellow or kill seedlings. Ask your SAAO how to protect them.", "bn": "বোরো বীজতলা: ডিসেম্বর-জানুয়ারিতে খুব ঠান্ডা রাতে চারা হলুদ হয়ে মরে যেতে পারে। কীভাবে রক্ষা করবেন, কৃষি অফিসারকে জিজ্ঞেস করুন।", "src": "irri_cold", "season": "boro" }
+      ],
+      "watch": ["cold", "tungro"]
+    },
+    {
+      "id": "early_tillering",
+      "days": "0–20 days after transplanting",
+      "do": [
+        { "en": "Fill gaps: where seedlings died, plant spare seedlings within 7 to 10 days of transplanting.", "bn": "ফাঁকা পূরণ: যেখানে চারা মরে গেছে, রোপণের ৭ থেকে ১০ দিনের মধ্যে বাড়তি চারা লাগান।", "src": "S_BARC", "season": "any" },
+        { "en": "Keep water in the field. Dry, poor soil makes brown spot worse.", "bn": "জমিতে পানি ধরে রাখুন। শুকনো, দুর্বল মাটিতে বাদামি দাগ রোগ বাড়ে।", "src": "irri_brownspot", "season": "any" },
+        { "en": "Boro: 2 to 4 weeks after transplanting, look at young leaves for dusty brown patches (khaira, zinc shortage). If you see them, ask your SAAO.", "bn": "বোরো: রোপণের ২ থেকে ৪ সপ্তাহ পরে কচি পাতায় মরিচার মতো বাদামি ছোপ (খৈরা, দস্তার অভাব) আছে কিনা দেখুন। থাকলে কৃষি অফিসারকে জিজ্ঞেস করুন।", "src": "irri_zndef", "season": "boro" }
+      ],
+      "watch": ["zn_def", "tungro", "blast"]
+    },
+    {
+      "id": "tillering",
+      "days": "21–50 days",
+      "do": [
+        { "en": "Pull weeds in the field and on the bunds. Weeds on the bunds help sheath blight spread.", "bn": "জমি আর আইলের আগাছা তুলে ফেলুন। আইলের আগাছা থেকে খোলপোড়া রোগ ছড়ায়।", "src": "irri_sheathblight", "season": "any" },
+        { "en": "Give urea in small parts, not all at once. Ask your SAAO how much. Too much urea makes blast, leaf blight and sheath blight worse.", "bn": "ইউরিয়া একবারে না দিয়ে কয়েক ভাগে দিন। কতটা দেবেন, কৃষি অফিসারকে জিজ্ঞেস করুন। বেশি ইউরিয়ায় ব্লাস্ট, পাতাপোড়া আর খোলপোড়া রোগ বাড়ে।", "src": "irri_blast", "season": "any" },
+        { "en": "Aman: if some hills turn yellow-orange and short, and you see small green jumping insects, tell your SAAO soon (tungro).", "bn": "আমন: কিছু গোছা হলদে-কমলা আর খাটো হলে, আর ছোট সবুজ লাফানো পোকা দেখলে, তাড়াতাড়ি কৃষি অফিসারকে জানান (টুংরো)।", "src": "irri_tungro", "season": "aman" }
+      ],
+      "watch": ["tungro", "blast", "sheath_blight", "blb", "n_def"]
+    },
+    {
+      "id": "pi_booting",
+      "days": "51–70 days",
+      "do": [
+        { "en": "In a dry spell, give the field water if you have a pump or a canal.", "bn": "খরার সময় পাম্প বা খাল থাকলে জমিতে পানি দিন।", "src": "S_AMAN_GUIDE", "season": "aman" },
+        { "en": "Check the stems near the water for spots (sheath blight). Tap the plant base: many small brown insects jumping onto the water means brown planthopper. Tell your SAAO.", "bn": "পানির কাছে কাণ্ডে দাগ আছে কিনা দেখুন (খোলপোড়া)। গাছের গোড়ায় টোকা দিন: অনেক ছোট বাদামি পোকা পানিতে লাফালে সেটা বাদামি গাছফড়িং। কৃষি অফিসারকে জানান।", "src": "irri_bph", "season": "any" },
+        { "en": "Boro: very cold nights at this stage can leave grains empty. Ask your SAAO.", "bn": "বোরো: এই সময়ে খুব ঠান্ডা রাতে দানা চিটা হতে পারে। কৃষি অফিসারকে জিজ্ঞেস করুন।", "src": "irri_cold", "season": "boro" }
+      ],
+      "watch": ["sheath_blight", "bph", "stem_borer"]
+    },
+    {
+      "id": "flowering",
+      "days": "71–85 days",
+      "do": [
+        { "en": "Look at the neck of the panicles. A grey-brown, broken neck can be neck blast. Send a photo to your SAAO quickly.", "bn": "শীষের গোড়া (ঘাড়) দেখুন। ছাই-বাদামি, ভাঙা ঘাড় হলে সেটা শীষ ব্লাস্ট হতে পারে। তাড়াতাড়ি কৃষি অফিসারকে ছবি পাঠান।", "src": "irri_blast_neck", "season": "any" },
+        { "en": "White, empty panicles that pull out easily mean stem borer. Tell your SAAO. Never use banned products like carbofuran.", "bn": "সাদা, খালি শীষ টানলে সহজে উঠে এলে সেটা মাজরা পোকা। কৃষি অফিসারকে জানান। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।", "src": "irri_stemborer", "season": "any" }
+      ],
+      "watch": ["blast", "bph", "stem_borer"]
+    },
+    {
+      "id": "grain_filling",
+      "days": "86 days to harvest",
+      "do": [
+        { "en": "Round patches of plants turning yellow-brown and drying can be brown planthopper burn. Do not spray any insecticide yourself: it can make it worse. Tell your SAAO at once.", "bn": "গোল গোল জায়গায় গাছ হলদে-বাদামি হয়ে শুকিয়ে গেলে সেটা বাদামি গাছফড়িংয়ের ক্ষতি হতে পারে। নিজে কোনো কীটনাশক দেবেন না, এতে আরো বাড়তে পারে। এখনই কৃষি অফিসারকে জানান।", "src": "irri_bph", "season": "any" },
+        { "en": "Harvest when most grains (about 80%) have turned straw-coloured. Ask your SAAO if unsure.", "bn": "বেশিরভাগ দানা (প্রায় ৮০ ভাগ) খড়ের রঙ হলে ধান কাটুন। নিশ্চিত না হলে কৃষি অফিসারকে জিজ্ঞেস করুন।", "src": "NEEDS-CHECK: BRRI harvest advice", "season": "any" }
+      ],
+      "watch": ["bph"]
+    }
+  ],
+  "key_dates": [
+    { "season": "aman", "en": "Normal Aman transplanting: 15 July – 15 August.", "bn": "আমনের স্বাভাবিক রোপণ: ১৫ জুলাই – ১৫ আগস্ট।", "src": "S_BRRI_RA1718" },
+    { "season": "aman", "en": "Late Aman after a flood: seedbed by 30 August; transplant by 15 September in the north, 20 September in the centre and south.", "bn": "বন্যার পরে নাবি আমন: ৩০ আগস্টের মধ্যে বীজতলা; উত্তরে ১৫ সেপ্টেম্বর, মধ্য ও দক্ষিণে ২০ সেপ্টেম্বরের মধ্যে রোপণ।", "src": "S_MOA" },
+    { "season": "aman", "en": "After a flood: wash mud off the leaves, wait about 10 days, then ask your SAAO about fertiliser.", "bn": "বন্যার পরে: পাতার কাদা ধুয়ে দিন, প্রায় ১০ দিন অপেক্ষা করুন, তারপর সারের কথা কৃষি অফিসারকে জিজ্ঞেস করুন।", "src": "S_MOA" },
+    { "season": "boro", "en": "Boro seedbeds and young plants face cold spells in December–January.", "bn": "ডিসেম্বর-জানুয়ারিতে বোরোর বীজতলা আর কচি চারা শৈত্যপ্রবাহের ঝুঁকিতে থাকে।", "src": "bd_cold_review" }
+  ],
+  "next_season": {
+    "floodplain": { "en": "Your area floods: for Aman, ask your SAAO about flood-tolerant varieties like BRRI dhan51, 52, 79 or BINA dhan11, 12. They can survive about 10 to 14 days under water.", "bn": "আপনার এলাকায় বন্যা হয়: আমনে বন্যা-সহনশীল জাতের কথা কৃষি অফিসারকে জিজ্ঞেস করুন, যেমন ব্রি ধান৫১, ৫২, ৭৯ বা বিনা ধান১১, ১২। এগুলো প্রায় ১০ থেকে ১৪ দিন পানির নিচে বাঁচতে পারে।", "src": "S_CG_SUB1" },
+    "coastal": { "en": "Your area is coastal: for Boro, ask your SAAO about salt-tolerant varieties like BRRI dhan67, 97 or 99.", "bn": "আপনার এলাকা উপকূলীয়: বোরোতে লবণ-সহনশীল জাতের কথা কৃষি অফিসারকে জিজ্ঞেস করুন, যেমন ব্রি ধান৬৭, ৯৭ বা ৯৯।", "src": "bd_salt_varieties" },
+    "barind": { "en": "Your area is dry (Barind): for Aman, ask your SAAO about drought-tolerant varieties like BRRI dhan56 or 71.", "bn": "আপনার এলাকা খরাপ্রবণ (বরেন্দ্র): আমনে খরা-সহনশীল জাতের কথা কৃষি অফিসারকে জিজ্ঞেস করুন, যেমন ব্রি ধান৫৬ বা ৭১।", "src": "S_RT_DROUGHT" },
+    "haor": { "en": "Your area is haor: flash floods come before Boro harvest. Ask your SAAO about early varieties and harvest timing.", "bn": "আপনার এলাকা হাওর: বোরো কাটার আগে আগাম বন্যা আসে। আগাম জাত আর কাটার সময় নিয়ে কৃষি অফিসারকে জিজ্ঞেস করুন।", "src": "S_DHAN79" }
+  },
+  "watch_names": {
+    "cold": { "en": "Cold injury", "bn": "ঠান্ডায় ক্ষতি" },
+    "tungro": { "en": "Tungro", "bn": "টুংরো" },
+    "zn_def": { "en": "Zinc shortage (khaira)", "bn": "দস্তার অভাব (খৈরা)" },
+    "blast": { "en": "Blast", "bn": "ব্লাস্ট" },
+    "sheath_blight": { "en": "Sheath blight", "bn": "খোলপোড়া" },
+    "blb": { "en": "Bacterial leaf blight", "bn": "পাতাপোড়া" },
+    "n_def": { "en": "Nitrogen shortage", "bn": "নাইট্রোজেনের অভাব" },
+    "bph": { "en": "Brown planthopper", "bn": "বাদামি গাছফড়িং" },
+    "stem_borer": { "en": "Stem borer", "bn": "মাজরা পোকা" }
+  }
+}
