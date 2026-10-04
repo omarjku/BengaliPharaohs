@@ -8,7 +8,8 @@ import { AppShell, useOnline } from "@/components/app/shell";
 import { CARDS } from "@/lib/engine/cards";
 import { cn } from "@/lib/utils";
 import { formatDate, num, useLang } from "@/lib/i18n";
-import { deleteAllCases, getPhoto, listCases, type CaseRecord } from "@/lib/store/db";
+import { DB_BLOCKED_EVENT, deleteAllCases, getPhoto, getProfile, listCases, type CaseRecord } from "@/lib/store/db";
+import { getPack, PACK_EVENT, refreshPack } from "@/lib/pack/pack";
 import { syncQueued } from "@/lib/sync";
 
 const STATUS = {
@@ -38,10 +39,27 @@ export default function CasesPage() {
   const online = useOnline();
   const [cases, setCases] = useState<CaseRecord[] | null>(null);
   const [syncing, setSyncing] = useState(false);
+  const [blocked, setBlocked] = useState(false); // an old copy of the app in another tab holds the database
+  const [replies, setReplies] = useState<Record<string, string>>({}); // case_id -> the SAAO's latest reply
   const reload = useCallback(() => listCases().then(setCases), []);
   useEffect(() => {
     reload();
+    const onBlocked = () => setBlocked(true);
+    window.addEventListener(DB_BLOCKED_EVENT, onBlocked);
+    return () => window.removeEventListener(DB_BLOCKED_EVENT, onBlocked);
   }, [reload]);
+  // The SAAO's answers come down with the offline pack (part case_replies); refresh it when this page opens online.
+  useEffect(() => {
+    const read = async () => {
+      const p = await getPack();
+      const list = (p?.parts.case_replies?.data as { replies?: { case_id: string; text: string }[] } | undefined)?.replies ?? [];
+      setReplies(Object.fromEntries(list.map((r) => [r.case_id, r.text]))); // later replies overwrite earlier ones
+    };
+    read();
+    window.addEventListener(PACK_EVENT, read);
+    if (online) getProfile().then((p) => p.upazila && refreshPack(p.upazila));
+    return () => window.removeEventListener(PACK_EVENT, read);
+  }, [online]);
 
   const pending = cases?.filter((c) => c.share === "queued" || c.share === "failed").length ?? 0;
 
@@ -69,7 +87,10 @@ export default function CasesPage() {
       {pending > 0 && !online && <p className="-mt-2 mb-4 text-center text-sm text-muted-foreground">{t("sync_offline")}</p>}
 
       {cases === null ? (
-        <Loader2 className="mx-auto mt-10 size-7 animate-spin text-primary" />
+        <>
+          <Loader2 className="mx-auto mt-10 size-7 animate-spin text-primary" />
+          {blocked && <p className="mt-4 text-center text-sm text-muted-foreground">{t("db_blocked")}</p>}
+        </>
       ) : cases.length === 0 ? (
         <p className="mt-16 text-center text-lg text-muted-foreground">{t("cases_empty")}</p>
       ) : (
@@ -87,6 +108,11 @@ export default function CasesPage() {
                       {c.simulated_date && ` · ${t("simulated")}`}
                     </span>
                     <span className={cn("mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-semibold", st.cls)}>{t(st.key)}</span>
+                    {replies[c.id] && (
+                      <span className="mt-1.5 block rounded-xl bg-ok-soft px-2.5 py-1.5 text-sm text-ok">
+                        <b>{t("saao_replied")}:</b> {replies[c.id]}
+                      </span>
+                    )}
                   </span>
                   <ChevronRight className="size-5 text-muted-foreground" />
                 </Link>

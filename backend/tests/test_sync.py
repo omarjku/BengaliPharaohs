@@ -123,3 +123,24 @@ def test_dashboard_needs_saao_code() -> None:
         assert c.get(f"/api/cases/{k['case_id']}/thumb").status_code == 401
         assert c.post(f"/api/cases/{k['case_id']}/reply", json={"text": "hi", "by": "saao"}).status_code == 401
         assert c.get("/api/cases", params={"upazila": "AUTH"}, headers=SAAO).status_code == 200
+
+
+def test_cors_exposes_x_health_and_etag():
+    # Cross-origin (Vercel -> Railway) the browser hides these unless exposed; the phone's probe and ETag cache need them.
+    with TestClient(app) as c:
+        r = c.get("/api/health", headers={"Origin": "http://localhost:3000"})
+        exposed = r.headers["access-control-expose-headers"].lower()
+        assert "x-health" in exposed and "etag" in exposed
+
+
+def test_pack_works_for_real_upazila_codes_and_is_fresh():
+    from datetime import datetime, timezone
+
+    with TestClient(app) as c:
+        code = "SRJ-SIRAJGANJ"  # the app sends codes like this (places.json), not the 4 mock folders
+        assert c.get("/api/pack/manifest", params={"upazila": code}).status_code == 200
+        p = c.get("/api/pack/flood", params={"upazila": code}).json()
+        assert p["seeded"] is True
+        age = datetime.now(timezone.utc) - datetime.fromisoformat(p["fetched_at"])
+        assert age.total_seconds() < 24 * 3600  # engine ignores flood data older than 24 h
+        assert c.get("/api/pack/flood", params={"upazila": "../etc"}).status_code == 404

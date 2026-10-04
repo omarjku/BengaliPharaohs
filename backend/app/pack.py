@@ -1,7 +1,7 @@
 """Offline pack: a small manifest + versioned parts, with ETag/304 so unchanged data costs ~nothing."""
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
@@ -21,9 +21,39 @@ def _hash(obj: object) -> str:
     return hashlib.sha256(json.dumps(obj, sort_keys=True, default=str).encode()).hexdigest()[:12]
 
 
+def _known_codes() -> set[str]:
+    """Every upazila code the app can send (places.json: ~494 "DISTRICT-NAME" codes plus the 4 old aliases)."""
+    try:
+        d = json.loads((APP_DATA / "places.json").read_text())
+        return {u["code"] for u in d["upazilas"]} | set(d.get("aliases", {}))
+    except (OSError, ValueError, KeyError):
+        return set()
+
+
+def _mock_dir(upazila: str) -> Path:
+    """Seeded stand-in data exists for 4 upazilas only; any other real upazila gets the SIR one (still labelled seeded)."""
+    if upazila.isalnum() and (MOCKS / upazila).is_dir():  # isalnum blocks "../" paths
+        return MOCKS / upazila
+    if upazila in _known_codes():
+        return MOCKS / "SIR"
+    raise HTTPException(404, "unknown upazila")
+
+
 def _check_upazila(upazila: str) -> None:
-    if not upazila.isalnum() or not (MOCKS / upazila).is_dir():  # isalnum blocks "../" paths
-        raise HTTPException(404, "unknown upazila")
+    _mock_dir(upazila)
+
+
+def _restamp(p: dict) -> dict:
+    """Seeded parts are stand-ins for a live feed: stamp them as fetched today so they never look stale during judging.
+    Still `seeded: true` + source "SEEDED ...". Date-level only, so ETags stay stable within a day."""
+    try:
+        old = datetime.fromisoformat(p["fetched_at"])
+        life = datetime.fromisoformat(p["valid_until"]) - old
+        today = datetime.now(timezone(timedelta(hours=6))).replace(hour=6, minute=0, second=0, microsecond=0)
+        p = {**p, "fetched_at": today.isoformat(), "valid_until": (today + life).isoformat()}
+    except (KeyError, TypeError, ValueError):
+        pass
+    return p
 
 
 def _file_hash(name: str) -> dict:
@@ -53,7 +83,7 @@ def _replies(session: Session, device_id: str | None) -> dict:
 
 def _part(name: str, upazila: str, session: Session, device_id: str | None) -> dict:
     if name in ("forecast", "flood", "advisories", "prices"):
-        return json.loads((MOCKS / upazila / f"{name}.json").read_text())
+        return _restamp(json.loads((_mock_dir(upazila) / f"{name}.json").read_text()))
     data = _replies(session, device_id) if name == "case_replies" else _file_hash(name)
     return {"source": "our backend" if name == "case_replies" else "app bundle",
             "fetched_at": None, "valid_until": None, "seeded": name != "case_replies", "data": data}

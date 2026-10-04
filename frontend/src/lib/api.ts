@@ -166,7 +166,37 @@ export async function syncCases(device_id: string, cases: SyncCase[]): Promise<S
   return res.json();
 }
 
-export type ServerCase = SyncCase & { received_at: string; seeded?: boolean };
+export type CaseReply = { id: number; case_id: string; text: string; by: string; created_at: string };
+export type ServerCase = SyncCase & {
+  received_at: string;
+  seeded?: boolean;
+  /** Which files the server holds (GET /api/cases/{id}/thumb|photo|voice, SAAO code needed). */
+  blobs?: { thumb: boolean; photo: boolean; voice: boolean };
+  reply?: CaseReply | null;
+};
+
+/** One stored file of a case as a Blob (the files need the SAAO code header, so <img src> cannot fetch them). Null if missing. */
+export async function fetchCaseBlob(caseId: string, kind: "thumb" | "photo" | "voice", signal?: AbortSignal): Promise<Blob | null> {
+  try {
+    const res = await fetch(`${API_URL}/api/cases/${encodeURIComponent(caseId)}/${kind}`, { headers: saaoHeaders(), signal: withTimeout(signal, 20000) });
+    return res.ok ? await res.blob() : null;
+  } catch {
+    return null;
+  }
+}
+
+/** POST /api/cases/{id}/reply — the SAAO's short answer; shows up on the farmer's phone via the pack's case_replies. */
+export async function postReply(caseId: string, text: string): Promise<CaseReply> {
+  const res = await fetch(`${API_URL}/api/cases/${encodeURIComponent(caseId)}/reply`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...saaoHeaders() },
+    body: JSON.stringify({ text, by: "saao" }),
+    signal: AbortSignal.timeout(10000),
+  });
+  if (res.status === 401) forgetSaaoCode();
+  if (!res.ok) throw new Error(`Backend returned ${res.status}.`);
+  return res.json();
+}
 
 /** GET /api/cases — SAAO dashboard, newest first. Throws if the backend is unreachable. */
 export async function listServerCases(upazila?: string, signal?: AbortSignal): Promise<ServerCase[]> {

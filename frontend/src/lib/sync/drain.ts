@@ -1,10 +1,10 @@
 // drain(): send what is queued, smallest and most important first, over whatever connection we have.
 // Every item is idempotent on the server, so a lost response just means "send again".
 import { API_URL } from "../api";
-import { getBlob, getCase, getKv, getOutbox, listOutbox, putOutbox, saveCase, setKv, type OutboxItem } from "../store/db";
+import { getBlob, getCase, getKv, getOutbox, listCases, listOutbox, putOutbox, saveCase, setKv, type OutboxItem } from "../store/db";
 import { photoKey, thumbKey, voiceKey } from "./compress";
 import { probe, type ProbeResult } from "./probe";
-import { toBatchCase } from "./outbox";
+import { enqueue, toBatchCase } from "./outbox";
 import type { BatchResult } from "./types";
 
 export type DrainResult = { sent: number; failed: boolean };
@@ -171,6 +171,9 @@ async function run(force: boolean): Promise<DrainResult> {
     emit();
     return { sent: 0, failed: true };
   }
+  // A case shared while offline is only marked "queued"; fill the outbox now, so reconnecting alone sends it
+  // (not just app start or "Sync now"). enqueue() is idempotent.
+  for (const c of await listCases()) if (c.consent && c.share === "queued") await enqueue(c).catch(() => {});
   const maxTier = await allowedTier(p);
   let sent = 0;
   let failed = false;

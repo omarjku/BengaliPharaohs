@@ -121,9 +121,11 @@ export async function getPackStatus(now = new Date()): Promise<PackStatus> {
 const fresh = (p: PackPart | undefined, maxH: number, now: number): p is PackPart =>
   !!p && now - Date.parse(p.fetched_at) < maxH * 3_600_000;
 
-type Forecast = { days: { date: string; rain_mm: number }[] };
+// The backend (contract/api.md) sends forecast days as {day: 1-5, rain_mm} (day 1 = the day it was fetched) and
+// prices as {paddy: [{market, tk}]}. The older {date}/{markets} shapes are still accepted.
+type Forecast = { days: { date?: string; day?: number; rain_mm: number }[] };
 type Flood = { station: string; level_m: number; danger_m: number; trend: "rising" | "steady" | "falling"; outlook_days: number };
-type Prices = { markets: { name: string; paddy_tk_per_maund: number; date: string }[] };
+type Prices = { markets?: { name: string; paddy_tk_per_maund: number }[]; paddy?: { market: string; tk: number }[] };
 
 /** Pure: pack -> the ContextPack shape the app/engine already uses. Stale parts (flood >24 h, forecast >48 h) become null. */
 export function packToContext(pack: Pack | undefined, date: Date = new Date()): ContextPack | null {
@@ -135,12 +137,15 @@ export function packToContext(pack: Pack | undefined, date: Date = new Date()): 
   let rain: ContextPack["rain"] = null;
   if (fc) {
     const today = date.toISOString().slice(0, 10);
-    const sum = (d: Forecast["days"]) => Math.round(d.reduce((a, x) => a + x.rain_mm, 0) * 10) / 10;
+    const day0 = Date.parse(w!.fetched_at.slice(0, 10));
+    const days = (fc.days ?? []).map((d) => ({ date: d.date ?? new Date(day0 + ((d.day ?? 1) - 1) * 86_400_000).toISOString().slice(0, 10), rain_mm: d.rain_mm }));
+    const sum = (d: typeof days) => Math.round(d.reduce((a, x) => a + x.rain_mm, 0) * 10) / 10;
     // last_10d_mm only counts past days the pack happens to contain (forecast pack, not observations).
-    const past = fc.days.filter((d) => d.date < today && Date.parse(today) - Date.parse(d.date) <= 10 * 86_400_000);
-    rain = { last_10d_mm: sum(past), forecast_3d_mm: sum(fc.days.filter((d) => d.date >= today).slice(0, 3)), as_of: w!.fetched_at };
+    const past = days.filter((d) => d.date < today && Date.parse(today) - Date.parse(d.date) <= 10 * 86_400_000);
+    rain = { last_10d_mm: sum(past), forecast_3d_mm: sum(days.filter((d) => d.date >= today).slice(0, 3)), as_of: w!.fetched_at };
   }
-  const mk = pr && (pr.data as Prices).markets[0];
+  const pd = pr?.data as Prices | undefined;
+  const mk = pd?.markets?.[0] ?? (pd?.paddy?.[0] && { name: pd.paddy[0].market, paddy_tk_per_maund: pd.paddy[0].tk });
   if (!flood && !rain) return null;
   return {
     upazila: pack.upazila,

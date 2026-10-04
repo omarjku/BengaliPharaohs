@@ -154,5 +154,21 @@ describe("stale handling + engine context", () => {
     expect(s.parts.flood?.stale).toBe(true);
   });
 
+  it("real backend shapes (contract): forecast {day}, prices {paddy:[{market,tk}]} -> context, no throw", () => {
+    const at = "2026-10-04T06:00:00+06:00";
+    const part = (data: unknown) => ({ version: "1", fetched_at: at, data });
+    const pack = {
+      upazila: "SRJ-SIRAJGANJ", version: "1", fetched_at: at, versions: {}, model_update_available: false,
+      parts: {
+        forecast: part({ days: [{ day: 1, rain_mm: 0, temp_c: 31 }, { day: 2, rain_mm: 2, temp_c: 30 }, { day: 3, rain_mm: 4, temp_c: 32 }, { day: 4, rain_mm: 6, temp_c: 33 }] }),
+        flood: part({ station: "Rajshahi (Padma)", level_m: 15.9, danger_m: 18.5, trend: "falling", outlook_days: 3 }),
+        prices: part({ unit: "Tk/maund", paddy: [{ market: "Rajshahi bazar", tk: 1230 }] }),
+      },
+    };
+    const c = packToContext(pack, new Date("2026-10-04T01:00:00Z"))!;
+    expect(c.rain?.forecast_3d_mm).toBe(6); // days 1-3 from the fetch date
+    expect(c.price).toMatchObject({ paddy_tk_per_maund: 1230, market: "Rajshahi bazar" });
+  });
+
   it("no pack -> null context", () => expect(packToContext(undefined)).toBeNull());
 });

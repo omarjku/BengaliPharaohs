@@ -18,8 +18,10 @@ export async function probe(): Promise<ProbeResult> {
   const saveData = !!conn().saveData;
   try {
     const res = await fetch(`${API_URL}/api/health?t=${Date.now()}`, { cache: "no-store", signal: AbortSignal.timeout(4000) });
-    // A captive portal answers 200 with its own HTML: only our server sets X-Health.
-    if (!res.ok || res.headers.get("X-Health") !== "1") return { status: "captive", kbps: 0, saveData };
+    // A captive portal answers 200 with its own HTML: only our server sets X-Health or answers {"ok":true}.
+    // (Cross-origin, X-Health is only readable if the backend exposes it via CORS, so the JSON body counts too.)
+    const ours = res.ok && (res.headers.get("X-Health") === "1" || (await res.json().catch(() => null))?.ok === true);
+    if (!ours) return { status: "captive", kbps: 0, saveData };
   } catch {
     return { status: "offline", kbps: 0, saveData };
   }
