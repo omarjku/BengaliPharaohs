@@ -181,7 +181,7 @@ function ResultView() {
         </div>
       </motion.section>
 
-      <BigButton variant={playing ? "outline" : "primary"} onClick={listen}>
+      <BigButton variant={playing || (card.tone === "unsure" && c.share === "local") ? "outline" : "primary"} onClick={listen}>
         {playing ? <Square className="size-5" /> : <Volume2 className="size-6" />}
         {playing ? t("stop") : t("listen")}
       </BigButton>
@@ -272,7 +272,7 @@ function ResultView() {
 
       {/* Hand-off to the SAAO: consent first, then the offline queue. */}
       {c.share === "local" ? (
-        <BigButton variant="outline" onClick={() => setConsentOpen(true)}>
+        <BigButton variant={card.tone === "unsure" ? "primary" : "outline"} onClick={() => setConsentOpen(true)}>
           <Send className="size-5" /> {t("share_btn")}
         </BigButton>
       ) : (
