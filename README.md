@@ -62,6 +62,12 @@ Flood, submergence and drought-stress photos; brown planthopper hopperburn; stem
 | Store-and-forward to a live FastAPI backend, SAAO dashboard behind a code | SMS to a keypad phone: preview only, no gateway |
 | 66 tests + offline Playwright run | Area update/forecast pack is seeded; real-phone and agronomist review not yet done |
 
+## Responsible AI, privacy and language
+- **Human decides.** The app informs and flags what it is unsure of; it never acts for the farmer. Below 80% confidence, or for anything that is not a rice leaf, it says "not sure, ask your SAAO". No pesticide names or doses.
+- **Privacy and consent.** Inference runs on the phone. A photo leaves the phone only after the farmer taps "Share with my SAAO" and agrees in a Bangla + audio consent screen; the photo is re-encoded in the browser, which strips EXIF (GPS, phone model); facts are sent first, the photo later.
+- **Bias.** Training photos come from a few Bangladeshi sites and mostly Jul-Dec; tungro is 97% and bacterial leaf blight 87% from one dataset each. Held-out accuracy is lower than validation (see Results). Not tested by an agronomist yet.
+- **Language.** Bangla (text, plus recorded voice cards). Offline Bangla speech input is designed (`docs/stt-plan.md`) but not shipped. For a less-supported language (e.g. Chakma, Marma: no public speech corpus found) the answers are a fixed list of 16 cards, so a new language is a translation and recording job with native speakers, not a retrained model; until then the human officer is the fallback.
+
 ## Run locally
 ```bash
 make setup     # backend venv + frontend deps + .env files

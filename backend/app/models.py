@@ -48,7 +48,8 @@ class Case(SQLModel, table=True):
     has_thumb: bool = False  # what the phone says it will send; real presence is in CaseBlob
     has_photo: bool = False
     has_voice: bool = False
-    received_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    # indexed: the SAAO list orders by this (newest first) with a LIMIT
+    received_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), index=True)
 
 
 class CaseBlob(SQLModel, table=True):

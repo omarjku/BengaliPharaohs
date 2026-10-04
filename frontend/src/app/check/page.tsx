@@ -1,8 +1,9 @@
 "use client";
 
 import { Camera, ImageIcon, Loader2, RotateCcw } from "lucide-react";
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BigButton, Choice, MultiChoice, QuestionTitle, Speak, Steps } from "@/components/app/choice";
 import { UpazilaPicker, VarietyPicker } from "@/components/app/pickers";
@@ -151,10 +152,16 @@ export default function CheckPage() {
     getProfile().then((p) => {
       setProfile(p);
       setA((x) => ({ ...x, variety: x.variety ?? p.variety }));
-    });
+    }).catch(() => {});
     loadModel().catch(() => {}); // warm up while the farmer frames the photo
   }, []);
   useEffect(() => () => void (photoUrl && URL.revokeObjectURL(photoUrl)), [photoUrl]);
+  // Photos 2-3: revoke what is still shown when leaving the page (list changes keep earlier URLs alive).
+  const extrasNow = useRef<string[]>([]);
+  useEffect(() => {
+    extrasNow.current = extras;
+  }, [extras]);
+  useEffect(() => () => extrasNow.current.forEach(URL.revokeObjectURL), []);
   useEffect(() => {
     const onBlocked = () => setPhotoError(t("db_blocked"));
     window.addEventListener(DB_BLOCKED_EVENT, onBlocked);
@@ -185,6 +192,7 @@ export default function CheckPage() {
       const saved = await Promise.race([savePhoto(caseId, small).then(() => true), new Promise<boolean>((r) => setTimeout(() => r(false), 4000))]).catch(() => false);
       if (!saved) setPhotoError(t("photo_not_saved"));
       setPhotoUrl(URL.createObjectURL(small));
+      extras.forEach(URL.revokeObjectURL);
       setExtras([]);
       setFollowQs([]);
       setTrail(["photo", needField ? "field" : "where"]);
@@ -272,7 +280,7 @@ export default function CheckPage() {
   // "Change answers" from the result card: /check/?edit=<case id> reopens that check with its answers and photo.
   useEffect(() => {
     const editId = new URLSearchParams(window.location.search).get("edit");
-    if (editId) Promise.all([getCase(editId), getPhoto(editId)]).then(([c, photo]) => openForEdit(editId, c, photo));
+    if (editId) Promise.all([getCase(editId), getPhoto(editId)]).then(([c, photo]) => openForEdit(editId, c, photo)).catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -352,6 +360,17 @@ export default function CheckPage() {
 
   async function finish() {
     setBusy(true);
+    try {
+      await save();
+    } catch {
+      setBusy(false); // storage full / unreadable: stay on the page and say so (the result page needs the saved case)
+      toast.error(t("save_failed"));
+      return;
+    }
+    router.push(`/result/?id=${caseId}`);
+  }
+
+  async function save() {
     const out = model ?? (await modelRun.current!);
     const conditions = conditionsNow();
     const base = {
@@ -386,7 +405,6 @@ export default function CheckPage() {
         photo_preds: out.perPhoto,
       });
     }
-    router.push(`/result/?id=${caseId}`);
   }
 
   const yn = (k: StringKey) => [
@@ -478,7 +496,7 @@ export default function CheckPage() {
         </div>
       )}
 
-        <motion.div key={step} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
+        <m.div key={step} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
           {step === "photo" && (
             <div className="flex flex-col gap-4">
               <h2 className="flex items-center justify-between gap-3 text-2xl font-bold">
@@ -731,7 +749,7 @@ export default function CheckPage() {
               </BigButton>
             </div>
           )}
-        </motion.div>
+        </m.div>
       {(step === "details" || step === "weather") && (
         <button onClick={goNext} className="mt-3 min-h-12 w-full text-center text-base text-muted-foreground underline">
           {t("skip")}

@@ -1,7 +1,7 @@
 "use client";
 
-import { BookOpen, CalendarDays, ChevronRight, ClipboardList, FolderOpen, Leaf, MapPin, Settings2, Waves } from "lucide-react";
-import { motion } from "motion/react";
+import { CalendarDays, ChevronRight, ClipboardList, FolderOpen, Leaf, MapPin, Settings2, Waves } from "lucide-react";
+import * as m from "motion/react-m";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { OfflineCheck } from "@/components/app/offline-check";
@@ -22,8 +22,8 @@ export default function Home() {
   const { date, simulated } = useEffectiveDate();
 
   useEffect(() => {
-    getProfile().then(setProfile);
-    listCases().then((cs) => setQueued(cs.filter((c) => c.share === "queued" || c.share === "failed").length));
+    getProfile().then(setProfile).catch(() => {});
+    listCases().then((cs) => setQueued(cs.filter((c) => c.share === "queued" || c.share === "failed").length)).catch(() => {});
   }, []);
 
   const place = upazilaByCode(profile?.upazila);
@@ -32,7 +32,6 @@ export default function Home() {
   const tiles = [
     { href: "/check/", icon: Leaf, title: t("home_check"), sub: t("home_check_sub"), tone: "bg-primary text-primary-foreground" },
     { href: "/flood/", icon: Waves, title: t("home_flood"), sub: t("home_flood_sub"), tone: "bg-[oklch(0.45_0.09_230)] text-white" },
-    { href: "/library/", icon: BookOpen, title: t("library_title"), sub: t("library_sub"), tone: "border-2 bg-card text-foreground" },
     { href: "/calendar/", icon: CalendarDays, title: t("home_calendar"), sub: t("home_calendar_sub"), tone: "bg-[oklch(0.62_0.12_75)] text-white" },
     { href: "/cases/", icon: FolderOpen, title: t("home_cases"), sub: t("home_cases_sub"), tone: "border-2 bg-card text-foreground", badge: queued },
   ];
@@ -66,7 +65,7 @@ export default function Home() {
 
       <div className="grid gap-3 sm:grid-cols-2">
         {tiles.map(({ href, icon: Icon, title, sub, tone, badge }, i) => (
-          <motion.div
+          <m.div
             key={href}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -84,7 +83,7 @@ export default function Home() {
               {!!badge && <span className="rounded-full bg-accent px-2.5 py-0.5 text-sm font-bold text-accent-foreground">{badge}</span>}
               <ChevronRight className="size-6 opacity-70" />
             </Link>
-          </motion.div>
+          </m.div>
         ))}
       </div>
 

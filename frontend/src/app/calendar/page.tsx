@@ -3,6 +3,7 @@
 import { CalendarDays, CheckCircle2, Eye, Leaf, Sprout } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Choice } from "@/components/app/choice";
 import { AppShell } from "@/components/app/shell";
 import calendarJson from "../../../public/data/calendar.json";
@@ -39,12 +40,12 @@ export default function CalendarPage() {
   const [p, setP] = useState<Profile | null>(null);
 
   useEffect(() => {
-    getProfile().then(setP);
+    getProfile().then(setP).catch(() => setP({}));
   }, []);
 
   async function update(next: Profile) {
     setP(next);
-    await saveProfile(next);
+    await saveProfile(next).catch(() => toast.error(t("save_failed")));
   }
 
   if (!p) return <AppShell title={t("cal_title")} back="/">{null}</AppShell>;

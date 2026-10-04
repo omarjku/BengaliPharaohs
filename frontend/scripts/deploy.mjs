@@ -1,14 +1,12 @@
-// One-command production deploy of the static build: npm run deploy
-// Uploads out/ as plain static files (no build on Vercel); the URL https://dhansathi-gilt.vercel.app stays the same.
-import { cpSync, existsSync, readFileSync, writeFileSync } from "node:fs";
+// One-command production deploy: npm run deploy (from frontend/).
+// Vercel builds it with the project settings (Root Directory frontend, npm run build, output out),
+// so it runs from the repo root. Same URL every time: https://dhansathi-gilt.vercel.app
+import { cpSync, existsSync } from "node:fs";
 import { execSync } from "node:child_process";
 
 if (!existsSync(".vercel")) {
   console.error("Run `vercel link --project dhansathi` in frontend/ once first.");
   process.exit(1);
 }
-cpSync(".vercel", "out/.vercel", { recursive: true });
-const config = JSON.parse(readFileSync("out/vercel.json", "utf8"));
-Object.assign(config, { framework: null, buildCommand: "", installCommand: "", outputDirectory: "." });
-writeFileSync("out/vercel.json", JSON.stringify(config, null, 2));
-execSync("vercel deploy out --prod --yes", { stdio: "inherit" });
+cpSync(".vercel", "../.vercel", { recursive: true });
+execSync("vercel deploy --prod --yes", { stdio: "inherit", cwd: ".." });

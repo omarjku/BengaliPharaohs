@@ -34,6 +34,7 @@ export const S = {
   // Claude draft for Zoha: says why we ask, that it is the last step, and that "জানি না" is fine.
   followup_sub: { bn: "ছবি দেখে দুটো সমস্যার কোনটা তা পরিষ্কার নয়। শেষ এই ২-৩টা উত্তর দিলে পরামর্শ আরও ঠিক হবে। না জানলে \"জানি না\" চাপুন।", en: "The photo alone can't tell which of two problems it is. Last 2–3 answers make the advice more accurate. Not sure? Tap \"Don't know\"." },
   db_blocked: { bn: "অ্যাপটি অন্য একটি ট্যাব বা উইন্ডোতেও খোলা আছে — সেটি বন্ধ করে আবার চেষ্টা করুন", en: "The app is also open in another tab or window — close it and try again" },
+  save_failed: { bn: "ফোনে জমা রাখা যায়নি — জায়গা কম থাকতে পারে। পুরোনো কিছু মুছে আবার চেষ্টা করুন।", en: "Could not save on the phone — storage may be full. Delete something old and try again." },
   photo_not_saved: { bn: "ছবিটা ফোনে রাখা যায়নি, তবু পরীক্ষা চলছে", en: "Couldn't keep the photo on the phone, but the check continues" },
   // Claude draft (Zoha to check): model loading stages and failure
   stage_script: { bn: "ইঞ্জিন চালু হচ্ছে…", en: "Starting the engine…" },
@@ -128,9 +129,6 @@ export const S = {
   mould_none: { bn: "কোনো ছাতা বা ঝুল নেই", en: "No mould" },
   mould_note_title: { bn: "কালো ঝুল দেখেছেন", en: "You saw black sooty mould" },
   mould_note: { bn: "কালো ঝুল সাধারণত রস-চোষা পোকার (যেমন বাদামি গাছফড়িং) আঠালো মধুরসের উপর জন্মায়। গাছের গোড়ায় পোকা আছে কিনা দেখুন, আর কৃষি অফিসারকে জানান।", en: "Black sooty mould usually grows on the sticky honeydew of sucking insects such as brown planthopper. Check the plant base for insects and tell your SAAO." },
-  library_title: { bn: "ধানের রোগ ও সমস্যা", en: "Rice problem guide" },
-  library_sub: { bn: "কারণ অনুযায়ী সাজানো, কোনটা দেখতে কেমন", en: "Sorted by cause, how each one looks" },
-  library_link: { bn: "রোগের তালিকায় দেখুন", en: "See it in the problem guide" },
   q_look: { bn: "সমস্যাটা দেখতে কেমন?", en: "What does the problem look like?" },
   q_look_hint: { bn: "যেটা সবচেয়ে মেলে সেটা বাছুন। ছবি দেখে সম্ভাব্যগুলো উপরে রাখা হয়েছে।", en: "Pick the closest. The likeliest ones from your photo are on top." },
   look_eye: { bn: "চোখের মতো দাগ, দুই মাথা সরু, মাঝখান ছাই রং", en: "Eye-shaped spots, pointed ends, grey centre" },

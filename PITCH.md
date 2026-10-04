@@ -5,7 +5,7 @@
 > - Say the honest numbers: held-out 74% right when answering, 63% coverage, 95% on validation only; 100% of unseen bean leaves -> NOT SURE; 6.1 MB; 11-14 ms on a laptop (phone number still to measure).
 > - Say real vs seeded, and that the flood date is simulated. Do not use `brown_spot-2.jpg` or `blb-2.jpg` on camera (confidently wrong).
 > - The "12-week venture plan and ask" row is for the Venture Lab pitch only; the World Bank judges score scalability and what happens next (SAAO photo collection, more crops/countries).
-> - Checklist: `docs/submission-checklist.md`.
+> - Checklist: `docs/submission-checklist.md`. Full judge audit and ranked TODO: `docs/judge-audit.md` (repo is private, no real-phone run, video missing, claims to reconcile).
 
 Synthesized from winner, judge and organizer write-ups (sources at the bottom). Owner: Zoha.
 

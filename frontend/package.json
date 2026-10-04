@@ -9,7 +9,7 @@
     "test": "vitest run src",
     "e2e": "playwright test",
     "lint": "eslint",
-    "deploy": "npm run build && node scripts/deploy.mjs"
+    "deploy": "node scripts/deploy.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

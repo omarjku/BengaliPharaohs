@@ -1,0 +1,16 @@
+# Only frontend/ is built (project Root Directory = frontend); keep uploads small.
+backend
+ml
+data
+runs
+notes
+demo
+docs
+.claude
+node_modules
+frontend/node_modules
+frontend/.next
+frontend/out
+frontend/test-results
+frontend/e2e/fixtures
+.github

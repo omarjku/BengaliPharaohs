@@ -6,7 +6,7 @@ Status as of the judge walk-through, Sun 4 Oct. Owner: O = Omar, Z = Zoha.
 | Item | Status | Who | Notes |
 |---|---|---|---|
 | Prototype link | ✅ | O | https://dhansathi-gilt.vercel.app, backend on Railway; `/api/health` ok |
-| Code | ✅ | O | Repo with README run steps. Confirm repo is shared/public with judges |
+| Code | ❌ | O | Repo is PRIVATE (checked 4 Oct). Make public or share with judges, then paste the URL in README |
 | Video 2-5 min, uploaded | ❌ | Z | Script: `docs/video-script.md`. Upload by 13:00, test the link in a private window |
 | Video: problem sentence (one sentence, with evidence) | ❌ | Z | Draft in the script; verify the 200,000 ha and SAAO ratio sources |
 | Video: AI capabilities + why not SMS/spreadsheet/search + guardrails | ❌ | Z/O | Script section 2 |
@@ -37,3 +37,12 @@ Status as of the judge walk-through, Sun 4 Oct. Owner: O = Omar, Z = Zoha.
 | Stage-safe SAAO code (never visible on screen or in the repo) | ✅ | O |
 | Name BAMIS and BRRI Rice Solution as closest tools on a slide | ❌ | Z |
 | Entrants aged 18-35 confirmed on the form | ❌ | O+Z |
+
+## Added by the judge audit (`docs/judge-audit.md`)
+| Item | Status | Who |
+|---|---|---|
+| Delete `/demo` scaffold page from production | ❌ | frontend owner |
+| Strip raw source ids "(S_MOA)" from calendar text; Latin digits for 16123 in English | ❌ | frontend owner |
+| Reconcile claims: model 5.8 vs 6.1 MB, audio recorded vs ElevenLabs (label synthetic), STT shipped or not | ❌ | O+Z |
+| Slides: SMS/spreadsheet/search comparison, problem data with year+country, "does not cover", day timeline + stack, Responsible AI | ❌ | Z |
+| Rehearsed answer on a less-supported language (Chakma/Marma) | ❌ | Z |
