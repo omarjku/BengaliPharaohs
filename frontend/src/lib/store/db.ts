@@ -84,6 +84,14 @@ export async function saveProfile(p: Profile) {
   await (await db()).put("kv", p, "profile");
 }
 
+/** Generic kv access (offline pack, etags). One put = one IndexedDB transaction = atomic. */
+export async function kvGet<T>(key: string): Promise<T | undefined> {
+  return (await (await db()).get("kv", key)) as T | undefined;
+}
+export async function kvSet(key: string, value: unknown) {
+  await (await db()).put("kv", value, key);
+}
+
 export async function saveCase(c: CaseRecord) {
   await (await db()).put("cases", c);
 }

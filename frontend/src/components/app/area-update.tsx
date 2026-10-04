@@ -4,6 +4,7 @@ import { CloudOff, CloudRain, Coins, Loader2, Waves } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useOnline } from "@/components/app/shell";
 import { getContext, type ContextPack } from "@/lib/api";
+import { getPack, packToContext, refreshPack } from "@/lib/pack/pack";
 import { cn } from "@/lib/utils";
 import { formatDate, num, useLang } from "@/lib/i18n";
 
@@ -20,7 +21,10 @@ export function AreaUpdate({ upazila }: { upazila?: string }) {
     if (!online || !upazila) return;
     const ac = new AbortController();
     setPack(undefined);
-    getContext(upazila, ac.signal).then(setPack);
+    // Offline pack first (also keeps it fresh for offline use); old single-call context as fallback.
+    refreshPack(upazila)
+      .then(async () => packToContext(await getPack(upazila)) ?? getContext(upazila, ac.signal))
+      .then((p) => !ac.signal.aborted && setPack(p));
     return () => ac.abort();
   }, [online, upazila]);
 
