@@ -9,8 +9,9 @@ import io
 import logging
 import os
 import threading
+from datetime import datetime, timedelta, timezone
 
-from sqlmodel import Session, select
+from sqlmodel import Session, func, select
 
 from .db import engine
 from .models import Case, CaseBlob, Reply
@@ -57,27 +58,51 @@ def answer(transcript: str) -> str:
     return (r.choices[0].message.content or "").strip()
 
 
+_busy: set[str] = set()  # notes being answered right now; the lock guards only this set, never a network call
+DAILY_LIMIT = int(os.getenv("NOTE_DAILY_LIMIT", "200"))  # the upload API is open, so cap what strangers can spend
+DEVICE_DAILY_LIMIT = int(os.getenv("NOTE_DEVICE_DAILY_LIMIT", "10"))
+
+
+def _over_limit(s: Session, device_id: str) -> bool:
+    since = datetime.now(timezone.utc) - timedelta(days=1)
+    q = select(func.count()).select_from(Reply).where(Reply.by == "ai", Reply.created_at >= since)
+    total = s.exec(q).one()
+    mine = s.exec(q.join(Case, Case.case_id == Reply.case_id).where(Case.device_id == device_id)).one()
+    return total >= DAILY_LIMIT or mine >= DEVICE_DAILY_LIMIT
+
+
 def answer_note(case_id: str) -> None:
     """Idempotent: does nothing until both the note facts and its audio are here, or once an AI reply exists."""
     if not os.getenv("OPENAI_API_KEY"):
         return
-    with _lock, Session(engine) as s:  # ponytail: one global lock, fine for a few notes a minute
-        case = s.get(Case, case_id)
-        voice = s.get(CaseBlob, (case_id, "voice"))
-        done = s.exec(select(Reply).where(Reply.case_id == case_id, Reply.by == "ai")).first()
-        if not case or case.kind != "note" or not voice or done:
+    with _lock:
+        if case_id in _busy:
             return
-        try:
-            heard = transcribe(voice.data, voice.content_type)
+        _busy.add(case_id)
+    try:
+        with Session(engine) as s:
+            case = s.get(Case, case_id)
+            voice = s.get(CaseBlob, (case_id, "voice"))
+            done = s.exec(select(Reply).where(Reply.case_id == case_id, Reply.by == "ai")).first()
+            if not case or case.kind != "note" or not voice or done or _over_limit(s, case.device_id):
+                return  # over the cap: the SAAO still gets the recording and answers by hand
+            audio, ctype = voice.data, voice.content_type
+        try:  # no DB session or lock held during the slow calls
+            heard = transcribe(audio, ctype)
             text = answer(heard) if heard else ""
         except Exception:  # provider down / bad audio: the SAAO still has the recording
             log.exception("note %s: AI answer failed", case_id)
             return
-        case.taps = {**case.taps, "transcript": heard}  # new dict so SQLAlchemy sees the JSON change
-        s.add(case)
-        if text:
-            s.add(Reply(case_id=case_id, text=f"“{heard}”\n{text}"[:1500], by="ai"))
-        s.commit()
+        with Session(engine) as s:
+            case = s.get(Case, case_id)
+            case.taps = {**case.taps, "transcript": heard}  # new dict so SQLAlchemy sees the JSON change
+            s.add(case)
+            if text:
+                s.add(Reply(case_id=case_id, text=f"“{heard}”\n{text}"[:1500], by="ai"))
+            s.commit()
+    finally:
+        with _lock:
+            _busy.discard(case_id)
 
 
 def schedule(bg, cases) -> None:

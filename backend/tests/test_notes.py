@@ -45,3 +45,15 @@ def test_no_key_or_not_a_note_means_no_ai_reply(monkeypatch):
         leaf = case(has_voice=True)
         post(c, [leaf], device="n2"); c.put(f"/api/cases/{leaf['case_id']}/voice", content=b"x", headers={"Content-Type": "audio/webm"})  # noqa: E702
         assert replies(c, "n2") == []
+
+
+def test_daily_cap_per_device(monkeypatch):
+    monkeypatch.setenv("OPENAI_API_KEY", "x")
+    monkeypatch.setattr(notes, "DEVICE_DAILY_LIMIT", 2)
+    monkeypatch.setattr(notes, "transcribe", lambda a, ct: "প্রশ্ন")
+    monkeypatch.setattr(notes, "answer", lambda t: "উত্তর")
+    with TestClient(app) as c:
+        for _ in range(3):
+            k = case(kind="note", card="NOTE", has_voice=True)
+            post(c, [k], device="cap-dev"); c.put(f"/api/cases/{k['case_id']}/voice", content=b"x", headers={"Content-Type": "audio/webm"})  # noqa: E702
+        assert len([r for r in replies(c, "cap-dev") if r["by"] == "ai"]) == 2
