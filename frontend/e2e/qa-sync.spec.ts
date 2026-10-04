@@ -143,3 +143,17 @@ test("DB upgrade v1 -> v2 blocked by an old open tab: page says why, then recove
   await expect(page.getByText("Waiting to send")).toBeVisible({ timeout: 10_000 });
   await ctx.close();
 });
+
+test("backend down: /saao shows labelled seeded cases and does not overflow a 360 px phone", async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 360, height: 740 } });
+  await ctx.addInitScript(() => {
+    localStorage.setItem("lang", "en");
+    localStorage.setItem("saao_code", "x");
+  });
+  const page = await ctx.newPage();
+  await page.route("**/api/cases*", (r) => r.abort());
+  await page.goto("/saao/");
+  await expect(page.getByText(/seeded/i).first()).toBeVisible({ timeout: 15_000 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await ctx.close();
+});

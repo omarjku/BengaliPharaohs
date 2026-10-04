@@ -1,7 +1,7 @@
 // Offline pack (docs/sync-plan.md §4): small daily download so the next offline session is better.
 // Atomic: parts are collected in memory and `pack_current` is replaced by ONE IndexedDB put, only if
 // every changed part arrived. A half download never replaces a working pack.
-import { API_URL, type ContextPack } from "../api";
+import { API_URL, timeoutSignal, type ContextPack } from "../api";
 import { getKv, setKv } from "../store/db";
 
 export const FETCH_PARTS = ["forecast", "flood", "case_replies", "advisories", "prices"] as const; // priority order
@@ -39,7 +39,7 @@ function deviceId(): string {
 }
 
 async function get(path: string, etag?: string): Promise<{ status: number; etag?: string; body?: unknown }> {
-  const res = await fetch(`${API_URL}${path}`, { headers: etag ? { "If-None-Match": etag } : {}, signal: AbortSignal.timeout(PART_TIMEOUT_MS) });
+  const res = await fetch(`${API_URL}${path}`, { headers: etag ? { "If-None-Match": etag } : {}, signal: timeoutSignal(PART_TIMEOUT_MS) });
   if (res.status === 304) return { status: 304 };
   if (!res.ok) throw new Error(`${path} ${res.status}`);
   return { status: res.status, etag: res.headers.get("ETag") ?? undefined, body: await res.json() };

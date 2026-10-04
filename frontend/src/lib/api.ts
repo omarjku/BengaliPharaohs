@@ -106,9 +106,24 @@ export async function listRuns(): Promise<Run[]> {
   return res.ok ? res.json() : [];
 }
 
-/** Patchy 2G/3G: never wait forever. Combines the caller's signal with a timeout. */
-const withTimeout = (signal: AbortSignal | undefined, ms: number) =>
-  signal ? AbortSignal.any([signal, AbortSignal.timeout(ms)]) : AbortSignal.timeout(ms);
+/** AbortSignal.timeout() needs Chrome 103+; older Android WebViews would throw and the app would never sync or load the pack. */
+export function timeoutSignal(ms: number): AbortSignal {
+  if (typeof AbortSignal.timeout === "function") return AbortSignal.timeout(ms);
+  const c = new AbortController();
+  setTimeout(() => c.abort(), ms);
+  return c.signal;
+}
+
+/** Patchy 2G/3G: never wait forever. Combines the caller's signal with a timeout (AbortSignal.any needs Chrome 116+). */
+const withTimeout = (signal: AbortSignal | undefined, ms: number) => {
+  if (!signal) return timeoutSignal(ms);
+  if (typeof AbortSignal.any === "function") return AbortSignal.any([signal, timeoutSignal(ms)]);
+  const c = new AbortController();
+  const stop = () => c.abort();
+  signal.aborted ? stop() : signal.addEventListener("abort", stop, { once: true });
+  timeoutSignal(ms).addEventListener("abort", stop, { once: true });
+  return c.signal;
+};
 
 // ---- Rice app endpoints: PROPOSED in contract/api.md (agree with Omar, then mark AGREED) ----
 
@@ -160,7 +175,7 @@ export async function syncCases(device_id: string, cases: SyncCase[]): Promise<S
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ device_id, cases }),
-    signal: AbortSignal.timeout(20000),
+    signal: timeoutSignal(20000),
   });
   if (!res.ok) throw new Error(`Sync failed: ${res.status}`);
   return res.json();
@@ -191,7 +206,7 @@ export async function postReply(caseId: string, text: string): Promise<CaseReply
     method: "POST",
     headers: { "Content-Type": "application/json", ...saaoHeaders() },
     body: JSON.stringify({ text, by: "saao" }),
-    signal: AbortSignal.timeout(10000),
+    signal: timeoutSignal(10000),
   });
   if (res.status === 401) forgetSaaoCode();
   if (!res.ok) throw new Error(`Backend returned ${res.status}.`);

@@ -1,6 +1,6 @@
 // drain(): send what is queued, smallest and most important first, over whatever connection we have.
 // Every item is idempotent on the server, so a lost response just means "send again".
-import { API_URL } from "../api";
+import { API_URL, timeoutSignal } from "../api";
 import { getBlob, getCase, getKv, getOutbox, listCases, listOutbox, putOutbox, saveCase, setKv, type OutboxItem } from "../store/db";
 import { photoKey, thumbKey, voiceKey } from "./compress";
 import { probe, type ProbeResult } from "./probe";
@@ -69,7 +69,7 @@ const fail = (res: Response | null): Outcome => {
 
 async function send(url: string, init: RequestInit, bytes: number, kbps: number): Promise<{ res: Response | null }> {
   try {
-    return { res: await fetch(url, { ...init, signal: AbortSignal.timeout(timeoutMs(bytes, kbps)) }) };
+    return { res: await fetch(url, { ...init, signal: timeoutSignal(timeoutMs(bytes, kbps)) }) };
   } catch {
     return { res: null }; // dropped / timed out
   }

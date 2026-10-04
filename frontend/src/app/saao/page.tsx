@@ -180,7 +180,7 @@ export default function SaaoPage() {
       {cases === null ? (
         <Loader2 className="mx-auto mt-10 size-7 animate-spin text-primary" />
       ) : (
-        <div className="grid gap-5 lg:grid-cols-[1fr_340px]">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
           <ul className="flex flex-col gap-2.5">
             {shown.map((c) => {
               const card = CARDS.cards[c.card ?? "C8"];
