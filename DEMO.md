@@ -54,7 +54,7 @@
 ## Likely failure points and fixes
 - Wizard Next needs district + upazila + season picked, else the button does nothing. Pre-fill the profile.
 - Service worker not caching: only works from HTTPS and after the green box. Test airplane mode from a force-stop.
-- Dashboard says "could not reach server, showing seeded demo cases": the SAAO code is missing/wrong or Railway is asleep. Hit `/api/health` first. SQLite on Railway is wiped on redeploy, so do not redeploy before the demo.
+- Dashboard says "could not reach server, showing seeded demo cases": the SAAO code is missing/wrong or Railway is asleep. Hit `/api/health` first. Case data lives on a Railway persistent volume (`/data`), so it survives redeploys (checked 4 Oct).
 - Dashboard seeded rows show raw debug chips (`where=middle`, `p=0.81`). Cosmetic; tell Zoha.
 - `not_rice-1` also shows a follow-up question before NOT SURE ("could be one of two problems"). Tap Don't know and move on; Zoha may want to skip follow-ups when the top class is not_rice.
 

@@ -33,7 +33,7 @@ Status as of the judge walk-through, Sun 4 Oct. Owner: O = Omar, Z = Zoha.
 | Decision on context rescue below min_prob (`docs/e2e-report.md` finding 4) | ❌ | Z+O |
 | README judge-ready | ✅ | O (this branch) |
 | `make smoke` green and tag `demo-ok` before the final push | ❌ | O |
-| Railway SQLite is wiped on redeploy: no redeploys after the last rehearsal; seed on startup | ❌ | O |
+| Railway SQLite on a persistent volume (`/data`); verified a case survives redeploys | ✅ | O |
 | Stage-safe SAAO code (never visible on screen or in the repo) | ✅ | O |
 | Name BAMIS and BRRI Rice Solution as closest tools on a slide | ❌ | Z |
 | Entrants aged 18-35 confirmed on the form | ❌ | O+Z |

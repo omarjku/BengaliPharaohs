@@ -69,7 +69,7 @@ make dev       # backend :8000 + frontend :3000
 make smoke     # backend tests + live stream + frontend type-check and build
 cd frontend && npm test && npm run build && npm start   # offline-capable build
 ```
-Frontend details: `frontend/README.md`. API: `contract/api.md`. Model training and evaluation: `ml/`. Deploy: Vercel (`frontend/`) and Railway (`backend/`, start `uvicorn app.main:app --host 0.0.0.0 --port $PORT`; SQLite is wiped on redeploy).
+Frontend details: `frontend/README.md`. API: `contract/api.md`. Model training and evaluation: `ml/`. Deploy: Vercel (`frontend/`) and Railway (`backend/`, start `uvicorn app.main:app --host 0.0.0.0 --port $PORT`; SQLite on a persistent volume at `/data`, survives redeploys).
 
 ## Other tools and where we differ
 BAMIS app (DAE/RIMES) and BRRI Rice Solution also diagnose rice from photos. We add BRRI after-flood decision rules, a photo check that works with no connection and declines low-confidence answers, and a hand-off to the SAAO for when the helpline (08:00-20:00, closed Fri, Sat, holidays) is shut. Details: `docs/prior-art.md`.
