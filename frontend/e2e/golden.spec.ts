@@ -51,7 +51,9 @@ async function listen(page: Page, clipPrefix: RegExp) {
 async function flood(page: Page, days: number) {
   await page.goto("/flood/");
   await page.getByRole("button", { name: "Flood", exact: true }).click();
-  await page.getByLabel("Upazila").selectOption("SIR");
+  // Two-step picker since all 494 upazilas were added: district first, then upazila ("SIR" is now an alias).
+  await page.getByLabel("District").selectOption("SIRAJGANJ");
+  await page.getByLabel("Upazila").selectOption("SRJ-SIRAJGANJ");
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: "No", exact: true }).click(); // not a flood-tolerant variety
   await page.getByRole("button", { name: "Whole plant under water" }).click();

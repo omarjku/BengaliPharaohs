@@ -14,7 +14,7 @@ import type { Prediction, Season } from "@/lib/engine/types";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
 import { classify, loadModel, shrinkPhoto, type ThresholdFile } from "@/lib/model/classify";
-import { upazilaByCode } from "@/lib/places";
+import { upazilaByCode, varietyById } from "@/lib/places";
 import { useEffectiveDate } from "@/lib/settings";
 import { getCase, getPhoto, getProfile, newId, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
 import type { StringKey } from "@/lib/strings";
@@ -423,7 +423,7 @@ export default function CheckPage() {
                 <div className="flex items-center gap-3 rounded-2xl border bg-card px-4 py-3 text-sm">
                   <span className="text-muted-foreground">{t("your_field")}:</span>
                   <span className="min-w-0 flex-1 truncate font-medium">
-                    {[PLACES.varieties.find((v) => v.id === a.variety), place].filter(Boolean).map((x) => tx(x!)).join(" · ")} · {t(`season_${profile.season ?? seasonFromDate(date)}`)}
+                    {[varietyById(a.variety), place].filter(Boolean).map((x) => tx(x!)).join(" · ")} · {t(`season_${profile.season ?? seasonFromDate(date)}`)}
                   </span>
                   <button
                     type="button"
