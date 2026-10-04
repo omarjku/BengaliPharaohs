@@ -1,0 +1,79 @@
+[
+ {
+  "file": "healthy-1.jpg",
+  "truth": "healthy",
+  "source": "AgML_BD__000355.jpg",
+  "py_top1": "healthy",
+  "py_p": 0.999
+ },
+ {
+  "file": "healthy-2.jpg",
+  "truth": "healthy",
+  "source": "AgML_BD__000383.jpg",
+  "py_top1": "healthy",
+  "py_p": 0.999
+ },
+ {
+  "file": "blast-1.jpg",
+  "truth": "blast",
+  "source": "AgML_BD__000522.jpg",
+  "py_top1": "blast",
+  "py_p": 0.994
+ },
+ {
+  "file": "blast-2.jpg",
+  "truth": "blast",
+  "source": "AgML_BD__000479.jpg",
+  "py_top1": "blast",
+  "py_p": 0.994
+ },
+ {
+  "file": "brown_spot-1.jpg",
+  "truth": "brown_spot",
+  "source": "AgML_BD__000170.jpg",
+  "py_top1": "brown_spot",
+  "py_p": 0.994
+ },
+ {
+  "file": "brown_spot-2.jpg",
+  "truth": "brown_spot",
+  "source": "AgML_BD__000204.jpg",
+  "py_top1": "sheath_blight",
+  "py_p": 0.964
+ },
+ {
+  "file": "blb-1.jpg",
+  "truth": "blb",
+  "source": "AgML_BD__000019.jpg",
+  "py_top1": "healthy",
+  "py_p": 0.287
+ },
+ {
+  "file": "blb-2.jpg",
+  "truth": "blb",
+  "source": "AgML_BD__000115.jpg",
+  "py_top1": "tungro",
+  "py_p": 0.997
+ },
+ {
+  "file": "not_rice-1.jpg",
+  "truth": "not_rice",
+  "source": "bean_014.jpg",
+  "py_top1": "not_rice",
+  "py_p": 0.95
+ },
+ {
+  "file": "not_rice-2.jpg",
+  "truth": "not_rice",
+  "source": "bean_001.jpg",
+  "py_top1": "not_rice",
+  "py_p": 0.925
+ },
+ {
+  "file": "not_rice-3.jpg",
+  "truth": "not_rice",
+  "source": "bean_008.jpg",
+  "py_top1": "not_rice",
+  "py_p": 0.501
+ }
+]
