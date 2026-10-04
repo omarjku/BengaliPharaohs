@@ -4,7 +4,9 @@ import { test, expect } from "@playwright/test";
 test("back keeps answers, off-leaf answers skip leaf/weather steps, result → change answers", async ({ context, page }) => {
   await context.addInitScript(() => localStorage.setItem("lang", "en"));
   await page.goto("/check/");
-  await page.locator('input[type=file]:not([capture])').setInputFiles("public/samples/brown_spot-1.jpg");
+  await page.locator('input[type=file]:not([capture])').setInputFiles(Array(3).fill("public/samples/brown_spot-1.jpg"));
+  await page.getByRole("button", { name: "Next", exact: true }).click(); // field walk (3 spots) → field
+  await page.waitForTimeout(500); // step animation
   // First visit: field details are unknown, so the field step is shown.
   await page.getByRole("button", { name: "Next", exact: true }).click(); // field → where
 

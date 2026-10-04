@@ -23,7 +23,7 @@ async function newPhone(browser: import("@playwright/test").Browser, code = CODE
 
 async function leafResult(page: Page) {
   await page.goto("/check/");
-  await page.locator("input[type=file]:not([capture])").setInputFiles("public/samples/blast-1.jpg");
+  await page.locator("input[type=file]:not([capture])").setInputFiles(Array(3).fill("public/samples/blast-1.jpg"));
   for (let i = 0; i < 10 && !page.url().includes("/result"); i++) {
     const s = page.getByRole("button", { name: "See the result" });
     if (await s.isVisible()) await s.click();

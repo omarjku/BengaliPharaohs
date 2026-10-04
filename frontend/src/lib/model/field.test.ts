@@ -1,3 +1,4 @@
+import "fake-indexeddb/auto";
 import { describe, expect, it } from "vitest";
 import type { Prediction } from "../engine/types";
 import { combineForEngine, MIN_SPOTS, patternFromSpread, summarizeField } from "./field";
@@ -63,5 +64,15 @@ describe("combineForEngine / pattern", () => {
     expect(patternFromSpread("whole_field")).toBe("whole_field");
     expect(patternFromSpread("healthy")).toBe("none");
     expect(patternFromSpread("unclear")).toBeUndefined();
+  });
+});
+
+describe("synced facts", () => {
+  it("leaf case carries taps.field_summary; old cases without a field do not", async () => {
+    const { toBatchCase } = await import("../sync/outbox");
+    const base = { id: "f", created_at: "2026-10-04T08:00:00Z", kind: "leaf" as const, card: "C2" as never, date_used: "2026-10-04", simulated_date: false, share: "queued" as const, consent: true, answers: {}, conditions: [] };
+    const summary = summarizeField([P("blast", 0.9), P("blast", 0.9), P("healthy", 0.9)], th);
+    expect((await toBatchCase({ ...base, field: { summary, spots: [] } })).taps.field_summary).toEqual(summary);
+    expect((await toBatchCase(base)).taps).not.toHaveProperty("field_summary");
   });
 });
