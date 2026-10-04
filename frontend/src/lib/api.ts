@@ -171,7 +171,31 @@ export type ServerCase = SyncCase & { received_at: string; seeded?: boolean };
 /** GET /api/cases — SAAO dashboard, newest first. Throws if the backend is unreachable. */
 export async function listServerCases(upazila?: string, signal?: AbortSignal): Promise<ServerCase[]> {
   const q = upazila ? `?upazila=${encodeURIComponent(upazila)}` : "";
-  const res = await fetch(`${API_URL}/api/cases${q}`, { signal: withTimeout(signal, 8000) });
+  const res = await fetch(`${API_URL}/api/cases${q}`, { headers: saaoHeaders(), signal: withTimeout(signal, 8000) });
+  if (res.status === 401) {
+    forgetSaaoCode();
+    throw new Error("SAAO code required.");
+  }
   if (!res.ok) throw new Error(`Backend returned ${res.status}.`);
   return res.json();
+}
+
+// The dashboard (case list, photos, replies) needs the SAAO code the backend has in SAAO_TOKEN.
+// Asked once and kept on this device; farmers' phones never need it.
+function saaoHeaders(): Record<string, string> {
+  try {
+    let code = localStorage.getItem("saao_code");
+    if (!code) {
+      code = window.prompt("SAAO code") ?? "";
+      if (code) localStorage.setItem("saao_code", code);
+    }
+    return code ? { "X-SAAO-Token": code } : {};
+  } catch {
+    return {};
+  }
+}
+function forgetSaaoCode() {
+  try {
+    localStorage.removeItem("saao_code");
+  } catch {}
 }

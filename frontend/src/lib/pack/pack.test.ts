@@ -2,8 +2,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const kv = new Map<string, unknown>();
 vi.mock("../store/db", () => ({
-  kvGet: async (k: string) => kv.get(k),
-  kvSet: async (k: string, v: unknown) => void kv.set(k, structuredClone(v)),
+  getKv: async (k: string) => kv.get(k),
+  setKv: async (k: string, v: unknown) => void kv.set(k, structuredClone(v)),
 }));
 import { getPack, getPackStatus, packToContext, refreshPack } from "./pack";
 

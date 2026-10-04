@@ -2,7 +2,7 @@
 // Atomic: parts are collected in memory and `pack_current` is replaced by ONE IndexedDB put, only if
 // every changed part arrived. A half download never replaces a working pack.
 import { API_URL, type ContextPack } from "../api";
-import { kvGet, kvSet } from "../store/db";
+import { getKv, setKv } from "../store/db";
 
 export const FETCH_PARTS = ["forecast", "flood", "case_replies", "advisories", "prices"] as const; // priority order
 export type PartName = (typeof FETCH_PARTS)[number];
@@ -53,7 +53,7 @@ export function refreshPack(upazila: string, opts: RefreshOpts = {}): Promise<Re
 async function doRefresh(upazila: string, opts: RefreshOpts): Promise<RefreshResult> {
   if (typeof navigator !== "undefined" && navigator.onLine === false) return "offline";
   try {
-    const old = await kvGet<Pack>(KEY);
+    const old = await getKv<Pack>(KEY);
     const cur = old?.upazila === upazila ? old : undefined;
     const q = `upazila=${encodeURIComponent(upazila)}`;
     const m = await get(`/api/pack/manifest?${q}`, cur?.manifest_etag);
@@ -90,7 +90,7 @@ async function doRefresh(upazila: string, opts: RefreshOpts): Promise<RefreshRes
       model_update_available: !!l && ((!!versions.rules && !!l.rules && versions.rules !== l.rules) || (!!versions.cards && !!l.cards && versions.cards !== l.cards)),
       parts,
     };
-    await kvSet(KEY, pack);
+    await setKv(KEY, pack);
     if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent(PACK_EVENT));
     return changed || !cur ? "updated" : "unchanged";
   } catch {
@@ -104,7 +104,7 @@ export type PackStatus = { as_of: string | null; stale: boolean; model_update_av
 const partStale = (p: PackPart, now: number) => !!p.valid_until && Date.parse(p.valid_until) < now;
 
 export async function getPack(upazila?: string): Promise<Pack | undefined> {
-  const p = await kvGet<Pack>(KEY);
+  const p = await getKv<Pack>(KEY);
   return p && (!upazila || p.upazila === upazila) ? p : undefined;
 }
 

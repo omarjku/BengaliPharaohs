@@ -4,12 +4,14 @@ import uuid
 
 os.environ["MOCK_LLM"] = "1"
 os.environ["DATABASE_URL"] = "sqlite:///./test.db"
+os.environ["SAAO_TOKEN"] = "test-saao"
 
 from fastapi.testclient import TestClient  # noqa: E402
 
 from app.main import app  # noqa: E402
 
 JPEG = {"Content-Type": "image/jpeg"}
+SAAO = {"X-SAAO-Token": "test-saao"}
 
 
 def case(**kw) -> dict:
@@ -39,7 +41,7 @@ def test_batch_retry_is_idempotent():
         k = case(upazila="IDEM")
         for _ in range(2):  # the second call is the retry after a lost response
             assert post(c, [k]).json() == {"accepted": [k["case_id"]], "rejected": []}
-        assert len(c.get("/api/cases", params={"upazila": "IDEM"}).json()) == 1
+        assert len(c.get("/api/cases", params={"upazila": "IDEM"}, headers=SAAO).json()) == 1
 
 
 def test_consent_rejected_and_batch_limit():
@@ -55,16 +57,16 @@ def test_blob_before_case_and_listing():
         assert c.put(f"/api/cases/{k['case_id']}/thumb", content=b"abc", headers=JPEG).json()["bytes"] == 3
         assert c.put(f"/api/cases/{k['case_id']}/voice", content=b"v", headers={"Content-Type": "audio/webm"}).status_code == 200
         post(c, [k])
-        row = c.get("/api/cases", params={"upazila": "OOO"}).json()[0]
+        row = c.get("/api/cases", params={"upazila": "OOO"}, headers=SAAO).json()[0]
         assert row["blobs"] == {"thumb": True, "photo": False, "voice": True} and row["class"] == "brown_spot"
         assert row["reply"] is None
-        assert c.get(f"/api/cases/{k['case_id']}/thumb").content == b"abc"
-        assert c.get(f"/api/cases/{k['case_id']}/photo").status_code == 404
+        assert c.get(f"/api/cases/{k['case_id']}/thumb", headers=SAAO).content == b"abc"
+        assert c.get(f"/api/cases/{k['case_id']}/photo", headers=SAAO).status_code == 404
         # repeat PUT replaces, same result
         r = c.put(f"/api/cases/{k['case_id']}/thumb", content=b"abc", headers=JPEG).json()
         assert r["sha256"] == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
-        c.post(f"/api/cases/{k['case_id']}/reply", json={"text": "I will visit Thursday", "by": "saao"})
-        assert c.get("/api/cases", params={"upazila": "OOO"}).json()[0]["reply"]["text"] == "I will visit Thursday"
+        c.post(f"/api/cases/{k['case_id']}/reply", json={"text": "I will visit Thursday", "by": "saao"}, headers=SAAO)
+        assert c.get("/api/cases", params={"upazila": "OOO"}, headers=SAAO).json()[0]["reply"]["text"] == "I will visit Thursday"
 
 
 def test_blob_size_limits():
@@ -83,9 +85,9 @@ def test_reply_validation():
         k = case()
         post(c, [k])
         url = f"/api/cases/{k['case_id']}/reply"
-        assert c.post(url, json={"text": "", "by": "saao"}).status_code == 422
-        assert c.post(url, json={"text": "x" * 501, "by": "saao"}).status_code == 422
-        assert c.post(f"/api/cases/{uuid.uuid4()}/reply", json={"text": "hi", "by": "saao"}).status_code == 404
+        assert c.post(url, json={"text": "", "by": "saao"}, headers=SAAO).status_code == 422
+        assert c.post(url, json={"text": "x" * 501, "by": "saao"}, headers=SAAO).status_code == 422
+        assert c.post(f"/api/cases/{uuid.uuid4()}/reply", json={"text": "hi", "by": "saao"}, headers=SAAO).status_code == 404
 
 
 def test_manifest_and_part_304():
@@ -106,7 +108,18 @@ def test_pack_case_replies_per_device():
         a, b = case(), case()
         post(c, [a], device="devA")
         post(c, [b], device="devB")
-        c.post(f"/api/cases/{a['case_id']}/reply", json={"text": "for A", "by": "saao"})
+        c.post(f"/api/cases/{a['case_id']}/reply", json={"text": "for A", "by": "saao"}, headers=SAAO)
         get = lambda d: c.get("/api/pack/case_replies", params={"upazila": "SIR", "device_id": d}).json()["data"]["replies"]
         assert [r["text"] for r in get("devA")] == ["for A"]
         assert get("devB") == []
+
+
+def test_dashboard_needs_saao_code() -> None:
+    with TestClient(app) as c:
+        k = case(upazila="AUTH")
+        post(c, [k])
+        assert c.get("/api/cases", params={"upazila": "AUTH"}).status_code == 401
+        assert c.get("/api/cases", params={"upazila": "AUTH"}, headers={"X-SAAO-Token": "wrong"}).status_code == 401
+        assert c.get(f"/api/cases/{k['case_id']}/thumb").status_code == 401
+        assert c.post(f"/api/cases/{k['case_id']}/reply", json={"text": "hi", "by": "saao"}).status_code == 401
+        assert c.get("/api/cases", params={"upazila": "AUTH"}, headers=SAAO).status_code == 200

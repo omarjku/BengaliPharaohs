@@ -1,10 +1,12 @@
 """Case sync endpoints: tier-0 facts in batches, blobs one PUT each, SAAO list + replies."""
 import hashlib
+import hmac
+import os
 from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi import APIRouter, Depends, Header, HTTPException, Request, Response
 from pydantic import BaseModel, ConfigDict, Field
 from sqlmodel import Session, select
 
@@ -12,6 +14,16 @@ from .db import get_session
 from .models import Case, CaseBlob, Reply
 
 router = APIRouter(prefix="/api")
+
+
+
+def require_saao(x_saao_token: str | None = Header(default=None)) -> None:
+    """Dashboard routes (case list, photos, replies) need the SAAO code from SAAO_TOKEN.
+    Farmers' phones never need it: they only upload their own cases. No SAAO_TOKEN set → dashboard is closed."""
+    expected = os.getenv("SAAO_TOKEN", "")
+    if not expected or not x_saao_token or not hmac.compare_digest(x_saao_token, expected):
+        raise HTTPException(401, "SAAO code required")
+
 
 LIMITS = {"thumb": 64 * 1024, "photo": 1024 * 1024, "voice": 1024 * 1024}
 
@@ -116,7 +128,9 @@ def _case_out(c: Case, blobs: set[str], reply: Reply | None) -> dict:
 
 
 @router.get("/cases")
-def list_cases(upazila: str | None = None, limit: int = 50, s: Session = Depends(get_session)) -> list[dict]:
+def list_cases(
+    upazila: str | None = None, limit: int = 50, s: Session = Depends(get_session), _: None = Depends(require_saao)
+) -> list[dict]:
     q = select(Case).order_by(Case.received_at.desc(), Case.created_at.desc()).limit(min(max(limit, 1), 200))
     if upazila:
         q = q.where(Case.upazila == upazila)
@@ -129,7 +143,9 @@ def list_cases(upazila: str | None = None, limit: int = 50, s: Session = Depends
 
 
 @router.get("/cases/{case_id}/{kind}")
-def get_blob(case_id: UUID, kind: Literal["thumb", "photo", "voice"], s: Session = Depends(get_session)) -> Response:
+def get_blob(
+    case_id: UUID, kind: Literal["thumb", "photo", "voice"], s: Session = Depends(get_session), _: None = Depends(require_saao)
+) -> Response:
     b = s.get(CaseBlob, (str(case_id), kind))
     if not b:
         raise HTTPException(404, "no such blob")
@@ -137,7 +153,7 @@ def get_blob(case_id: UUID, kind: Literal["thumb", "photo", "voice"], s: Session
 
 
 @router.post("/cases/{case_id}/reply")
-def post_reply(case_id: UUID, body: ReplyIn, s: Session = Depends(get_session)) -> dict:
+def post_reply(case_id: UUID, body: ReplyIn, s: Session = Depends(get_session), _: None = Depends(require_saao)) -> dict:
     if not s.get(Case, str(case_id)):
         raise HTTPException(404, "unknown case")
     r = Reply(case_id=str(case_id), text=body.text, by=body.by)
