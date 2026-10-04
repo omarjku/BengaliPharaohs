@@ -8,7 +8,8 @@
     "start": "npx serve out -l 3000",
     "test": "vitest run src",
     "e2e": "playwright test",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy": "npm run build && node scripts/deploy.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
