@@ -8,7 +8,6 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { AreaUpdate } from "@/components/app/area-update";
 import { BigButton } from "@/components/app/choice";
-import { FieldSummaryCard } from "@/components/app/field-summary";
 import { AppShell } from "@/components/app/shell";
 import { VoiceNote } from "@/components/app/voice-note";
 import { playClips, stopAudio } from "@/lib/audio/play";
@@ -304,9 +303,6 @@ function ResultView() {
           )}
         </div>
       </m.section>
-
-      {/* "unclear" would only repeat the not-sure box above */}
-      {c.field && c.field.summary.spread !== "unclear" && <FieldSummaryCard f={c.field.summary} />}
 
       <BigButton variant={playing || (card.tone === "unsure" && c.share === "local") ? "outline" : "primary"} onClick={listen}>
         {playing ? <Square className="size-5" /> : <Volume2 className="size-6" />}

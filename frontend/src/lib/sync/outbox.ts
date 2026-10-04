@@ -32,7 +32,7 @@ export async function enqueue(c: CaseRecord): Promise<void> {
 export async function toBatchCase(c: CaseRecord): Promise<BatchCase> {
   const items = (await listOutbox()).filter((i) => i.case_id === c.id);
   const has = (k: OutboxKind) => items.some((i) => i.kind === k);
-  const taps: Record<string, unknown> = c.kind === "leaf" ? { ...c.answers, conditions: c.conditions, ...(c.field && { field_summary: c.field.summary }) } : { ...c.advisor_input };
+  const taps: Record<string, unknown> = c.kind === "leaf" ? { ...c.answers, conditions: c.conditions } : { ...c.advisor_input };
   return {
     case_id: c.id,
     created_at: c.created_at,
