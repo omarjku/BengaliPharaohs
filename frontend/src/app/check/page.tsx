@@ -15,10 +15,13 @@ import { useLang } from "@/lib/i18n";
 import { classify, loadModel, shrinkPhoto, type ThresholdFile } from "@/lib/model/classify";
 import { PLACES, upazilaByCode } from "@/lib/places";
 import { useEffectiveDate } from "@/lib/settings";
-import { getProfile, newId, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
+import { getCase, getPhoto, getProfile, newId, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
 import type { StringKey } from "@/lib/strings";
 
-const TOTAL = 5;
+/** Canonical order. Which steps appear depends on the answers (see planSteps); back keeps every answer. */
+const CANON = ["photo", "field", "where", "details", "weather", "followup"] as const;
+type StepId = (typeof CANON)[number];
+const after = (a: StepId, b: StepId) => CANON.indexOf(a) > CANON.indexOf(b);
 
 type ModelOut = { pred: Prediction; ms: number; dummy: boolean; th: ThresholdFile } | { error: string };
 
@@ -88,9 +91,13 @@ export default function CheckPage() {
   const { t, tx } = useLang();
   const router = useRouter();
   const { date, simulated } = useEffectiveDate();
-  const [step, setStep] = useState(1);
+  const [trail, setTrail] = useState<StepId[]>(["photo"]);
+  const step = trail[trail.length - 1];
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-  const [caseId] = useState(newId);
+  const [caseId, setCaseId] = useState(newId);
+  const [editing, setEditing] = useState(false);
+  const [editField, setEditField] = useState(false);
+  const [followQs, setFollowQs] = useState<string[]>([]);
   const [model, setModel] = useState<ModelOut | null>(null);
   const [busy, setBusy] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -131,10 +138,9 @@ export default function CheckPage() {
       const small = await shrinkPhoto(f);
       await savePhoto(caseId, small);
       setPhotoUrl(URL.createObjectURL(small));
-      setModel(null);
-      modelRun.current = classify(small).catch((e: Error) => ({ error: e.message }));
-      modelRun.current.then(setModel);
-      setStep(2);
+      startModel(small);
+      setFollowQs([]);
+      setTrail(["photo", needField ? "field" : "where"]);
     } catch (e) {
       // e.g. a format the browser can't open (some phones save HEIC). Show it instead of failing silently.
       setPhotoError(`${t("photo_failed")} (${e instanceof Error ? e.message : String(e)})`);
@@ -150,16 +156,112 @@ export default function CheckPage() {
     onFile(f);
   };
 
+  function startModel(photo: Blob) {
+    setModel(null);
+    modelRun.current = classify(photo).catch((e: Error) => ({ error: e.message }));
+    modelRun.current.then(setModel);
+  }
+
+  async function openForEdit(id: string) {
+    const c = await getCase(id);
+    const photo = await getPhoto(id);
+    if (!c || c.kind !== "leaf" || !photo) return;
+    setA(c.answers ?? {});
+    setEditing(true);
+    // A case already sent to the SAAO stays as it was; the edited check becomes a new case.
+    let target = id;
+    if (c.share !== "local") {
+      target = newId();
+      await savePhoto(target, photo);
+    }
+    setCaseId(target);
+    setPhotoUrl(URL.createObjectURL(photo));
+    startModel(photo);
+    setTrail(["where"]);
+  }
+  // "Change answers" from the result card: /check/?edit=<case id> reopens that check with its answers and photo.
+  useEffect(() => {
+    const editId = new URLSearchParams(window.location.search).get("edit");
+    if (editId) openForEdit(editId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const pred = model && "pred" in model ? model.pred : undefined;
   const relevant = useMemo(() => relevantConditions(pred), [pred]);
-  const showRow = (row: string) => !relevant || ROW_CONDITIONS[row].some((c) => relevant.has(c));
+  const wholeField = a.pattern === "whole_field" || a.pattern === "whole_field_dying";
+  // Whole-field yellowing points to nutrients or flooding, so those two are always asked then.
+  const showRow = (row: string) => (wholeField && (row === "urea" || row === "flooded")) || !relevant || ROW_CONDITIONS[row].some((c) => relevant.has(c));
+
+  // ---- Which steps and questions this farmer gets (branching start + model-targeted questions) ----
+  const needField = editField || !(profile.upazila && a.variety);
+  const placesOnPlant = (a.where ?? []).filter((w) => w !== "unknown");
+  // Only sheath / panicle / plant base: a leaf photo can't judge it (location guard) → no leaf or weather questions.
+  const offLeafOnly = placesOnPlant.length > 0 && placesOnPlant.every((w) => w === "sheath" || w === "panicle" || w === "base");
+  const showFirst = !offLeafOnly && (wholeField || !relevant || relevant.has("old_leaves_first") || relevant.has("new_leaves_first"));
+  const showInsects =
+    placesOnPlant.includes("base") ||
+    a.pattern === "one_hill" ||
+    a.pattern === "patches" ||
+    a.pattern === "whole_field_dying" ||
+    !relevant ||
+    [...relevant].some((c) => c.startsWith("insects_"));
+  const weatherRows = [...(["rain", "flooded", "storm", "cold_nights", "urea"] as const).filter(showRow), ...(place?.region === "coastal" ? ["salty_water"] : [])];
+
+  function planSteps(): StepId[] {
+    const s: StepId[] = ["photo"];
+    if (needField) s.push("field");
+    s.push("where");
+    if (showFirst || showInsects) s.push("details");
+    if (!offLeafOnly && weatherRows.length) s.push("weather");
+    if (followQs.length) s.push("followup");
+    return s;
+  }
+  const order = planSteps();
+
+  function conditionsNow() {
+    const season = profile.season ?? seasonFromDate(date);
+    const stage = stageFromTransplant(profile.transplant_date, date);
+    return conditionsFrom(a, { season, stage, region: place?.region });
+  }
+
+  /** After the last planned step: ask 1–3 targeted questions only if the photo leaves a close call. */
+  async function targetedQuestions(): Promise<string[]> {
+    const out = model ?? (modelRun.current ? await modelRun.current : null);
+    if (!out || "error" in out) return [];
+    const th = { ...DEFAULT_THRESHOLDS, min_prob: out.th.min_prob, min_margin: out.th.min_margin };
+    const cross = crossCheck(out.pred, conditionsNow(), th);
+    if (cross.decision === "location_guard" || cross.reasons.includes("model_confident")) return [];
+    return cross.ask.filter((q) => !a.followups?.[q]).slice(0, 3);
+  }
+
+  async function goNext() {
+    let next = order.find((s) => after(s, step));
+    if (!next && step !== "followup") {
+      setBusy(true);
+      const qs = await targetedQuestions();
+      setBusy(false);
+      if (qs.length) {
+        setFollowQs(qs);
+        next = "followup";
+      }
+    }
+    if (next) setTrail((t) => [...t, next]);
+    else await finish();
+  }
+
+  function goBack() {
+    if (trail.length > 1) {
+      if (step === "followup") setFollowQs([]); // re-planned from the (maybe changed) answers next time
+      if (step === "field") setEditField(false);
+      setTrail((t) => t.slice(0, -1));
+    } else if (editing) router.back();
+    else router.push("/");
+  }
 
   async function finish() {
     setBusy(true);
     const out = model ?? (await modelRun.current!);
-    const season = profile.season ?? seasonFromDate(date);
-    const stage = stageFromTransplant(profile.transplant_date, date);
-    const conditions = conditionsFrom(a, { season, stage, region: place?.region });
+    const conditions = conditionsNow();
     const base = {
       id: caseId,
       created_at: new Date().toISOString(),
@@ -193,8 +295,8 @@ export default function CheckPage() {
   ];
 
   return (
-    <AppShell title={t("check_title")} back="/">
-      <Steps step={step} total={TOTAL} />
+    <AppShell title={t("check_title")} onBack={goBack}>
+      <Steps step={order.filter((s) => !after(s, step)).length} total={order.length} />
       <input ref={camRef} type="file" accept="image/*" capture="environment" hidden onChange={fromInput} />
       <input ref={galRef} type="file" accept="image/*" hidden onChange={fromInput} />
       {camOpen && (
@@ -212,7 +314,7 @@ export default function CheckPage() {
         />
       )}
 
-      {photoUrl && step > 1 && (
+      {photoUrl && step !== "photo" && (
         <div className="mb-4 flex items-center gap-3 rounded-2xl border bg-card p-2 pr-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={photoUrl} alt="" className="size-16 rounded-xl object-cover" />
@@ -225,14 +327,14 @@ export default function CheckPage() {
               <span className="font-medium text-ok">✓ {t("photo_saved_local")}</span>
             )}
           </div>
-          <button onClick={() => setStep(1)} className="flex items-center gap-1 rounded-full px-2 py-1 text-sm text-primary" aria-label={t("photo_retake")}>
+          <button onClick={() => setTrail(["photo"])} className="flex items-center gap-1 rounded-full px-2 py-1 text-sm text-primary" aria-label={t("photo_retake")}>
             <RotateCcw className="size-4" />
           </button>
         </div>
       )}
 
         <motion.div key={step} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
-          {step === 1 && (
+          {step === "photo" && (
             <div className="flex flex-col gap-4">
               <h2 className="flex items-center justify-between gap-3 text-2xl font-bold">
                 {t("photo_title")}
@@ -281,7 +383,7 @@ export default function CheckPage() {
             </div>
           )}
 
-          {step === 2 && (
+          {step === "field" && (
             <div className="flex flex-col gap-6">
               <div>
                 <h2 className="flex items-center justify-between gap-3 text-2xl font-bold">
@@ -318,7 +420,7 @@ export default function CheckPage() {
                 onClick={async () => {
                   // Remember for next time (stays on the phone).
                   await saveProfile({ ...profile, season: profile.season ?? seasonFromDate(date), variety: a.variety ?? profile.variety });
-                  setStep(3);
+                  await goNext();
                 }}
               >
                 {t("next")}
@@ -326,8 +428,27 @@ export default function CheckPage() {
             </div>
           )}
 
-          {step === 3 && (
+          {step === "where" && (
             <div className="flex flex-col gap-6">
+              {!needField && (
+                // Field details already known (profile): show them, one tap to change.
+                <div className="flex items-center gap-3 rounded-2xl border bg-card px-4 py-3 text-sm">
+                  <span className="text-muted-foreground">{t("your_field")}:</span>
+                  <span className="min-w-0 flex-1 truncate font-medium">
+                    {[PLACES.varieties.find((v) => v.id === a.variety), place].filter(Boolean).map((x) => tx(x!)).join(" · ")} · {t(`season_${profile.season ?? seasonFromDate(date)}`)}
+                  </span>
+                  <button
+                    type="button"
+                    className="font-semibold text-primary"
+                    onClick={() => {
+                      setEditField(true);
+                      setTrail((tr) => [...tr.slice(0, -1), "field"]);
+                    }}
+                  >
+                    {t("change")}
+                  </button>
+                </div>
+              )}
               <MultiChoice
                 clip="Q-WHERE"
                 question={t("q_where")}
@@ -353,13 +474,13 @@ export default function CheckPage() {
                   { value: "whole_field_dying", label: t("pattern_whole_field_dying"), icon: "🥀" },
                 ]}
               />
-              <BigButton onClick={() => setStep(4)}>{t("next")}</BigButton>
+              <BigButton onClick={goNext} disabled={busy}>{t("next")}</BigButton>
             </div>
           )}
 
-          {step === 4 && (
+          {step === "details" && (
             <div className="flex flex-col gap-6">
-              <Choice
+              {showFirst && <Choice
                 clip="Q-FIRST"
                 question={t("q_first")}
                 value={a.first}
@@ -368,8 +489,8 @@ export default function CheckPage() {
                   { value: "old", label: t("first_old"), icon: "⬇️" },
                   { value: "new", label: t("first_new"), icon: "⬆️" },
                 ]}
-              />
-              <MultiChoice
+              />}
+              {showInsects && <MultiChoice
                 clip="Q-INSECTS"
                 question={t("q_insects")}
                 value={a.insects}
@@ -379,12 +500,12 @@ export default function CheckPage() {
                   ...INSECTS.map((i) => ({ value: i, label: t(`ins_${i}`), hint: t(`ins_${i}_h`), icon: INSECT_ICON[i] })),
                   { value: "none" as const, label: t("insects_none"), icon: "✓" },
                 ]}
-              />
-              <BigButton onClick={() => setStep(5)}>{t("next")}</BigButton>
+              />}
+              <BigButton onClick={goNext} disabled={busy}>{t("next")}</BigButton>
             </div>
           )}
 
-          {step === 5 && (
+          {step === "weather" && (
             <div className="flex flex-col gap-3">
               <h2 className="mb-1 text-lg font-semibold">{t("q_weather")}</h2>
               {showRow("rain") && (
@@ -419,6 +540,28 @@ export default function CheckPage() {
                   ]}
                 />
               )}
+              <BigButton className="mt-3" onClick={goNext} disabled={busy}>
+                {busy ? <Loader2 className="size-5 animate-spin" /> : null}
+                {t("next")}
+              </BigButton>
+            </div>
+          )}
+
+          {step === "followup" && (
+            <div className="flex flex-col gap-3">
+              <div className="mb-1">
+                <h2 className="text-2xl font-bold">{t("followup_title")}</h2>
+                <p className="mt-1 text-sm text-muted-foreground">{t("followup_sub")}</p>
+              </div>
+              {followQs.map((q) => (
+                <Segmented
+                  key={q}
+                  label={tx(KNOWLEDGE.questions[q])}
+                  value={a.followups?.[q]}
+                  onChange={(v) => setA((x) => ({ ...x, followups: { ...x.followups, [q]: v } }))}
+                  options={yn("dont_know")}
+                />
+              ))}
               <BigButton className="mt-3" onClick={finish} disabled={busy}>
                 {busy ? <Loader2 className="size-5 animate-spin" /> : null}
                 {t("see_result")}
@@ -426,8 +569,8 @@ export default function CheckPage() {
             </div>
           )}
         </motion.div>
-      {step > 2 && step < TOTAL && (
-        <button onClick={() => setStep(step + 1)} className="mt-3 w-full py-2 text-center text-sm text-muted-foreground underline">
+      {(step === "details" || step === "weather") && (
+        <button onClick={goNext} className="mt-3 w-full py-2 text-center text-sm text-muted-foreground underline">
           {t("skip")}
         </button>
       )}

@@ -3,7 +3,9 @@
  "note": "DRAFT from docs/knowledge/rice-leaf-health.md. Rules may only re-rank within classifier top-2 or move to NOT_SURE; never invent a class.",
  "classes": {
   "healthy": {
-   "favours": [],
+   "favours": [
+    "senescence_near_harvest"
+   ],
    "unlikely_if": [
     "pattern_patches",
     "insects_hoppers_base"
@@ -27,7 +29,8 @@
     "season_boro",
     "stage_seedling",
     "stage_tillering",
-    "field_dry"
+    "field_dry",
+    "lesion_eye_shaped"
    ],
    "unlikely_if": [
     "symptom_sheath"
@@ -49,10 +52,12 @@
    "favours": [
     "urea_none",
     "field_dry",
-    "pattern_whole_field"
+    "pattern_whole_field",
+    "lesion_not_eye_shaped"
    ],
    "unlikely_if": [
-    "urea_high"
+    "urea_high",
+    "lesion_eye_shaped"
    ],
    "confusers": [
     "blast",
@@ -152,7 +157,8 @@
    "favours": [
     "urea_high",
     "rain_heavy_7d",
-    "symptom_tip_edge"
+    "symptom_tip_edge",
+    "zonate_bands"
    ],
    "unlikely_if": [
     "field_dry"
@@ -172,7 +178,8 @@
   "bls": {
    "favours": [
     "storm_recent",
-    "rain_heavy_7d"
+    "rain_heavy_7d",
+    "streaks_translucent"
    ],
    "ask": [
     "q_thin_streaks_translucent"
@@ -211,7 +218,8 @@
    "favours": [
     "season_boro",
     "stage_tillering",
-    "new_leaves_first"
+    "new_leaves_first",
+    "khaira_patches"
    ],
    "ask": [
     "q_khaira_after_transplant"
@@ -250,7 +258,8 @@
   "stem_borer": {
    "favours": [
     "symptom_base",
-    "symptom_panicle"
+    "symptom_panicle",
+    "deadheart"
    ],
    "ask": [
     "q_deadheart_pulls_out"
@@ -291,7 +300,8 @@
   "fe_tox": {
    "favours": [
     "waterlogged",
-    "old_leaves_first"
+    "old_leaves_first",
+    "orange_film"
    ],
    "ask": [
     "q_orange_film"
@@ -336,7 +346,15 @@
   "old_leaves_first": "Symptom.first = old leaves",
   "new_leaves_first": "Symptom.first = new leaves",
   "insects_hoppers_base": "Symptom.insects = hoppers at base (brown planthopper)",
-  "insects_leafhoppers": "Symptom.insects = green leafhoppers on leaves (NEEDS separate option from base hoppers)"
+  "insects_leafhoppers": "Symptom.insects = green leafhoppers on leaves (NEEDS separate option from base hoppers)",
+  "lesion_eye_shaped": "Follow-up: spots have a grey-white centre and pointed ends (eye-shaped) = yes",
+  "lesion_not_eye_shaped": "Follow-up: spots are NOT eye-shaped with a grey centre = no",
+  "streaks_translucent": "Follow-up: thin see-through lines between the veins = yes",
+  "zonate_bands": "Follow-up: light/dark brown bands in the dried part = yes",
+  "khaira_patches": "Follow-up: brown dusty patches 2-4 weeks after transplanting = yes",
+  "orange_film": "Follow-up: oily orange film on the field water = yes",
+  "deadheart": "Follow-up: dead centre shoot / white panicle pulls out easily = yes",
+  "senescence_near_harvest": "Follow-up: near harvest and only the oldest bottom leaves yellowing = yes"
  },
  "questions": {
   "q_old_leaves_near_harvest": {

@@ -27,10 +27,14 @@ async function leafCheck(page: Page, sample: string) {
   await page.goto("/check/");
   await page.locator('input[type=file]:not([capture])').setInputFiles(S + sample);
   await expect(page.getByText("1/5").or(page.getByText("2/5"))).toBeVisible();
-  await page.getByRole("button", { name: "Next", exact: true }).click(); // field details
-  await page.getByRole("button", { name: "Next", exact: true }).click(); // where/pattern
-  await page.getByRole("button", { name: "Next", exact: true }).click(); // first/insects
-  await page.getByRole("button", { name: "See the result" }).click();
+  // The wizard adapts to the answers (steps appear/disappear, follow-up questions only for close calls),
+  // so walk it: "Next" until the result, or "See the result" on the follow-up step.
+  for (let i = 0; i < 10 && !page.url().includes("/result"); i++) {
+    const seeResult = page.getByRole("button", { name: "See the result" });
+    if (await seeResult.isVisible()) await seeResult.click();
+    else await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.waitForTimeout(150);
+  }
   await page.waitForURL(/\/result\/\?id=/);
   await expect(page.getByRole("button", { name: "Listen", exact: true })).toBeVisible();
   return lastCase(page);

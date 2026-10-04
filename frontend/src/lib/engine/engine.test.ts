@@ -109,3 +109,30 @@ describe("farmer answers → conditions", () => {
     expect(crossCheck(p("blast", 0.9, "brown_spot", 0.05), ["insects_stem_borer"]).decision).toBe("location_guard");
   });
 });
+
+describe("targeted follow-up answers", () => {
+  const p = (top1: string, p1: number, top2: string, p2: number): Prediction => ({ top1, p1, top2, p2, probs: { [top1]: p1, [top2]: p2 } });
+
+  it("map to existing conditions; 'don't know' adds nothing", () => {
+    const c = conditionsFrom({ followups: { q_tip_edge_after_storm: "yes", q_cold_spell: "unknown", q_eye_shaped_grey_centre: "no" } }, {});
+    expect(c).toEqual(expect.arrayContaining(["storm_recent", "symptom_tip_edge", "lesion_not_eye_shaped"]));
+    expect(c).not.toContain("cold_nights");
+  });
+
+  it("eye-shaped spots let context promote blast over brown spot", () => {
+    const ctx = conditionsFrom({ followups: { q_eye_shaped_grey_centre: "yes" }, urea: "a_lot", cold_nights: "yes" }, { season: "boro" });
+    const r = crossCheck(p("brown_spot", 0.55, "blast", 0.4), ctx, DEFAULT_THRESHOLDS);
+    expect(r.decision).toBe("swap");
+    expect(r.cls).toBe("blast");
+  });
+
+  it("eye-shaped spots conflict with brown spot → NOT SURE rather than a confident brown spot", () => {
+    const ctx = conditionsFrom({ followups: { q_eye_shaped_grey_centre: "yes" } }, {});
+    expect(crossCheck(p("brown_spot", 0.6, "healthy", 0.3), ctx, DEFAULT_THRESHOLDS).decision).toBe("not_sure");
+  });
+
+  it("hoppers at the base from a follow-up fire the location guard", () => {
+    const ctx = conditionsFrom({ followups: { q_tap_base_hoppers: "yes" } }, {});
+    expect(crossCheck(p("blb", 0.9, "healthy", 0.05), ctx, DEFAULT_THRESHOLDS).decision).toBe("location_guard");
+  });
+});

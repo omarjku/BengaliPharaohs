@@ -34,6 +34,31 @@ export type LeafAnswers = {
   cold_nights?: "yes" | "no" | Unknown;
   salty_water?: "yes" | "no" | Unknown;
   urea?: "none" | "normal" | "a_lot" | Unknown;
+  /** Targeted follow-up questions (knowledge.json question ids), asked only when the photo leaves a close call. */
+  followups?: Record<string, "yes" | "no" | Unknown>;
+};
+
+/** What a "yes" to each follow-up question tells the engine (knowledge.json condition ids). */
+export const FOLLOWUP_YES: Record<string, string[]> = {
+  q_eye_shaped_grey_centre: ["lesion_eye_shaped"],
+  q_tips_edges_old_leaves: ["symptom_tip_edge", "old_leaves_first"],
+  q_spots_near_water_on_stem: ["symptom_sheath"],
+  q_some_hills_green_insects: ["insects_leafhoppers", "pattern_patches"],
+  q_whole_field_old_leaves: ["pattern_whole_field", "old_leaves_first"],
+  q_tip_edge_after_storm: ["storm_recent", "symptom_tip_edge"],
+  q_thin_streaks_translucent: ["streaks_translucent"],
+  q_zonate_bands: ["zonate_bands"],
+  q_khaira_after_transplant: ["khaira_patches"],
+  q_tap_base_hoppers: ["insects_hoppers_base"],
+  q_deadheart_pulls_out: ["deadheart"],
+  q_cold_spell: ["cold_nights"],
+  q_salty_water: ["salt_water"],
+  q_orange_film: ["orange_film"],
+  q_old_leaves_near_harvest: ["senescence_near_harvest"],
+};
+/** A "no" only tells us something for a few questions. */
+export const FOLLOWUP_NO: Record<string, string[]> = {
+  q_eye_shaped_grey_centre: ["lesion_not_eye_shaped"],
 };
 
 export function conditionsFrom(a: LeafAnswers, p: { season?: Season; stage?: Stage; region?: Region }): string[] {
@@ -67,7 +92,11 @@ export function conditionsFrom(a: LeafAnswers, p: { season?: Season; stage?: Sta
     else if (i === "bph" || i === "wbph") c.push("insects_hoppers_base");
     else c.push(`insects_${i}`);
   }
-  return c;
+  for (const [q, v] of Object.entries(a.followups ?? {})) {
+    if (v === "yes") c.push(...(FOLLOWUP_YES[q] ?? []));
+    if (v === "no") c.push(...(FOLLOWUP_NO[q] ?? []));
+  }
+  return [...new Set(c)];
 }
 
 /** Default season from the calendar month; the farmer can change it. Aman Jul–Nov, Boro Dec–Apr, Aus May–Jun. */

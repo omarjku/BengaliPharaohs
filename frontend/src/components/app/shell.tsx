@@ -56,12 +56,15 @@ export function AppShell({
   children,
   title,
   back,
+  onBack,
   wide,
   hideNav,
 }: {
   children: React.ReactNode;
   title?: string;
   back?: string;
+  /** In-page back (e.g. the previous wizard step); takes precedence over `back`. */
+  onBack?: () => void;
   wide?: boolean;
   hideNav?: boolean;
 }) {
@@ -75,7 +78,11 @@ export function AppShell({
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-30 bg-primary text-primary-foreground shadow-sm pt-[env(safe-area-inset-top)]">
         <div className={cn("mx-auto flex h-14 w-full items-center gap-2 px-3", wide ? "max-w-6xl" : "max-w-2xl")}>
-          {back ? (
+          {onBack ? (
+            <button type="button" onClick={onBack} aria-label={t("back")} className="-ml-1 flex size-11 items-center justify-center rounded-full active:bg-white/15">
+              <ChevronLeft className="size-7" />
+            </button>
+          ) : back ? (
             <Link href={back} aria-label={t("back")} className="-ml-1 flex size-11 items-center justify-center rounded-full active:bg-white/15">
               <ChevronLeft className="size-7" />
             </Link>

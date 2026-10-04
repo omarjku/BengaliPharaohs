@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, Ban, CheckCircle2, ChevronDown, CircleHelp, Eye, FlaskConical, Home, Loader2, Phone, Send, ShieldCheck, Square, Volume2, Leaf } from "lucide-react";
+import { AlertTriangle, Ban, CheckCircle2, ChevronDown, ChevronLeft, CircleHelp, Eye, FlaskConical, Home, Loader2, Phone, Send, ShieldCheck, Square, Volume2, Leaf } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -377,6 +377,11 @@ function ResultView() {
         </dl>
       </details>
 
+      {c.kind === "leaf" && (
+        <Link href={`/check/?edit=${c.id}`} className="flex min-h-14 items-center justify-center gap-2 rounded-2xl border-2 border-primary/40 bg-card font-semibold text-primary">
+          <ChevronLeft className="size-5" /> {t("change_answers")}
+        </Link>
+      )}
       <div className="grid grid-cols-2 gap-3">
         <Link href={c.kind === "leaf" ? "/check/" : "/flood/"} className="flex min-h-14 items-center justify-center gap-2 rounded-2xl border-2 bg-card font-semibold">
           {c.kind === "leaf" ? <Leaf className="size-5" /> : "🌊"} {t("new_check")}
