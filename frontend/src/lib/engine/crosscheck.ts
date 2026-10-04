@@ -103,6 +103,8 @@ export function crossCheck(
 
   // The model spreads its answer over many classes: probably not a rice leaf, or a bad photo.
   if (p1 + p2 < th.min_top2_mass) return notSure(["model_lost"]);
+  // The classifier says "not a rice leaf" (7th class): never swap or keep, always NOT SURE (card C8).
+  if (top1 === "not_rice") return notSure(["not_rice"]);
 
   const n1 = s1.favours.length, c1 = s1.conflicts.length;
   const n2 = s2.favours.length, c2 = s2.conflicts.length;
