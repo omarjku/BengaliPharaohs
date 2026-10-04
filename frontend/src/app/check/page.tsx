@@ -13,7 +13,7 @@ import { crossCheck, DEFAULT_THRESHOLDS, KNOWLEDGE } from "@/lib/engine/crossche
 import type { Prediction, Season } from "@/lib/engine/types";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
-import { classify, loadModel, shrinkPhoto, type ThresholdFile } from "@/lib/model/classify";
+import { classify, loadModel, onModelStage, shrinkPhoto, type ModelStage, type ThresholdFile } from "@/lib/model/classify";
 import { combinePredictions } from "@/lib/model/combine";
 import { upazilaByCode, varietyById } from "@/lib/places";
 import { useEffectiveDate } from "@/lib/settings";
@@ -128,7 +128,10 @@ export default function CheckPage() {
   // Photos 2 and 3 (optional). Every photo gets its own model run; the answer averages them.
   const [extras, setExtras] = useState<string[]>([]);
   const runs = useRef<Promise<ModelOut>[]>([]);
+  const photos = useRef<Blob[]>([]); // all photos of this check, so "Try again" re-checks every one
   const addMode = useRef(false);
+  const [modelStage, setModelStage] = useState<ModelStage | null>(null);
+  useEffect(() => onModelStage(setModelStage), []);
 
   useEffect(() => {
     getProfile().then((p) => {
@@ -188,12 +191,26 @@ export default function CheckPage() {
 
   /** keep = add this photo to the ones already checked (photos 2-3); otherwise start over with this one. */
   function startModel(photo: Blob, keep = false) {
-    if (!keep) runs.current = [];
+    if (!keep) {
+      runs.current = [];
+      photos.current = [];
+    }
+    photos.current.push(photo);
     runs.current.push(classify(photo).catch((e: Error) => ({ error: e.message })));
+    watchRuns();
+  }
+
+  function watchRuns() {
     setModel(null);
     const all = Promise.all(runs.current).then(mergeOuts);
     modelRun.current = all;
     all.then((m) => modelRun.current === all && setModel(m));
+  }
+
+  /** "Try again" after a model error or timeout: check every photo again. */
+  function retryModel() {
+    runs.current = photos.current.map((ph) => classify(ph).catch((e: Error) => ({ error: e.message })));
+    watchRuns();
   }
 
   async function addExtra(f: Blob) {
@@ -396,7 +413,15 @@ export default function CheckPage() {
           <div className="min-w-0 flex-1 text-sm">
             {!model ? (
               <span className="flex items-center gap-2 font-medium text-muted-foreground">
-                <Loader2 className="size-4 animate-spin" /> {t("photo_reading")}
+                <Loader2 className="size-4 shrink-0 animate-spin" /> {t(modelStage ? `stage_${modelStage}` : "photo_reading")}
+              </span>
+            ) : "error" in model ? (
+              <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span className="font-medium text-bad">{t("model_failed")}</span>
+                <button type="button" className="min-h-9 rounded-full bg-primary px-3 text-sm font-semibold text-primary-foreground" onClick={retryModel}>
+                  {t("try_again")}
+                </button>
+                <span className="w-full text-xs text-muted-foreground">{model.error}</span>
               </span>
             ) : (
               <span className="font-medium text-ok">✓ {t("photo_saved_local")}</span>

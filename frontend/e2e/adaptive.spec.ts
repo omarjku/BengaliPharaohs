@@ -20,7 +20,8 @@ test("back keeps answers, off-leaf answers skip leaf/weather steps, result → c
   for (let i = 0; i < 4 && !page.url().includes("/result"); i++) {
     const see = page.getByRole("button", { name: "See the result" });
     if (await see.isVisible()) await see.click();
-    else await page.getByRole("button", { name: "Next", exact: true }).click();
+    // The last click can race the navigation to the result (button disabled, then gone): don't wait 2 min for it.
+    else await page.getByRole("button", { name: "Next", exact: true }).click({ timeout: 5_000 }).catch(() => {});
     await page.waitForTimeout(150);
   }
   await page.waitForURL(/\/result\/\?id=/);
