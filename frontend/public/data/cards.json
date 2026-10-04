@@ -133,7 +133,7 @@
       "kind": "photo", "tone": "unsure", "clip": "C8-NOTSURE",
       "title": { "en": "Not sure — show your SAAO", "bn": "নিশ্চিত নই — কৃষি অফিসারকে দেখান" },
       "parts": [
-        { "en": "Not sure. This does not look like a rice leaf we know, or the photo is not clear.", "bn": "নিশ্চিত নই। এটা আমাদের চেনা ধানপাতার মতো লাগছে না, অথবা ছবি পরিষ্কার নয়।" },
+        { "en": "This does not look like a rice leaf we know, or the photo is not clear.", "bn": "এটা আমাদের চেনা ধানপাতার মতো লাগছে না, অথবা ছবি পরিষ্কার নয়।" },
         { "en": "We will not guess. A wrong answer could cost you money.", "bn": "আমরা আন্দাজে বলব না। ভুল উত্তরে আপনার টাকা নষ্ট হতে পারে।" },
         { "en": "Take a new photo in daylight: one leaf, close and sharp. Or show the plant to your SAAO.", "bn": "দিনের আলোয় নতুন ছবি তুলুন: একটা পাতা, কাছ থেকে, পরিষ্কার করে। অথবা গাছটা কৃষি অফিসারকে দেখান।" },
         { "en": "Do not spray or buy anything because of this app.", "bn": "এই অ্যাপের কথায় কোনো ওষুধ দেবেন না বা কিনবেন না।" }

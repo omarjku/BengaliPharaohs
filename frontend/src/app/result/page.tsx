@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, Ban, CalendarDays, CheckCircle2, ChevronDown, ChevronLeft, CircleHelp, Eye, FlaskConical, Home, Loader2, Phone, Send, ShieldCheck, Square, Volume2, Leaf } from "lucide-react";
+import { AlertTriangle, Ban, CalendarDays, CheckCircle2, ChevronDown, ChevronLeft, CircleHelp, FlaskConical, Home, Loader2, Phone, Send, ShieldCheck, Square, Volume2, Leaf } from "lucide-react";
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import Link from "next/link";
@@ -272,8 +272,6 @@ function ResultView() {
         </div>
       )}
 
-      {c.field && <FieldSummaryCard f={c.field.summary} />}
-
       <m.section
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -298,6 +296,7 @@ function ResultView() {
         )}
         <div className="min-w-0 flex-1">
           <h2 className="text-2xl font-bold leading-tight">{card.title}</h2>
+          <p className="mt-1 text-[17px] font-semibold leading-snug" data-testid="result-see">{card.parts[0]}</p>
           {c.simulated_date && (
             <span className="mt-1 inline-block rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-accent-foreground">
               {formatDate(c.date_used, lang)} · {t("simulated")}
@@ -305,6 +304,9 @@ function ResultView() {
           )}
         </div>
       </m.section>
+
+      {/* "unclear" would only repeat the not-sure box above */}
+      {c.field && c.field.summary.spread !== "unclear" && <FieldSummaryCard f={c.field.summary} />}
 
       <BigButton variant={playing || (card.tone === "unsure" && c.share === "local") ? "outline" : "primary"} onClick={listen}>
         {playing ? <Square className="size-5" /> : <Volume2 className="size-6" />}
@@ -315,9 +317,6 @@ function ResultView() {
       {c.kind === "leaf" && c.cross?.decision !== "location_guard" && c.cross?.cls && <Confidence p={pChosen} t={t} />}
 
       <section className="flex flex-col gap-4 rounded-3xl border bg-card p-4 shadow-xs">
-        <Part icon={Eye} label={t("part_see")}>
-          {card.parts[0]}
-        </Part>
         <Part icon={CircleHelp} label={t("part_why")}>
           {card.parts[1]}
         </Part>

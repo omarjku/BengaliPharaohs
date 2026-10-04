@@ -73,7 +73,6 @@ export function AreaUpdate({ upazila }: { upazila?: string }) {
     <section className={box} aria-label={t("area_title")}>
       <h3 className="flex flex-wrap items-center gap-2 font-semibold">
         {t("area_title")}
-        {Object.values(pack.parts).some((p) => p?.seeded) && <span className="rounded-full bg-accent px-2 text-xs font-bold text-accent-foreground">{t("seeded")}</span>}
       </h3>
       <p className={cn("mb-3 text-xs", view.kind === "offline" ? "font-semibold text-warn" : "text-muted-foreground")}>{status}</p>
       <div className="grid gap-2">
