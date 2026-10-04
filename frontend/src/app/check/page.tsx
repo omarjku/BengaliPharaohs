@@ -14,9 +14,10 @@ import type { Prediction, Season } from "@/lib/engine/types";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
 import { classify, loadModel, shrinkPhoto, type ThresholdFile } from "@/lib/model/classify";
+import { combinePredictions } from "@/lib/model/combine";
 import { upazilaByCode, varietyById } from "@/lib/places";
 import { useEffectiveDate } from "@/lib/settings";
-import { DB_BLOCKED_EVENT, getCase, getPhoto, getProfile, newId, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
+import { DB_BLOCKED_EVENT, getCase, getPhoto, getProfile, newId, photoKey, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
 import type { StringKey } from "@/lib/strings";
 
 /** Canonical order. Which steps appear depends on the answers (see planSteps); back keeps every answer. */
@@ -24,7 +25,21 @@ const CANON = ["photo", "field", "where", "details", "weather", "followup"] as c
 type StepId = (typeof CANON)[number];
 const after = (a: StepId, b: StepId) => CANON.indexOf(a) > CANON.indexOf(b);
 
-type ModelOut = { pred: Prediction; ms: number; dummy: boolean; th: ThresholdFile } | { error: string };
+type ModelOut = { pred: Prediction; ms: number; dummy: boolean; th: ThresholdFile; perPhoto?: { top1: string; p1: number }[] } | { error: string };
+const MAX_PHOTOS = 3;
+
+/** Several photos -> one answer: average the probabilities (src/lib/model/combine.ts). */
+function mergeOuts(outs: ModelOut[]): ModelOut {
+  const ok = outs.filter((o): o is Exclude<ModelOut, { error: string }> => "pred" in o);
+  if (!ok.length) return outs[0];
+  return {
+    pred: combinePredictions(ok.map((o) => o.pred)),
+    ms: Math.max(...ok.map((o) => o.ms)),
+    dummy: ok.some((o) => o.dummy),
+    th: ok[0].th,
+    perPhoto: ok.map((o) => ({ top1: o.pred.top1, p1: Number(o.pred.p1.toFixed(3)) })),
+  };
+}
 
 /** Which knowledge conditions each weather question can produce (to skip questions that can't change the answer). */
 const ROW_CONDITIONS: Record<string, string[]> = {
@@ -110,6 +125,10 @@ export default function CheckPage() {
   const camRef = useRef<HTMLInputElement>(null);
   const galRef = useRef<HTMLInputElement>(null);
   const modelRun = useRef<Promise<ModelOut> | null>(null);
+  // Photos 2 and 3 (optional). Every photo gets its own model run; the answer averages them.
+  const [extras, setExtras] = useState<string[]>([]);
+  const runs = useRef<Promise<ModelOut>[]>([]);
+  const addMode = useRef(false);
 
   useEffect(() => {
     getProfile().then((p) => {
@@ -138,6 +157,7 @@ export default function CheckPage() {
     setPhotoError(null);
     if (!f) return;
     if (!looksLikeImage(f)) return setPhotoError(t("photo_not_image"));
+    if (addMode.current) return addExtra(f);
     setProcessing(true);
     try {
       const small = await shrinkPhoto(f);
@@ -148,6 +168,7 @@ export default function CheckPage() {
       const saved = await Promise.race([savePhoto(caseId, small).then(() => true), new Promise<boolean>((r) => setTimeout(() => r(false), 4000))]).catch(() => false);
       if (!saved) setPhotoError(t("photo_not_saved"));
       setPhotoUrl(URL.createObjectURL(small));
+      setExtras([]);
       setFollowQs([]);
       setTrail(["photo", needField ? "field" : "where"]);
     } catch (e) {
@@ -165,10 +186,31 @@ export default function CheckPage() {
     onFile(f);
   };
 
-  function startModel(photo: Blob) {
+  /** keep = add this photo to the ones already checked (photos 2-3); otherwise start over with this one. */
+  function startModel(photo: Blob, keep = false) {
+    if (!keep) runs.current = [];
+    runs.current.push(classify(photo).catch((e: Error) => ({ error: e.message })));
     setModel(null);
-    modelRun.current = classify(photo).catch((e: Error) => ({ error: e.message }));
-    modelRun.current.then(setModel);
+    const all = Promise.all(runs.current).then(mergeOuts);
+    modelRun.current = all;
+    all.then((m) => modelRun.current === all && setModel(m));
+  }
+
+  async function addExtra(f: Blob) {
+    addMode.current = false;
+    const n = extras.length + 2; // photo 1 is the first one
+    if (n > MAX_PHOTOS) return;
+    setProcessing(true);
+    try {
+      const small = await shrinkPhoto(f);
+      startModel(small, true);
+      await Promise.race([savePhoto(photoKey(caseId, n), small), new Promise((r) => setTimeout(r, 4000))]).catch(() => {});
+      setExtras((x) => [...x, URL.createObjectURL(small)]);
+    } catch (e) {
+      setPhotoError(`${t("photo_failed")} (${e instanceof Error ? e.message : String(e)})`);
+    } finally {
+      setProcessing(false);
+    }
   }
 
   async function openForEdit(id: string, c: Awaited<ReturnType<typeof getCase>>, photo: Blob | undefined) {
@@ -184,6 +226,16 @@ export default function CheckPage() {
     setCaseId(target);
     setPhotoUrl(URL.createObjectURL(photo));
     startModel(photo);
+    // Extra photos of that check come back too (and are checked again).
+    const more: string[] = [];
+    for (let n = 2; n <= (c.photo_count ?? 1); n++) {
+      const b = await getPhoto(photoKey(id, n));
+      if (!b) continue;
+      if (target !== id) await savePhoto(photoKey(target, more.length + 2), b);
+      startModel(b, true);
+      more.push(URL.createObjectURL(b));
+    }
+    setExtras(more);
     setTrail(["where"]);
   }
   // "Change answers" from the result card: /check/?edit=<case id> reopens that check with its answers and photo.
@@ -290,7 +342,16 @@ export default function CheckPage() {
     } else {
       const th = { ...DEFAULT_THRESHOLDS, min_prob: out.th.min_prob, min_margin: out.th.min_margin };
       const cross = crossCheck(out.pred, conditions, th);
-      await saveCase({ ...base, card: cross.card, prediction: out.pred, cross, model_ms: out.ms, model_dummy: out.dummy });
+      await saveCase({
+        ...base,
+        card: cross.card,
+        prediction: out.pred,
+        cross,
+        model_ms: out.ms,
+        model_dummy: out.dummy,
+        photo_count: 1 + extras.length,
+        photo_preds: out.perPhoto,
+      });
     }
     router.push(`/result/?id=${caseId}`);
   }
@@ -312,7 +373,10 @@ export default function CheckPage() {
             setCamOpen(false);
             onFile(b);
           }}
-          onClose={() => setCamOpen(false)}
+          onClose={() => {
+            addMode.current = false;
+            setCamOpen(false);
+          }}
           onFallback={() => {
             // No in-page camera (permission refused, old browser): use the phone's camera app instead.
             setCamOpen(false);
@@ -325,6 +389,10 @@ export default function CheckPage() {
         <div className="mb-4 flex items-center gap-3 rounded-2xl border bg-card p-2 pr-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={photoUrl} alt="" className="size-16 rounded-xl object-cover" />
+          {extras.map((u) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={u} src={u} alt="" className="size-12 rounded-lg object-cover" />
+          ))}
           <div className="min-w-0 flex-1 text-sm">
             {!model ? (
               <span className="flex items-center gap-2 font-medium text-muted-foreground">
@@ -337,6 +405,35 @@ export default function CheckPage() {
           <button onClick={() => setTrail(["photo"])} className="flex items-center gap-1 rounded-full px-2 py-1 text-sm text-primary" aria-label={t("photo_retake")}>
             <RotateCcw className="size-4" />
           </button>
+        </div>
+      )}
+      {photoUrl && step !== "photo" && 1 + extras.length < MAX_PHOTOS && (
+        <div className="-mt-2 mb-4 rounded-2xl bg-secondary/50 px-3 py-2.5">
+          <p className="mb-2 text-sm text-muted-foreground">{t("photo_add_hint")}</p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              disabled={processing}
+              onClick={() => {
+                addMode.current = true;
+                setCamOpen(true);
+              }}
+              className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border-2 border-primary/30 bg-card text-sm font-semibold text-primary disabled:opacity-50"
+            >
+              <Camera className="size-5" /> {t("photo_add")} · {t("photo_add_camera")}
+            </button>
+            <button
+              type="button"
+              disabled={processing}
+              onClick={() => {
+                addMode.current = true;
+                galRef.current?.click();
+              }}
+              className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border-2 border-primary/30 bg-card text-sm font-semibold text-primary disabled:opacity-50"
+            >
+              <ImageIcon className="size-5" /> {t("photo_add_gallery")}
+            </button>
+          </div>
         </div>
       )}
 
@@ -381,10 +478,10 @@ export default function CheckPage() {
                   <Loader2 className="size-5 animate-spin" /> {t("photo_reading")}
                 </p>
               )}
-              <BigButton onClick={() => setCamOpen(true)} disabled={processing}>
+              <BigButton onClick={() => { addMode.current = false; setCamOpen(true); }} disabled={processing}>
                 <Camera className="size-6" /> {t("photo_camera")}
               </BigButton>
-              <BigButton variant="outline" onClick={() => galRef.current?.click()} disabled={processing}>
+              <BigButton variant="outline" onClick={() => { addMode.current = false; galRef.current?.click(); }} disabled={processing}>
                 <ImageIcon className="size-6" /> {t("photo_gallery")}
               </BigButton>
             </div>

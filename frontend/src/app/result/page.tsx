@@ -17,7 +17,7 @@ import { RULES } from "@/lib/engine/rules";
 import { cn } from "@/lib/utils";
 import { formatDate, num, useLang } from "@/lib/i18n";
 import { varietyById } from "@/lib/places";
-import { getCase, getPhoto, getProfile, saveCase, type CaseRecord } from "@/lib/store/db";
+import { getCase, getPhoto, getProfile, photoKey, saveCase, type CaseRecord } from "@/lib/store/db";
 import type { StringKey } from "@/lib/strings";
 import { syncQueued } from "@/lib/sync";
 
@@ -79,6 +79,7 @@ function ResultView() {
   const id = useSearchParams().get("id");
   const [c, setC] = useState<CaseRecord | null | undefined>(undefined);
   const [photo, setPhoto] = useState<string | null>(null);
+  const [morePhotos, setMorePhotos] = useState<string[]>([]);
   const [variety, setVariety] = useState<string | undefined>();
   const [playing, setPlaying] = useState(false);
   const [missingAudio, setMissingAudio] = useState(false);
@@ -89,7 +90,16 @@ function ResultView() {
 
   useEffect(() => {
     if (!id) return setC(null);
-    getCase(id).then((x) => setC(x ?? null));
+    getCase(id).then(async (x) => {
+      setC(x ?? null);
+      // Photos 2-3 of a multi-photo check.
+      const urls: string[] = [];
+      for (let n = 2; n <= (x?.photo_count ?? 1); n++) {
+        const b = await getPhoto(photoKey(id, n));
+        if (b) urls.push(URL.createObjectURL(b));
+      }
+      setMorePhotos(urls);
+    });
     getPhoto(id).then((b) => b && setPhoto(URL.createObjectURL(b)));
     getProfile().then((p) => setVariety(p.variety));
     return () => stopAudio();
@@ -167,7 +177,18 @@ function ResultView() {
       >
         {photo ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={photo} alt="" className="size-20 shrink-0 rounded-2xl object-cover ring-2 ring-white" />
+          <span className="flex shrink-0 flex-col items-center gap-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={photo} alt="" className="size-20 rounded-2xl object-cover ring-2 ring-white" />
+            {morePhotos.length > 0 && (
+              <span className="flex gap-1">
+                {morePhotos.map((u) => (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img key={u} src={u} alt="" className="size-9 rounded-lg object-cover ring-1 ring-white" />
+                ))}
+              </span>
+            )}
+          </span>
         ) : (
           <ToneIcon className="size-12 shrink-0" />
         )}
@@ -290,6 +311,18 @@ function ResultView() {
           <ChevronDown className="size-5 transition-transform group-open:rotate-180" />
         </summary>
         <dl className="mt-3 grid gap-3">
+          {c.photo_preds && c.photo_preds.length > 1 && (
+            <div>
+              <dt className="font-semibold text-muted-foreground">{t("why_photos")}</dt>
+              <dd className="flex flex-wrap gap-3">
+                {c.photo_preds.map((pp, i) => (
+                  <span key={i}>
+                    {num(i + 1, lang)}. {tx(LABEL_NAMES[pp.top1]) || pp.top1} {num(Math.round(pp.p1 * 100), lang)}%
+                  </span>
+                ))}
+              </dd>
+            </div>
+          )}
           {c.prediction && (
             <div>
               <dt className="font-semibold text-muted-foreground">{t("why_model")}</dt>

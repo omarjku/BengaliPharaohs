@@ -41,6 +41,9 @@ export type CaseRecord = {
   conditions?: string[];
   model_ms?: number;
   model_dummy?: boolean;
+  /** Up to 3 leaf photos (photo 1 under the case id, photos 2-3 under photoKey(id, n)); the model averages them. */
+  photo_count?: number;
+  photo_preds?: { top1: string; p1: number }[];
   // flood path
   advisor_input?: AdvisorInput;
   advisor?: AdvisorResult;
@@ -120,6 +123,9 @@ export async function deleteAllCases() {
   await d.clear("photos");
   await d.clear("outbox");
 }
+
+/** Key of the extra photos 2 and 3 of a case (photo 1 is stored under the case id itself). */
+export const photoKey = (id: string, n: number) => (n <= 1 ? id : `${id}#${n}`);
 
 export async function savePhoto(id: string, blob: Blob) {
   await (await db()).put("photos", blob, id);
