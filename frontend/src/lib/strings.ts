@@ -117,6 +117,7 @@ export const S = {
   where_sheath: { bn: "পানির কাছে কাণ্ডে", en: "Stem near the water" },
   where_panicle: { bn: "শীষে বা শীষের গোড়ায়", en: "Panicle or its neck" },
   where_base: { bn: "গাছের গোড়ায়", en: "Base of the plant" },
+  where_whole_plant: { bn: "পুরো গাছে (পাতা, কাণ্ড, সব জায়গায়)", en: "The whole plant (leaves, stem, everywhere)" },
   where_none: { bn: "কোনো সমস্যা দেখছি না", en: "I don't see any problem" },
   q_pattern: { bn: "কয়টা গাছে এই সমস্যা?", en: "How many plants have this problem?" },
   q_pattern_hint: { bn: "জমির আইলে দাঁড়িয়ে একবার চারদিকে দেখুন", en: "Stand on the bund and look around the field once" },

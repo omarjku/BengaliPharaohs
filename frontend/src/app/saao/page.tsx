@@ -8,6 +8,7 @@ import { fetchCaseBlob, listServerCases, postReply, type ServerCase } from "@/li
 import { CARDS } from "@/lib/engine/cards";
 import { cn } from "@/lib/utils";
 import { formatDate, num, useLang } from "@/lib/i18n";
+import { labelName } from "@/lib/labels";
 import { upazilaByCode } from "@/lib/places";
 
 // Shown only when the backend is unreachable, and always labelled "seeded" (DEMO.md: say what is real).
@@ -199,6 +200,9 @@ export default function SaaoPage() {
                     <span className="min-w-0 flex-1">
                       <span className="flex flex-wrap items-center gap-1.5">
                         <span className="font-semibold">{tx(card?.title)}</span>
+                        {c.kind === "leaf" && c.class && c.class !== "n/a" && (
+                          <span className="rounded-full bg-secondary px-2 text-xs font-medium">{labelName(c.class, lang)}</span>
+                        )}
                         {c.seeded && <span className="rounded-full bg-accent px-2 text-xs font-bold text-accent-foreground">{t("seeded")}</span>}
                         {c.simulated_date && <span className="rounded-full bg-muted px-2 text-xs">{t("simulated")}</span>}
                       </span>

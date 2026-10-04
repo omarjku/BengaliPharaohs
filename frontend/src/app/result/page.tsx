@@ -17,6 +17,7 @@ import { RULES } from "@/lib/engine/rules";
 import { cn } from "@/lib/utils";
 import { formatDate, num, useLang } from "@/lib/i18n";
 import { varietyById } from "@/lib/places";
+import { LABEL_NAMES, labelName } from "@/lib/labels";
 import { getCase, getPhoto, getProfile, photoKey, saveCase, type CaseRecord } from "@/lib/store/db";
 import type { StringKey } from "@/lib/strings";
 import { syncQueued } from "@/lib/sync";
@@ -28,16 +29,6 @@ const TONE = {
   unsure: { box: "bg-unsure-soft text-unsure border-unsure/30", icon: CircleHelp },
 };
 
-const LABEL_NAMES: Record<string, { bn: string; en: string }> = {
-  healthy: { bn: "সুস্থ", en: "Healthy" },
-  blast: { bn: "ব্লাস্ট", en: "Blast" },
-  brown_spot: { bn: "বাদামি দাগ", en: "Brown spot" },
-  sheath_blight: { bn: "খোলপোড়া", en: "Sheath blight" },
-  tungro: { bn: "টুংরো", en: "Tungro" },
-  blb: { bn: "পাতাপোড়া (BLB)", en: "Bacterial leaf blight" },
-  leaf_scald: { bn: "পাতা ঝলসানো", en: "Leaf scald" },
-  not_rice: { bn: "ধানপাতা নয়", en: "Not a rice leaf" },
-};
 
 function Confidence({ p, t }: { p: number | null; t: (k: StringKey) => string }) {
   // Calibrated probability shown as a bar with a word, never as a bare % (cards rule: no false certainty).
@@ -341,6 +332,11 @@ function ResultView() {
               <dt className="font-semibold text-muted-foreground">{t("why_context")}</dt>
               <dd className="flex flex-wrap gap-1.5">
                 <code className="rounded bg-muted px-1.5">{c.cross.decision}</code>
+                {c.cross.lookalike && (
+                  <span className="w-full font-medium">
+                    {lang === "bn" ? "দেখতে মিলতে পারে" : "Could also be"}: {labelName(c.cross.lookalike, lang)}
+                  </span>
+                )}
                 {c.cross.reasons.map((r) => (
                   <code key={r} className="rounded bg-muted px-1.5">
                     {r}
@@ -348,7 +344,7 @@ function ResultView() {
                 ))}
                 {Object.entries(c.cross.support).map(([cls, s]) => (
                   <span key={cls} className="w-full text-xs text-muted-foreground">
-                    {cls}: +{s.favours.join(", +") || "0"} {s.conflicts.length > 0 && `/ −${s.conflicts.join(", −")}`}
+                    {labelName(cls, lang)}: +{s.favours.join(", +") || "0"} {s.conflicts.length > 0 && `/ −${s.conflicts.join(", −")}`}
                   </span>
                 ))}
               </dd>

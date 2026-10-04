@@ -13,7 +13,7 @@ export const QUESTION_CLIPS = {
   "Q-SEASON": { q: ["profile_season"], opts: ["season_aman", "season_aus", "season_boro"] },
   "Q-WHERE": {
     q: ["q_where", "pick_many"],
-    opts: ["where_tip_edge", "where_middle", "where_sheath", "where_panicle", "where_base", "where_none"],
+    opts: ["where_tip_edge", "where_middle", "where_sheath", "where_panicle", "where_base", "where_whole_plant", "where_none"],
   },
   "Q-PATTERN": {
     q: ["q_pattern", "q_pattern_hint"],

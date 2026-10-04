@@ -576,6 +576,7 @@ export default function CheckPage() {
                   { value: "sheath", label: t("where_sheath"), icon: "🌊" },
                   { value: "panicle", label: t("where_panicle"), icon: "🌾" },
                   { value: "base", label: t("where_base"), icon: "🪴" },
+                  { value: "whole_plant", label: t("where_whole_plant"), icon: "🌾" },
                   { value: "none", label: t("where_none"), icon: "✅" },
                 ]}
                 exclusive={["none"]}

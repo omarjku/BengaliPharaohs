@@ -3,7 +3,7 @@ import type { Region, Season, Stage } from "./types";
 
 export type Unknown = "unknown";
 export const NO_PROBLEM = "no_problem_seen";
-export type Where = "tip_edge" | "middle" | "sheath" | "panicle" | "base" | "none";
+export type Where = "tip_edge" | "middle" | "sheath" | "panicle" | "base" | "whole_plant" | "none";
 /** Pests Bangladeshi farmers know by name. Only hoppers, leafhoppers and stem borer change the engine; the rest go to the SAAO. */
 export const INSECTS = [
   "green_leafhopper",
