@@ -181,6 +181,6 @@ export async function applyBurstPack(upazila: string, bp: NonNullable<import("..
   const newReplies = ((bp.parts.case_replies?.data as Replies | undefined)?.replies ?? []).filter((r) => !seen.has(r.id)).length;
   const versions = { rules: bp.versions?.rules ?? cur?.versions.rules, cards: bp.versions?.cards ?? cur?.versions.cards };
   await setKv(KEY, { upazila, version: cur?.version ?? "burst", manifest_etag: undefined, fetched_at: now.toISOString(), versions, model_update_available: cur?.model_update_available ?? false, parts } satisfies Pack);
-  if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent(PACK_EVENT));
+  if (received.length && typeof window !== "undefined") window.dispatchEvent(new CustomEvent(PACK_EVENT));
   return { received, newReplies };
 }

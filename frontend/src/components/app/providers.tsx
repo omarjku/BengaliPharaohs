@@ -2,7 +2,7 @@
 
 import { MotionConfig } from "motion/react";
 import { useEffect } from "react";
-import { toast } from "sonner";
+import { BurstBanner } from "@/components/app/burst-banner";
 import { LangProvider } from "@/lib/i18n";
 import { persistStorage } from "@/lib/store/db";
 import { startSync, syncQueued } from "@/lib/sync";
@@ -27,16 +27,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
         .catch(() => {});
     }
     persistStorage();
-    const toastSent = (r: { sent: number }) => {
-      if (r.sent) toast.success(`✓ ${r.sent}`);
-    };
-    syncQueued().then(toastSent); // app start: also (re)queues anything saved before the outbox existed
-    return startSync(toastSent); // pageshow, online, visible, every 60 s
+    syncQueued(); // app start: also (re)queues anything saved before the outbox existed
+    return startSync(); // pageshow, online, visible, every 60 s. <BurstBanner/> tells the farmer what each window achieved.
   }, []);
 
   return (
     <LangProvider>
       <MotionConfig reducedMotion="user">{children}</MotionConfig>
+      <BurstBanner />
     </LangProvider>
   );
 }

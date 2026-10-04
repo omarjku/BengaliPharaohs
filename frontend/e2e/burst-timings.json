@@ -1,0 +1,25 @@
+{
+ "rtt_added_ms": 300,
+ "window_ms": 1822,
+ "api_calls": 7,
+ "report": {
+  "started_at": "2026-10-04T03:47:17.170Z",
+  "ms": 1611,
+  "budget_ms": 15000,
+  "sent": {
+   "facts": 1,
+   "thumbs": 1,
+   "photos": 1,
+   "voice": 0
+  },
+  "received": [
+   "case_replies",
+   "flood",
+   "forecast"
+  ],
+  "new_replies": 1,
+  "bytes_up": 45570,
+  "bytes_down": 1150,
+  "stopped_by_budget": false
+ }
+}

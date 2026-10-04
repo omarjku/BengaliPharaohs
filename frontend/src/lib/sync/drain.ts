@@ -236,7 +236,7 @@ export async function getLastSyncReport(): Promise<SyncReport | null> {
 
 /** One connection window. Plan: (a) probe <=2 s, (b) /api/burst, (c) thumbs, (d) voice/photos if the time and measured speed allow,
  *  (e) stop at the deadline; whatever is not confirmed stays queued for the next window. */
-async function run(force: boolean, budgetMs?: number): Promise<DrainResult> {
+async function run(force: boolean, budgetMs?: number, forceUpazila?: string): Promise<DrainResult> {
   const t0 = Date.now();
   const onWifi = (navigator as unknown as { connection?: { type?: string } }).connection?.type === "wifi";
   const budget = budgetMs ?? (onWifi ? 120_000 : BURST_BUDGET_MS);
@@ -260,7 +260,7 @@ async function run(force: boolean, budgetMs?: number): Promise<DrainResult> {
   let failed = false;
   const due = async (kind: OutboxItem["kind"]) =>
     (await listOutbox()).filter((i) => i.state === "queued" && i.kind === kind && (force || i.next_at <= Date.now())).sort((a, b) => a.created_at - b.created_at);
-  const upazila = (await getProfile().catch(() => ({}) as { upazila?: string })).upazila;
+  const upazila = forceUpazila ?? (await getProfile().catch(() => ({}) as { upazila?: string })).upazila;
 
   // (b) one round trip: up to 20 facts + the changed pack parts. A pack-only burst when there is nothing to send, but not every minute.
   const lastBurst = (await getKv<number>("burst_last_at")) ?? 0;
@@ -340,18 +340,21 @@ async function run(force: boolean, budgetMs?: number): Promise<DrainResult> {
 let lastBandwidthAt = 0;
 
 let running = false;
-/** One drain at a time, across tabs where Web Locks exist. Never throws. */
-export async function drain(opts: { force?: boolean; budgetMs?: number } = {}): Promise<DrainResult> {
+/** One drain at a time, across tabs where Web Locks exist. Never throws.
+ *  `wait`: queue behind a drain that is already running instead of returning at once (the area news uses this, so only one request fetches the pack).
+ *  `upazila`: fetch this area's pack instead of the profile's. */
+export async function drain(opts: { force?: boolean; budgetMs?: number; wait?: boolean; upazila?: string } = {}): Promise<DrainResult> {
   const guarded = async (): Promise<DrainResult> => {
     try {
-      return await run(!!opts.force, opts.budgetMs);
+      return await run(!!opts.force, opts.budgetMs, opts.upazila);
     } catch {
       return { sent: 0, failed: true };
     }
   };
   if (typeof navigator !== "undefined" && navigator.locks) {
-    return (await navigator.locks.request("drain", { ifAvailable: true }, (lock) => (lock ? guarded() : { sent: 0, failed: false }))) as DrainResult;
+    return (await navigator.locks.request("drain", opts.wait ? {} : { ifAvailable: true }, (lock) => (lock ? guarded() : { sent: 0, failed: false }))) as DrainResult;
   }
+  for (let i = 0; opts.wait && running && i < 100; i++) await new Promise((r) => setTimeout(r, 100));
   if (running) return { sent: 0, failed: false };
   running = true;
   try {
