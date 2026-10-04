@@ -81,7 +81,8 @@ When told "new transcript": `git pull`, read the new files in `notes/transcripts
 - Bangladesh + Bangla + rice — Zoha is a native speaker; ~20k BD field rice photos; 2024 Aman flood losses.
 - **No LLM in the farmer's path** (overrides rule 5's "LLM for language" for this challenge) — brief demands a fixed answer list and no hallucinations; advisor = deterministic BRRI rules.
 - Train our own MobileNetV3-Small (no usable ready-made BD model); onnxruntime-web WASM in a PWA; native only if the real-phone test fails.
-- Cut: offline ASR, in-browser TTS, iOS, hispa class, pesticide names/doses, any mention of India/dams on stage.
+- **Reversed Sat night (Omar):** offline Bangla speech-to-text is back in — closed-vocabulary answers only, tap fallback; Vosk Bengali Zipformer int8 (~28 MB, Apache-2.0) via sherpa-onnx WASM; gate test CER 7.8% (`docs/stt-plan.md`). TTS = Zoha's pre-generated ElevenLabs clips (offline playback).
+- Cut: in-browser TTS, iOS, hispa class, pesticide names/doses, any mention of India/dams on stage.
 - Challenge 04 Agriculture over 04 Health and 05 Rare Disease — most demo-able offline story (photo → answer in airplane mode), measurable accuracy, lower medical-safety risk; Seoul prize.
 - SQLite via SQLModel, no database server — simplest thing Omar can debug.
 - SSE streaming for LLM output — the answer appearing live is part of the demo's feel.
