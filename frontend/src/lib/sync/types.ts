@@ -1,7 +1,7 @@
 export type BatchCase = {
   case_id: string;
   created_at: string;
-  kind: "leaf" | "flood" | "drought";
+  kind: "leaf" | "flood" | "drought" | "note";
   upazila: string;
   class: string;
   confidence: number | null;

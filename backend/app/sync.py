@@ -6,11 +6,12 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Request, Response
+from fastapi import APIRouter, BackgroundTasks, Depends, Header, HTTPException, Request, Response
 from pydantic import BaseModel, ConfigDict, Field
 from sqlmodel import Session, select
 
 from .db import get_session
+from . import notes
 from .models import Case, CaseBlob, Reply
 
 router = APIRouter(prefix="/api")
@@ -33,7 +34,7 @@ class CaseIn(BaseModel):
 
     case_id: UUID
     created_at: datetime
-    kind: Literal["leaf", "flood", "drought"]
+    kind: Literal["leaf", "flood", "drought", "note"]
     upazila: str
     class_: str | None = Field(default=None, alias="class")
     confidence: float | None = None
@@ -81,8 +82,9 @@ def store_cases(session: Session, device_id: str, cases: list[CaseIn]) -> tuple[
 
 
 @router.post("/cases/batch")
-def cases_batch(batch: BatchIn, session: Session = Depends(get_session)) -> dict:
+def cases_batch(batch: BatchIn, bg: BackgroundTasks, session: Session = Depends(get_session)) -> dict:
     accepted, rejected = store_cases(session, batch.device_id, batch.cases)
+    notes.schedule(bg, [c for c in batch.cases if str(c.case_id) in accepted])
     return {"accepted": accepted, "rejected": rejected}
 
 
@@ -117,8 +119,10 @@ async def put_photo(case_id: UUID, request: Request, s: Session = Depends(get_se
 
 
 @router.put("/cases/{case_id}/voice")
-async def put_voice(case_id: UUID, request: Request, s: Session = Depends(get_session)) -> dict:
-    return await _put_blob("voice", case_id, request, s)
+async def put_voice(case_id: UUID, request: Request, bg: BackgroundTasks, s: Session = Depends(get_session)) -> dict:
+    out = await _put_blob("voice", case_id, request, s)
+    bg.add_task(notes.answer_note, str(case_id))  # no-op unless it is a voice question whose facts are here
+    return out
 
 
 def _reply_out(r: Reply) -> dict:

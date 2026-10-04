@@ -19,7 +19,7 @@ function pickMime(): string | undefined {
  * The farmer records up to 30 s in their own words for the SAAO. Nothing is transcribed (offline Bangla speech
  * recognition doesn't fit a cheap phone); a person listens. Works offline; stays on the phone unless shared.
  */
-export function VoiceNote({ caseId, readOnly, onChange }: { caseId: string; readOnly?: boolean; onChange: (has: boolean) => void }) {
+export function VoiceNote({ caseId, readOnly, onChange, title, hint }: { caseId: string; readOnly?: boolean; onChange: (has: boolean) => void; title?: string; hint?: string }) {
   const { t, lang } = useLang();
   const [url, setUrl] = useState<string | null>(null);
   const [recording, setRecording] = useState(false);
@@ -96,11 +96,11 @@ export function VoiceNote({ caseId, readOnly, onChange }: { caseId: string; read
     <section className="rounded-3xl border bg-card p-4">
       <div className="mb-1 flex items-center justify-between gap-3">
         <h3 className="flex items-center gap-2 font-semibold">
-          <Mic className="size-5 text-primary" /> {t("voice_title")}
+          <Mic className="size-5 text-primary" /> {title ?? t("voice_title")}
         </h3>
-        {!readOnly && <Speak clip="Q-VOICE" />}
+        {!readOnly && !title && <Speak clip="Q-VOICE" />}
       </div>
-      {!readOnly && <p className="mb-3 text-sm text-muted-foreground">{t("voice_hint")}</p>}
+      {!readOnly && <p className="mb-3 text-sm text-muted-foreground">{hint ?? t("voice_hint")}</p>}
 
       {url && !recording && (
         <div className="flex flex-col gap-2">

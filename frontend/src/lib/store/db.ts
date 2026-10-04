@@ -30,8 +30,8 @@ export type OutboxItem = {
 export type CaseRecord = {
   id: string; // anonymous uuid
   created_at: string;
-  kind: "leaf" | "flood" | "drought";
-  card: CardId;
+  kind: "leaf" | "flood" | "drought" | "note";
+  card: CardId | "NOTE"; // NOTE = a voice question (no card; the answer comes back as a reply)
   date_used: string;
   simulated_date: boolean;
   upazila?: string;

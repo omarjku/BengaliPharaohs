@@ -270,6 +270,24 @@ export const S = {
   voice_saved: { bn: "আপনার কথা রাখা হয়েছে", en: "Your voice note is saved" },
   voice_no_mic: { bn: "মাইক্রোফোন চালু করা যায়নি। ফোনের সেটিংসে অনুমতি দিন।", en: "Could not use the microphone. Allow it in the phone settings." },
   share_voice: { bn: "আমার কথার রেকর্ডও পাঠান", en: "Also send my voice note" },
+  // Voice question (any time, answered online). Claude draft — Zoha to check the Bangla.
+  home_note: { bn: "মুখে প্রশ্ন করুন", en: "Ask by voice" },
+  home_note_sub: { bn: "খেতের যেকোনো কথা বলুন — নেট পেলে উত্তর আসবে", en: "Say anything about your farm — the answer comes when online" },
+  note_title: { bn: "আপনার প্রশ্ন বা কথা", en: "Your question or note" },
+  note_intro: {
+    bn: "নেট না থাকলেও রেকর্ড করুন। ফোনে রাখা থাকবে, নেট পেলে নিজে থেকেই যাবে। উত্তর আসবে “আমার কেস”-এ।",
+    en: "Record even without internet. It stays on the phone and goes by itself when there is a connection. The answer appears in My cases.",
+  },
+  note_hint: { bn: "৩০ সেকেন্ড পর্যন্ত, নিজের ভাষায়।", en: "Up to 30 seconds, in your own words." },
+  note_ai_warning: {
+    bn: "উত্তর দেবে কম্পিউটার, ভুল হতে পারে। আপনার কৃষি অফিসারও রেকর্ডটা দেখবেন।",
+    en: "A computer writes the answer and it can be wrong. Your SAAO also gets the recording.",
+  },
+  note_send: { bn: "রাখুন ও পাঠান", en: "Save and send" },
+  note_saved: { bn: "রাখা হয়েছে। নেট পেলে যাবে।", en: "Saved. It will go when there is a connection." },
+  note_case: { bn: "আপনার মুখের প্রশ্ন", en: "Your voice question" },
+  note_waiting: { bn: "উত্তরের অপেক্ষায়", en: "Waiting for the answer" },
+  ai_answered: { bn: "কম্পিউটারের উত্তর (ভুল হতে পারে)", en: "Computer answer (can be wrong)" },
   saao_voice: { bn: "কৃষকের কথা", en: "Farmer's voice note" },
   // Crop calendar
   home_calendar: { bn: "ফসলের ক্যালেন্ডার", en: "Crop calendar" },

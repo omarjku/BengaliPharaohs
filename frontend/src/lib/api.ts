@@ -159,7 +159,7 @@ export type SyncCase = {
   output_code: string;
   consent: true;
   card?: string;
-  kind?: "leaf" | "flood" | "drought";
+  kind?: "leaf" | "flood" | "drought" | "note";
   date_used?: string;
   simulated_date?: boolean;
   photo_jpeg_b64?: string;

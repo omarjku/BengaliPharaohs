@@ -9,7 +9,7 @@ load_dotenv()
 
 from datetime import datetime, timezone  # noqa: E402
 
-from fastapi import Depends, FastAPI, HTTPException, Response  # noqa: E402
+from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Response  # noqa: E402
 from pydantic import BaseModel, Field  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 from fastapi.middleware.gzip import GZipMiddleware  # noqa: E402
@@ -17,7 +17,7 @@ from fastapi.responses import StreamingResponse  # noqa: E402
 from sqlmodel import Session, select  # noqa: E402
 
 from .db import engine, get_session, init_db  # noqa: E402
-from . import pack, sync  # noqa: E402
+from . import notes, pack, sync  # noqa: E402
 from .llm import provider, stream_text  # noqa: E402
 from .models import Run, RunOut, RunRequest  # noqa: E402
 
@@ -70,10 +70,11 @@ class BurstIn(BaseModel):
 
 
 @app.post("/api/burst")
-def burst(req: BurstIn, session: Session = Depends(get_session)) -> dict:
+def burst(req: BurstIn, bg: BackgroundTasks, session: Session = Depends(get_session)) -> dict:
     """ONE round trip for a short connection window: store the farmer's cases AND return the pack parts that
     changed. Cases are saved first and never lost if the pack part fails (unknown upazila -> pack null)."""
     accepted, rejected = sync.store_cases(session, req.device_id, req.cases)
+    notes.schedule(bg, [c for c in req.cases if str(c.case_id) in accepted])
     pack_out = None
     if req.upazila:
         try:

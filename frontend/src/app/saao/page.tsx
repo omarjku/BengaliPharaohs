@@ -49,7 +49,7 @@ function Thumb({ c, unsure }: { c: ServerCase; unsure: boolean }) {
     <img src={src} alt="" className="size-14 shrink-0 rounded-xl object-cover" />
   ) : (
     <span className={cn("flex size-14 shrink-0 items-center justify-center rounded-xl text-2xl", unsure ? "bg-unsure-soft" : "bg-secondary")}>
-      {unsure ? <CircleHelp className="size-7 text-unsure" /> : c.kind === "leaf" ? "🍃" : "🌊"}
+      {unsure ? <CircleHelp className="size-7 text-unsure" /> : c.kind === "leaf" ? "🍃" : c.kind === "note" ? "🎙️" : "🌊"}
     </span>
   );
 }
@@ -199,7 +199,7 @@ export default function SaaoPage() {
                     <Thumb c={c} unsure={unsure} />
                     <span className="min-w-0 flex-1">
                       <span className="flex flex-wrap items-center gap-1.5">
-                        <span className="font-semibold">{tx(card?.title)}</span>
+                        <span className="font-semibold">{c.kind === "note" ? t("note_case") : tx(card?.title)}</span>
                         {c.kind === "leaf" && c.class && c.class !== "n/a" && (
                           <span className="rounded-full bg-secondary px-2 text-xs font-medium">{labelName(c.class, lang)}</span>
                         )}

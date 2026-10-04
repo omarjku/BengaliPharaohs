@@ -203,7 +203,7 @@ function ResultView() {
   }, [id]);
 
   const card: RenderedCard | null = useMemo(() => {
-    if (!c) return null;
+    if (!c || c.card === "NOTE") return null; // voice questions have no card; they live on the Cases list
     if (c.advisor) {
       const inp = c.advisor_input;
       const v = varietyById(variety);

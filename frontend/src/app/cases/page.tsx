@@ -37,7 +37,7 @@ function Thumb({ id, kind }: { id: string; kind: CaseRecord["kind"] }) {
     // eslint-disable-next-line @next/next/no-img-element
     <img src={url} alt="" loading="lazy" decoding="async" className="size-14 shrink-0 rounded-xl object-cover" />
   ) : (
-    <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-secondary text-2xl">{kind === "drought" ? "☀️" : kind === "flood" ? "🌊" : "🍃"}</span>
+    <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-secondary text-2xl">{kind === "note" ? "🎙️" : kind === "drought" ? "☀️" : kind === "flood" ? "🌊" : "🍃"}</span>
   );
 }
 
@@ -47,7 +47,7 @@ export default function CasesPage() {
   const [cases, setCases] = useState<CaseRecord[] | null>(null);
   const [syncing, setSyncing] = useState(false);
   const [blocked, setBlocked] = useState(false); // an old copy of the app in another tab holds the database
-  const [replies, setReplies] = useState<Record<string, string>>({}); // case_id -> the SAAO's latest reply
+  const [replies, setReplies] = useState<Record<string, { text: string; by: string }>>({}); // case_id -> latest reply (SAAO, or "ai" for voice questions)
   const reload = useCallback(() => listCases().then(setCases).catch(() => setCases((c) => c ?? [])), []);
   useEffect(() => {
     reload();
@@ -59,8 +59,8 @@ export default function CasesPage() {
   useEffect(() => {
     const read = async () => {
       const p = await getPack();
-      const list = (p?.parts.case_replies?.data as { replies?: { case_id: string; text: string }[] } | undefined)?.replies ?? [];
-      setReplies(Object.fromEntries(list.map((r) => [r.case_id, r.text]))); // later replies overwrite earlier ones
+      const list = (p?.parts.case_replies?.data as { replies?: { case_id: string; text: string; by: string }[] } | undefined)?.replies ?? [];
+      setReplies(Object.fromEntries(list.map((r) => [r.case_id, r]))); // later replies overwrite earlier ones
     };
     read();
     window.addEventListener(PACK_EVENT, read);
@@ -104,25 +104,29 @@ export default function CasesPage() {
         <ul className="flex flex-col gap-2.5">
           {cases.map((c) => {
             const st = STATUS[c.share];
+            const note = c.kind === "note"; // voice question: no result page, the answer shows right here
+            const r = replies[c.id];
+            const Row = note ? "div" : Link;
             return (
               <li key={c.id}>
-                <Link href={`/result/?id=${c.id}`} className="flex items-center gap-3 rounded-2xl border bg-card p-2.5 pr-3 active:bg-muted">
+                <Row href={`/result/?id=${c.id}`} className="flex items-center gap-3 rounded-2xl border bg-card p-2.5 pr-3 active:bg-muted">
                   <Thumb id={c.id} kind={c.kind} />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate font-semibold">{tx(CARDS.cards[c.card]?.title)}</span>
+                    <span className="block truncate font-semibold">{c.card === "NOTE" ? t("note_case") : tx(CARDS.cards[c.card]?.title)}</span>
                     <span className="block text-sm text-muted-foreground">
                       {formatDate(c.created_at.slice(0, 10), lang)}
                       {c.simulated_date && ` · ${t("simulated")}`}
                     </span>
                     <span className={cn("mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-semibold", st.cls)}>{t(st.key)}</span>
-                    {replies[c.id] && (
-                      <span className="mt-1.5 block rounded-xl bg-ok-soft px-2.5 py-1.5 text-sm text-ok">
-                        <b>{t("saao_replied")}:</b> {replies[c.id]}
+                    {r && (
+                      <span className={cn("mt-1.5 block whitespace-pre-line rounded-xl px-2.5 py-1.5 text-sm", r.by === "ai" ? "bg-unsure-soft text-unsure" : "bg-ok-soft text-ok")}>
+                        <b>{t(r.by === "ai" ? "ai_answered" : "saao_replied")}:</b> {r.text}
                       </span>
                     )}
+                    {note && !r && c.share === "synced" && <span className="mt-1.5 block text-sm text-muted-foreground">{t("note_waiting")}…</span>}
                   </span>
-                  <ChevronRight className="size-5 text-muted-foreground" />
-                </Link>
+                  {!note && <ChevronRight className="size-5 text-muted-foreground" />}
+                </Row>
               </li>
             );
           })}

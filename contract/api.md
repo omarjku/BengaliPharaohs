@@ -28,7 +28,7 @@ Unchanged body. Adds headers `Cache-Control: no-store`, `X-Health: 1` (captive-p
 
 ### POST /api/cases/batch
 Request `{"device_id": string, "cases": [CaseIn]}`, max 20 cases (`422` above). Upsert by `case_id`, so a retry is harmless.
-`CaseIn = {"case_id": uuid, "created_at": iso, "kind": "leaf"|"flood"|"drought", "upazila": code, "class": string|null, "confidence": number|null, "taps": object, "output_code": string, "card": string, "date_used": string, "simulated_date": bool, "consent": bool, "has_thumb": bool, "has_photo": bool, "has_voice": bool}`
+`CaseIn = {"case_id": uuid, "created_at": iso, "kind": "leaf"|"flood"|"drought"|"note", "upazila": code, "class": string|null, "confidence": number|null, "taps": object, "output_code": string, "card": string, "date_used": string, "simulated_date": bool, "consent": bool, "has_thumb": bool, "has_photo": bool, "has_voice": bool}`
 `200 {"accepted": [case_id], "rejected": [{"case_id", "reason"}]}`. `consent != true` is rejected with reason `"no_consent"`.
 
 ### PUT /api/cases/{case_id}/thumb | /photo | /voice
@@ -60,3 +60,9 @@ Response `{"accepted": [case_id], "rejected": [{case_id, reason}], "pack": null 
 - `prices`: `{"unit": "Tk/maund", "paddy": [{"market", "tk"}]}` (2 markets)
 - `case_replies`: `{"replies": [Reply]}` for cases of `device_id` (empty without it); `seeded: false`
 - `rules`, `cards`: `{"name", "version", "hash"}` only; the files are bundled in the app
+
+## Voice questions (`kind: "note"`, `card: "NOTE"`)
+The farmer records a question offline; it syncs like any case (facts + `PUT /voice`). When both have arrived and the
+server has `OPENAI_API_KEY`, it transcribes (Bangla) and an LLM writes a short answer, stored as a Reply with
+`"by": "ai"` (text = `“transcript”\nanswer`) and `taps.transcript` on the case. It reaches the phone through the
+`case_replies` pack part like a SAAO reply. No key -> no AI reply; the SAAO answers by hand.
