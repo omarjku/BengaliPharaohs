@@ -37,6 +37,9 @@ app.add_middleware(
     allow_origin_regex=os.getenv("FRONTEND_ORIGIN_REGEX") or None,  # e.g. https://.*\.vercel\.app
     allow_methods=["*"],
     allow_headers=["*"],
+    # Without this the browser hides X-Health/ETag from the cross-origin app (Vercel -> Railway): the phone then
+    # thinks every connection is a captive portal and never syncs.
+    expose_headers=["X-Health", "ETag", "Retry-After"],
 )
 
 

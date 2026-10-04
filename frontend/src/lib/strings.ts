@@ -290,6 +290,13 @@ export const S = {
   selfcheck_title: { bn: "অফলাইন পরীক্ষা", en: "Offline self-check" },
   selfcheck_ok: { bn: "সব ফাইল ফোনে আছে। ইন্টারনেট ছাড়াই চলবে।", en: "Every file is on the phone. Works without internet." },
   selfcheck_dev: { bn: "ডেভেলপমেন্ট মোডে অফলাইন বন্ধ থাকে", en: "Offline caching is off in development mode" },
+  // QA additions (SAAO dashboard: reply, wrong code, empty)
+  saao_reply_ph: { bn: "ছোট উত্তর লিখুন (সর্বোচ্চ ৫০০ অক্ষর)", en: "Write a short reply (max 500 characters)" },
+  saao_reply_send: { bn: "উত্তর পাঠান", en: "Send reply" },
+  saao_reply_failed: { bn: "পাঠানো যায়নি — আবার চেষ্টা করুন", en: "Could not send — try again" },
+  saao_replied: { bn: "কৃষি অফিসারের উত্তর", en: "SAAO replied" },
+  saao_wrong_code: { bn: "কোডটি ঠিক নয়। রিফ্রেশ করে আবার দিন।", en: "That SAAO code was not accepted. Tap Refresh to enter it again." },
+  saao_empty: { bn: "এখনো কোনো কেস আসেনি", en: "No cases received yet" },
 } as const;
 
 export type StringKey = keyof typeof S;
