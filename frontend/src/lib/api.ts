@@ -106,9 +106,24 @@ export async function listRuns(): Promise<Run[]> {
   return res.ok ? res.json() : [];
 }
 
-/** Patchy 2G/3G: never wait forever. Combines the caller's signal with a timeout. */
-const withTimeout = (signal: AbortSignal | undefined, ms: number) =>
-  signal ? AbortSignal.any([signal, AbortSignal.timeout(ms)]) : AbortSignal.timeout(ms);
+/** AbortSignal.timeout() needs Chrome 103+; older Android WebViews would throw and the app would never sync or load the pack. */
+export function timeoutSignal(ms: number): AbortSignal {
+  if (typeof AbortSignal.timeout === "function") return AbortSignal.timeout(ms);
+  const c = new AbortController();
+  setTimeout(() => c.abort(), ms);
+  return c.signal;
+}
+
+/** Patchy 2G/3G: never wait forever. Combines the caller's signal with a timeout (AbortSignal.any needs Chrome 116+). */
+const withTimeout = (signal: AbortSignal | undefined, ms: number) => {
+  if (!signal) return timeoutSignal(ms);
+  if (typeof AbortSignal.any === "function") return AbortSignal.any([signal, timeoutSignal(ms)]);
+  const c = new AbortController();
+  const stop = () => c.abort();
+  signal.aborted ? stop() : signal.addEventListener("abort", stop, { once: true });
+  timeoutSignal(ms).addEventListener("abort", stop, { once: true });
+  return c.signal;
+};
 
 // ---- Rice app endpoints: PROPOSED in contract/api.md (agree with Omar, then mark AGREED) ----
 
@@ -160,13 +175,43 @@ export async function syncCases(device_id: string, cases: SyncCase[]): Promise<S
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ device_id, cases }),
-    signal: AbortSignal.timeout(20000),
+    signal: timeoutSignal(20000),
   });
   if (!res.ok) throw new Error(`Sync failed: ${res.status}`);
   return res.json();
 }
 
-export type ServerCase = SyncCase & { received_at: string; seeded?: boolean };
+export type CaseReply = { id: number; case_id: string; text: string; by: string; created_at: string };
+export type ServerCase = SyncCase & {
+  received_at: string;
+  seeded?: boolean;
+  /** Which files the server holds (GET /api/cases/{id}/thumb|photo|voice, SAAO code needed). */
+  blobs?: { thumb: boolean; photo: boolean; voice: boolean };
+  reply?: CaseReply | null;
+};
+
+/** One stored file of a case as a Blob (the files need the SAAO code header, so <img src> cannot fetch them). Null if missing. */
+export async function fetchCaseBlob(caseId: string, kind: "thumb" | "photo" | "voice", signal?: AbortSignal): Promise<Blob | null> {
+  try {
+    const res = await fetch(`${API_URL}/api/cases/${encodeURIComponent(caseId)}/${kind}`, { headers: saaoHeaders(), signal: withTimeout(signal, 20000) });
+    return res.ok ? await res.blob() : null;
+  } catch {
+    return null;
+  }
+}
+
+/** POST /api/cases/{id}/reply — the SAAO's short answer; shows up on the farmer's phone via the pack's case_replies. */
+export async function postReply(caseId: string, text: string): Promise<CaseReply> {
+  const res = await fetch(`${API_URL}/api/cases/${encodeURIComponent(caseId)}/reply`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...saaoHeaders() },
+    body: JSON.stringify({ text, by: "saao" }),
+    signal: timeoutSignal(10000),
+  });
+  if (res.status === 401) forgetSaaoCode();
+  if (!res.ok) throw new Error(`Backend returned ${res.status}.`);
+  return res.json();
+}
 
 /** GET /api/cases — SAAO dashboard, newest first. Throws if the backend is unreachable. */
 export async function listServerCases(upazila?: string, signal?: AbortSignal): Promise<ServerCase[]> {

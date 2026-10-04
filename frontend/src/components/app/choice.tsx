@@ -30,7 +30,7 @@ export function Speak({ clip, className }: { clip: string; className?: string })
       aria-label={t("speak_question")}
       aria-pressed={on}
       className={cn(
-        "inline-flex size-11 shrink-0 items-center justify-center rounded-full transition-colors",
+        "inline-flex size-12 shrink-0 items-center justify-center rounded-full transition-colors",
         on ? "bg-primary text-primary-foreground" : "bg-secondary text-primary hover:bg-secondary/70",
         className,
       )}

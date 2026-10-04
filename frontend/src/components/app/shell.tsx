@@ -34,7 +34,7 @@ function LangToggle() {
           onClick={() => setLang(l)}
           aria-pressed={lang === l}
           className={cn(
-            "min-h-9 min-w-11 rounded-full px-2.5 transition-colors",
+            "min-h-11 min-w-12 rounded-full px-2.5 transition-colors",
             lang === l ? "bg-primary-foreground text-primary" : "text-primary-foreground/85",
           )}
         >
@@ -79,11 +79,11 @@ export function AppShell({
       <header className="sticky top-0 z-30 bg-primary text-primary-foreground shadow-sm pt-[env(safe-area-inset-top)]">
         <div className={cn("mx-auto flex h-14 w-full items-center gap-2 px-3", wide ? "max-w-6xl" : "max-w-2xl")}>
           {onBack ? (
-            <button type="button" onClick={onBack} aria-label={t("back")} className="-ml-1 flex size-11 items-center justify-center rounded-full active:bg-white/15">
+            <button type="button" onClick={onBack} aria-label={t("back")} className="-ml-1 flex size-12 items-center justify-center rounded-full active:bg-white/15">
               <ChevronLeft className="size-7" />
             </button>
           ) : back ? (
-            <Link href={back} aria-label={t("back")} className="-ml-1 flex size-11 items-center justify-center rounded-full active:bg-white/15">
+            <Link href={back} aria-label={t("back")} className="-ml-1 flex size-12 items-center justify-center rounded-full active:bg-white/15">
               <ChevronLeft className="size-7" />
             </Link>
           ) : (

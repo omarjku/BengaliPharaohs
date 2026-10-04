@@ -17,7 +17,8 @@ async function add(case_id: string, kind: OutboxKind, bytes: number) {
 export async function enqueue(c: CaseRecord): Promise<void> {
   if (!c.consent) return;
   await add(c.id, "facts", FACTS_BYTES);
-  if (c.share_photo && (await prepareImages(c.id))) {
+  // A photo the browser cannot re-encode (HEIC, corrupt, no memory) must not block the facts or the voice note.
+  if (c.share_photo && !(await getOutbox(`${c.id}:thumb`)) && (await prepareImages(c.id).catch(() => false))) {
     await add(c.id, "thumb", (await getBlob(thumbKey(c.id)))?.size ?? 0);
     await add(c.id, "photo", (await getBlob(photoKey(c.id)))?.size ?? 0);
   }

@@ -31,7 +31,8 @@ export const S = {
   change: { bn: "বদলান", en: "Change" },
   your_field: { bn: "আপনার জমি", en: "Your field" },
   followup_title: { bn: "আর দু-একটা প্রশ্ন", en: "A couple more questions" },
-  followup_sub: { bn: "ছবিটা দুটো সমস্যার মাঝামাঝি — এই উত্তরগুলো পার্থক্য বুঝতে সাহায্য করবে", en: "The photo could be one of two problems — these answers help tell them apart" },
+  // Claude draft for Zoha: says why we ask, that it is the last step, and that "জানি না" is fine.
+  followup_sub: { bn: "ছবি দেখে দুটো সমস্যার কোনটা তা পরিষ্কার নয়। শেষ এই ২-৩টা উত্তর দিলে পরামর্শ আরও ঠিক হবে। না জানলে \"জানি না\" চাপুন।", en: "The photo alone can't tell which of two problems it is. Last 2–3 answers make the advice more accurate. Not sure? Tap \"Don't know\"." },
   db_blocked: { bn: "অ্যাপটি অন্য একটি ট্যাব বা উইন্ডোতেও খোলা আছে — সেটি বন্ধ করে আবার চেষ্টা করুন", en: "The app is also open in another tab or window — close it and try again" },
   photo_not_saved: { bn: "ছবিটা ফোনে রাখা যায়নি, তবু পরীক্ষা চলছে", en: "Couldn't keep the photo on the phone, but the check continues" },
   // Claude draft (Zoha to check): model loading stages and failure
@@ -294,6 +295,13 @@ export const S = {
   selfcheck_title: { bn: "অফলাইন পরীক্ষা", en: "Offline self-check" },
   selfcheck_ok: { bn: "সব ফাইল ফোনে আছে। ইন্টারনেট ছাড়াই চলবে।", en: "Every file is on the phone. Works without internet." },
   selfcheck_dev: { bn: "ডেভেলপমেন্ট মোডে অফলাইন বন্ধ থাকে", en: "Offline caching is off in development mode" },
+  // QA additions (SAAO dashboard: reply, wrong code, empty)
+  saao_reply_ph: { bn: "ছোট উত্তর লিখুন (সর্বোচ্চ ৫০০ অক্ষর)", en: "Write a short reply (max 500 characters)" },
+  saao_reply_send: { bn: "উত্তর পাঠান", en: "Send reply" },
+  saao_reply_failed: { bn: "পাঠানো যায়নি — আবার চেষ্টা করুন", en: "Could not send — try again" },
+  saao_replied: { bn: "কৃষি অফিসারের উত্তর", en: "SAAO replied" },
+  saao_wrong_code: { bn: "কোডটি ঠিক নয়। রিফ্রেশ করে আবার দিন।", en: "That SAAO code was not accepted. Tap Refresh to enter it again." },
+  saao_empty: { bn: "এখনো কোনো কেস আসেনি", en: "No cases received yet" },
 } as const;
 
 export type StringKey = keyof typeof S;
