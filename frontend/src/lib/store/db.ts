@@ -13,6 +13,19 @@ export type Profile = {
 
 export type ShareState = "local" | "queued" | "synced" | "failed";
 
+export type OutboxKind = "facts" | "thumb" | "voice" | "photo" | "log";
+export type OutboxItem = {
+  id: string; // `${case_id}:${kind}` so enqueue is idempotent
+  case_id: string;
+  tier: 0 | 1 | 2 | 3 | 4;
+  kind: OutboxKind;
+  state: "queued" | "sending" | "done" | "failed";
+  attempts: number;
+  next_at: number; // epoch ms
+  bytes: number;
+  created_at: number;
+};
+
 export type CaseRecord = {
   id: string; // anonymous uuid
   created_at: string;
@@ -45,15 +58,20 @@ interface Schema extends DBSchema {
   kv: { key: string; value: unknown };
   cases: { key: string; value: CaseRecord; indexes: { by_created: string } };
   photos: { key: string; value: Blob };
+  outbox: { key: string; value: OutboxItem; indexes: { by_case: string } };
 }
 
 let dbp: Promise<IDBPDatabase<Schema>> | null = null;
 function db() {
-  dbp ??= openDB<Schema>("dhansathi", 1, {
-    upgrade(d) {
-      d.createObjectStore("kv");
-      d.createObjectStore("cases", { keyPath: "id" }).createIndex("by_created", "created_at");
-      d.createObjectStore("photos");
+  dbp ??= openDB<Schema>("dhansathi", 2, {
+    upgrade(d, oldVersion) {
+      if (oldVersion < 1) {
+        d.createObjectStore("kv");
+        d.createObjectStore("cases", { keyPath: "id" }).createIndex("by_created", "created_at");
+        d.createObjectStore("photos");
+      }
+      // v2: upload outbox (existing data is kept).
+      if (oldVersion < 2) d.createObjectStore("outbox", { keyPath: "id" }).createIndex("by_case", "case_id");
     },
   });
   return dbp;
@@ -79,6 +97,7 @@ export async function deleteAllCases() {
   const d = await db();
   await d.clear("cases");
   await d.clear("photos");
+  await d.clear("outbox");
 }
 
 export async function savePhoto(id: string, blob: Blob) {
@@ -98,6 +117,28 @@ export async function getVoice(id: string) {
 }
 export async function deleteVoice(id: string) {
   await (await db()).delete("photos", voiceKey(id));
+}
+
+export async function getKv<T>(key: string): Promise<T | undefined> {
+  return (await (await db()).get("kv", key)) as T | undefined;
+}
+export async function setKv(key: string, v: unknown) {
+  await (await db()).put("kv", v, key);
+}
+export async function putBlob(key: string, blob: Blob) {
+  await (await db()).put("photos", blob, key);
+}
+export async function getBlob(key: string) {
+  return (await db()).get("photos", key);
+}
+export async function putOutbox(item: OutboxItem) {
+  await (await db()).put("outbox", item);
+}
+export async function getOutbox(id: string) {
+  return (await db()).get("outbox", id);
+}
+export async function listOutbox(): Promise<OutboxItem[]> {
+  return (await db()).getAll("outbox");
 }
 
 /** Ask the browser not to evict our data (cases + cached model) under storage pressure. */

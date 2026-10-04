@@ -7,12 +7,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from fastapi import Depends, FastAPI  # noqa: E402
+from fastapi import Depends, FastAPI, Response  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
+from fastapi.middleware.gzip import GZipMiddleware  # noqa: E402
 from fastapi.responses import StreamingResponse  # noqa: E402
 from sqlmodel import Session, select  # noqa: E402
 
 from .db import engine, get_session, init_db  # noqa: E402
+from . import pack, sync  # noqa: E402
 from .llm import provider, stream_text  # noqa: E402
 from .models import Run, RunOut, RunRequest  # noqa: E402
 
@@ -24,6 +26,7 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(title="Hack-Nation API", lifespan=lifespan)
+app.add_middleware(GZipMiddleware, minimum_size=500)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -41,9 +44,22 @@ def sse(event: str, data: dict) -> str:
     return f"event: {event}\ndata: {json.dumps(data)}\n\n"
 
 
+app.include_router(sync.router)
+app.include_router(pack.router)
+
+
 @app.get("/api/health")
-def health() -> dict:
+def health(response: Response) -> dict:
+    # no-store + X-Health let the phone tell a real answer from a captive-portal page.
+    response.headers["Cache-Control"] = "no-store"
+    response.headers["X-Health"] = "1"
     return {"ok": True, "provider": provider()}
+
+
+@app.get("/api/probe.bin")
+def probe() -> Response:
+    """32 KB of random bytes (incompressible) so the phone can measure real throughput."""
+    return Response(os.urandom(32768), media_type="application/octet-stream", headers={"Cache-Control": "no-store"})
 
 
 @app.post("/api/run")

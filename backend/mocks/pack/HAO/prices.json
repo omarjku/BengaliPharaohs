@@ -1,0 +1,19 @@
+{
+ "source": "SEEDED (stand-in for DAM)",
+ "fetched_at": "2026-10-04T06:00:00+06:00",
+ "valid_until": "2026-10-11T06:00:00+06:00",
+ "seeded": true,
+ "data": {
+  "unit": "Tk/maund",
+  "paddy": [
+   {
+    "market": "Sunamganj bazar",
+    "tk": 1160
+   },
+   {
+    "market": "Upazila haat",
+    "tk": 1140
+   }
+  ]
+ }
+}
