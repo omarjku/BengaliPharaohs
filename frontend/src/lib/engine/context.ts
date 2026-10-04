@@ -3,7 +3,7 @@ import type { Region, Season, Stage } from "./types";
 
 export type Unknown = "unknown";
 export const NO_PROBLEM = "no_problem_seen";
-export type Where = "tip_edge" | "middle" | "sheath" | "panicle" | "base" | "whole_plant" | "none";
+export type Where = "tip_edge" | "middle" | "sheath" | "panicle" | "base" | "whole_plant" | "grain" | "none";
 /** Pests Bangladeshi farmers know by name. Only hoppers, leafhoppers and stem borer change the engine; the rest go to the SAAO. */
 export const INSECTS = [
   "green_leafhopper",
@@ -26,6 +26,8 @@ export type LeafAnswers = {
   /** Several places can be affected at once; [] or ["unknown"] = not answered. */
   where?: (Where | Unknown)[];
   pattern?: "one_hill" | "patches" | "whole_field" | "whole_field_dying" | "none" | Unknown;
+  /** Visible mould colour: fungus clue (white = sheath blight, grey = blast, black = sooty mould on insect honeydew, orange = false smut). */
+  mould?: "white" | "grey" | "black" | "orange" | "none" | Unknown;
   first?: "old" | "new" | "none" | Unknown;
   insects?: (Insect | "none" | Unknown)[];
   rain?: "none" | "some" | "heavy" | Unknown;
@@ -81,6 +83,10 @@ export function conditionsFrom(a: LeafAnswers, p: { season?: Season; stage?: Sta
   if (p.stage === "tillering") c.push("stage_tillering");
   if (p.stage === "pi_booting" || p.stage === "flowering" || p.stage === "grain_filling") c.push("stage_heading");
   for (const w of a.where ?? []) if (w !== "unknown" && w !== "none") c.push(`symptom_${w}`);
+  // Grains / husk (e.g. glume blotch, grain discolouration) are not on the leaf: same guard as the panicle.
+  if (a.where?.includes("grain")) c.push("symptom_panicle");
+  if (a.mould && a.mould !== "unknown" && a.mould !== "none") c.push(`mould_${a.mould}`);
+  if (a.mould === "orange") c.push("symptom_panicle"); // false smut balls are on the grains
   // The farmer sees nothing wrong: counts for "healthy" in the cross-check, never for a disease.
   if (a.where?.includes("none") || a.pattern === "none" || a.first === "none") c.push(NO_PROBLEM);
   if (a.pattern && a.pattern !== "unknown" && a.pattern !== "none") {

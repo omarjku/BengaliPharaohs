@@ -13,12 +13,13 @@ export const QUESTION_CLIPS = {
   "Q-SEASON": { q: ["profile_season"], opts: ["season_aman", "season_aus", "season_boro"] },
   "Q-WHERE": {
     q: ["q_where", "pick_many"],
-    opts: ["where_tip_edge", "where_middle", "where_sheath", "where_panicle", "where_base", "where_whole_plant", "where_none"],
+    opts: ["where_tip_edge", "where_middle", "where_sheath", "where_panicle", "where_base", "where_whole_plant", "where_grain", "where_none"],
   },
   "Q-PATTERN": {
     q: ["q_pattern", "q_pattern_hint"],
     opts: ["pattern_one_hill", "pattern_patches", "pattern_whole_field", "pattern_whole_field_dying", "pattern_none"],
   },
+  "Q-MOULD": { q: ["q_mould", "q_mould_hint"], opts: ["mould_white", "mould_grey", "mould_black", "mould_orange", "mould_none"] },
   "Q-FIRST": { q: ["q_first"], opts: ["first_old", "first_new", "first_none"] },
   "Q-INSECTS": {
     q: ["q_insects", "pick_many"],

@@ -48,7 +48,11 @@ const GUARD_ASK: Record<string, string> = {
 };
 
 /** Farmer's own "no problem" answer supports a healthy result (kept in code so knowledge.json stays as reviewed). */
-const EXTRA_FAVOURS: Record<string, string[]> = { healthy: ["no_problem_seen"] };
+const EXTRA_FAVOURS: Record<string, string[]> = {
+  healthy: ["no_problem_seen"],
+  sheath_blight: ["mould_white"], // white cotton-like mycelium near the water (irri_sheathblight)
+  blast: ["mould_grey"], // grey sporulation in the centre of spots (irri_blast)
+};
 
 function score(info: ClassInfo | undefined, ctx: Set<string>, cls?: string) {
   return {

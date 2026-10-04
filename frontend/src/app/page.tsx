@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, ChevronRight, ClipboardList, FolderOpen, Leaf, MapPin, Settings2, Waves } from "lucide-react";
+import { BookOpen, CalendarDays, ChevronRight, ClipboardList, FolderOpen, Leaf, MapPin, Settings2, Waves } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -32,6 +32,7 @@ export default function Home() {
   const tiles = [
     { href: "/check/", icon: Leaf, title: t("home_check"), sub: t("home_check_sub"), tone: "bg-primary text-primary-foreground" },
     { href: "/flood/", icon: Waves, title: t("home_flood"), sub: t("home_flood_sub"), tone: "bg-[oklch(0.45_0.09_230)] text-white" },
+    { href: "/library/", icon: BookOpen, title: t("library_title"), sub: t("library_sub"), tone: "border-2 bg-card text-foreground" },
     { href: "/calendar/", icon: CalendarDays, title: t("home_calendar"), sub: t("home_calendar_sub"), tone: "bg-[oklch(0.62_0.12_75)] text-white" },
     { href: "/cases/", icon: FolderOpen, title: t("home_cases"), sub: t("home_cases_sub"), tone: "border-2 bg-card text-foreground", badge: queued },
   ];

@@ -100,6 +100,12 @@ describe("cross-check X01–X19", () => {
 });
 
 describe("farmer answers → conditions", () => {
+  it("mould colour steers the answer; grains and orange balls are not leaf problems", () => {
+    expect(crossCheck(p("blast", 0.55, "sheath_blight", 0.4), conditionsFrom({ mould: "white" }, {})).support.sheath_blight.favours).toContain("mould_white");
+    expect(crossCheck(p("brown_spot", 0.5, "blast", 0.45), conditionsFrom({ mould: "grey" }, {})).support.blast.favours).toContain("mould_grey");
+    expect(crossCheck(p("blast", 0.9, "brown_spot", 0.05), conditionsFrom({ where: ["grain"] }, {})).decision).toBe("location_guard");
+    expect(crossCheck(p("blast", 0.9, "brown_spot", 0.05), conditionsFrom({ mould: "orange" }, {})).decision).toBe("location_guard");
+  });
   it("'no problem' answers add no disease condition and support healthy", () => {
     const c = conditionsFrom({ where: ["none"], pattern: "none", first: "none" }, {});
     expect(c).toEqual(["no_problem_seen"]);

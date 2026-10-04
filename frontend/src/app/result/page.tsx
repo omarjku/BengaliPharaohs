@@ -238,6 +238,16 @@ function ResultView() {
         </section>
       )}
 
+      {c.answers?.mould === "black" && (
+        <section className="rounded-3xl border-2 border-warn/40 bg-warn-soft/60 p-4">
+          <h3 className="mb-1 font-semibold text-warn">⚫ {t("mould_note_title")}</h3>
+          <p className="text-[15px]">{t("mould_note")}</p>
+          <Link href="/library/#sooty_mould" className="mt-2 inline-block text-sm font-semibold text-primary underline">
+            {t("library_link")}
+          </Link>
+        </section>
+      )}
+
       {pests.length > 0 && (
         <section className="rounded-3xl border-2 border-warn/40 bg-warn-soft/60 p-4">
           <h3 className="mb-1 font-semibold text-warn">🐛 {t("pest_note_title")}</h3>
@@ -334,7 +344,10 @@ function ResultView() {
                 <code className="rounded bg-muted px-1.5">{c.cross.decision}</code>
                 {c.cross.lookalike && (
                   <span className="w-full font-medium">
-                    {lang === "bn" ? "দেখতে মিলতে পারে" : "Could also be"}: {labelName(c.cross.lookalike, lang)}
+                    {lang === "bn" ? "দেখতে মিলতে পারে" : "Could also be"}: {labelName(c.cross.lookalike, lang)}{" "}
+                    <Link href={`/library/#${c.cross.lookalike}`} className="text-primary underline">
+                      {t("library_link")}
+                    </Link>
                   </span>
                 )}
                 {c.cross.reasons.map((r) => (

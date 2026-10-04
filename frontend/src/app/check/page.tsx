@@ -577,6 +577,7 @@ export default function CheckPage() {
                   { value: "panicle", label: t("where_panicle"), icon: "🌾" },
                   { value: "base", label: t("where_base"), icon: "🪴" },
                   { value: "whole_plant", label: t("where_whole_plant"), icon: "🌾" },
+                  { value: "grain", label: t("where_grain"), icon: "🍚" },
                   { value: "none", label: t("where_none"), icon: "✅" },
                 ]}
                 exclusive={["none"]}
@@ -593,6 +594,21 @@ export default function CheckPage() {
                   { value: "whole_field", label: t("pattern_whole_field"), icon: "🌾" },
                   { value: "whole_field_dying", label: t("pattern_whole_field_dying"), hint: t("pattern_whole_field_dying_h"), icon: "🥀" },
                   { value: "none", label: t("pattern_none"), icon: "✅" },
+                ]}
+              />
+              <Choice
+                clip="Q-MOULD"
+                question={t("q_mould")}
+                hint={t("q_mould_hint")}
+                value={a.mould}
+                onChange={(v) => set("mould", v)}
+                cols={1}
+                options={[
+                  { value: "white", label: t("mould_white"), icon: "⚪" },
+                  { value: "grey", label: t("mould_grey"), icon: "🩶" },
+                  { value: "black", label: t("mould_black"), icon: "⚫" },
+                  { value: "orange", label: t("mould_orange"), icon: "🟠" },
+                  { value: "none", label: t("mould_none"), icon: "✅" },
                 ]}
               />
               <BigButton onClick={goNext} disabled={busy}>{t("next")}</BigButton>
