@@ -73,9 +73,30 @@ function db() {
       // v2: upload outbox (existing data is kept).
       if (oldVersion < 2) d.createObjectStore("outbox", { keyPath: "id" }).createIndex("by_case", "case_id");
     },
+    // An older copy of the app (another tab or the installed window) still has the old version open:
+    // the upgrade waits until it closes. Tell the page so it can say so instead of spinning forever.
+    blocked() {
+      if (typeof window !== "undefined") window.dispatchEvent(new Event(DB_BLOCKED_EVENT));
+    },
+    // This copy is the old one and a newer copy wants to upgrade: let go and reload into the new version.
+    blocking() {
+      const old = dbp;
+      dbp = null;
+      void old?.then((d) => d.close());
+      if (typeof window !== "undefined") window.location.reload();
+    },
+    terminated() {
+      dbp = null;
+    },
+  }).catch((e) => {
+    dbp = null; // allow a retry instead of caching the failure
+    throw e;
   });
   return dbp;
 }
+
+/** Window event: the on-phone database is waiting for another open copy of the app to close. */
+export const DB_BLOCKED_EVENT = "dhansathi:db-blocked";
 
 export async function getProfile(): Promise<Profile> {
   return ((await (await db()).get("kv", "profile")) as Profile) ?? {};
