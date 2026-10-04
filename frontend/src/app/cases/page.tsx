@@ -23,12 +23,19 @@ function Thumb({ id, kind }: { id: string; kind: CaseRecord["kind"] }) {
   const [url, setUrl] = useState<string | null>(null);
   useEffect(() => {
     let u: string | null = null;
-    if (kind === "leaf") getPhoto(id).then((b) => b && setUrl((u = URL.createObjectURL(b))));
-    return () => void (u && URL.revokeObjectURL(u));
+    let dead = false;
+    if (kind === "leaf")
+      getPhoto(id)
+        .then((b) => b && !dead && setUrl((u = URL.createObjectURL(b)))) // not after unmount: that URL would leak
+        .catch(() => {});
+    return () => {
+      dead = true;
+      if (u) URL.revokeObjectURL(u);
+    };
   }, [id, kind]);
   return url ? (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={url} alt="" className="size-14 shrink-0 rounded-xl object-cover" />
+    <img src={url} alt="" loading="lazy" decoding="async" className="size-14 shrink-0 rounded-xl object-cover" />
   ) : (
     <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-secondary text-2xl">{kind === "drought" ? "☀️" : kind === "flood" ? "🌊" : "🍃"}</span>
   );
@@ -41,7 +48,7 @@ export default function CasesPage() {
   const [syncing, setSyncing] = useState(false);
   const [blocked, setBlocked] = useState(false); // an old copy of the app in another tab holds the database
   const [replies, setReplies] = useState<Record<string, string>>({}); // case_id -> the SAAO's latest reply
-  const reload = useCallback(() => listCases().then(setCases), []);
+  const reload = useCallback(() => listCases().then(setCases).catch(() => setCases((c) => c ?? [])), []);
   useEffect(() => {
     reload();
     const onBlocked = () => setBlocked(true);
@@ -57,7 +64,7 @@ export default function CasesPage() {
     };
     read();
     window.addEventListener(PACK_EVENT, read);
-    if (online) getProfile().then((p) => p.upazila && refreshPack(p.upazila));
+    if (online) getProfile().then((p) => p.upazila && refreshPack(p.upazila)).catch(() => {});
     return () => window.removeEventListener(PACK_EVENT, read);
   }, [online]);
 

@@ -30,8 +30,12 @@ export function VoiceNote({ caseId, readOnly, onChange }: { caseId: string; read
 
   useEffect(() => {
     let u: string | null = null;
-    getVoice(caseId).then((b) => b && setUrl((u = URL.createObjectURL(b))));
+    let dead = false;
+    getVoice(caseId)
+      .then((b) => b && !dead && setUrl((u = URL.createObjectURL(b)))) // not after unmount: that URL would leak
+      .catch(() => {});
     return () => {
+      dead = true;
       if (u) URL.revokeObjectURL(u);
       if (timer.current) clearInterval(timer.current);
       rec.current?.state === "recording" && rec.current.stop();
@@ -56,7 +60,11 @@ export function VoiceNote({ caseId, readOnly, onChange }: { caseId: string; read
       setRecording(false);
       const blob = new Blob(chunks, { type: r.mimeType || mimeType || "audio/webm" });
       if (!blob.size) return;
-      await saveVoice(caseId, blob);
+      try {
+        await saveVoice(caseId, blob);
+      } catch {
+        return setError(t("save_failed")); // storage full: don't show a note as saved when it is not
+      }
       setUrl((old) => {
         if (old) URL.revokeObjectURL(old);
         return URL.createObjectURL(blob);

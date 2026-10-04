@@ -1,6 +1,7 @@
 "use client";
 
 import { Lock } from "lucide-react";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BigButton, Choice } from "@/components/app/choice";
@@ -27,14 +28,18 @@ export default function ProfilePage() {
     getProfile().then((x) => {
       setP(x);
       setLoaded(true);
-    });
+    }).catch(() => setLoaded(true)); // unreadable storage: show the empty form
   }, []);
 
   const season = p.season ?? seasonFromDate(date);
   const stage = stageFromTransplant(p.transplant_date, date);
 
   async function save() {
-    await saveProfile({ ...p, season });
+    try {
+      await saveProfile({ ...p, season });
+    } catch {
+      return toast.error(t("save_failed")); // storage full: stay on the form, keep what was typed
+    }
     router.push("/");
   }
 
