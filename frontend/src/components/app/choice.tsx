@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, HelpCircle, Square, Volume2 } from "lucide-react";
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import { useEffect, useId, useState } from "react";
 import { toast } from "sonner";
 import { playClips, stopAudio } from "@/lib/audio/play";
@@ -84,7 +84,7 @@ export function Choice<V extends string>({
         {all.map((o) => {
           const on = value === o.value;
           return (
-            <motion.button
+            <m.button
               type="button"
               key={o.value}
               whileTap={{ scale: 0.97 }}
@@ -103,7 +103,7 @@ export function Choice<V extends string>({
                 {o.hint && <span className="mt-0.5 block text-xs font-normal text-muted-foreground">{o.hint}</span>}
               </span>
               {on && <Check className="size-5 shrink-0 text-primary" />}
-            </motion.button>
+            </m.button>
           );
         })}
       </div>
@@ -127,7 +127,7 @@ export function BigButton({
   type?: "button" | "submit";
 }) {
   return (
-    <motion.button
+    <m.button
       type={type}
       whileTap={{ scale: 0.97 }}
       onClick={onClick}
@@ -141,7 +141,7 @@ export function BigButton({
       )}
     >
       {children}
-    </motion.button>
+    </m.button>
   );
 }
 
@@ -202,7 +202,7 @@ export function MultiChoice<V extends string>({
         {all.map((o) => {
           const on = sel.includes(o.value);
           return (
-            <motion.button
+            <m.button
               type="button"
               key={o.value}
               whileTap={{ scale: 0.98 }}
@@ -230,7 +230,7 @@ export function MultiChoice<V extends string>({
                 {o.label}
                 {o.hint && <span className="mt-0.5 block text-xs font-normal text-muted-foreground">{o.hint}</span>}
               </span>
-            </motion.button>
+            </m.button>
           );
         })}
       </div>

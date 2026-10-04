@@ -1,7 +1,8 @@
 "use client";
 
 import { AlertTriangle, Ban, CalendarDays, CheckCircle2, ChevronDown, ChevronLeft, CircleHelp, Eye, FlaskConical, Home, Loader2, Phone, Send, ShieldCheck, Square, Volume2, Leaf } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
@@ -21,6 +22,7 @@ import { LABEL_NAMES, labelName } from "@/lib/labels";
 import { getCase, getPhoto, getProfile, photoKey, saveCase, type CaseRecord } from "@/lib/store/db";
 import type { StringKey } from "@/lib/strings";
 import { syncQueued } from "@/lib/sync";
+import { toast } from "sonner";
 
 const TONE = {
   ok: { box: "bg-ok-soft text-ok border-ok/30", icon: CheckCircle2 },
@@ -81,19 +83,35 @@ function ResultView() {
 
   useEffect(() => {
     if (!id) return setC(null);
-    getCase(id).then(async (x) => {
+    let dead = false;
+    const urls: string[] = []; // every object URL made here, revoked on cleanup
+    const url = (b: Blob) => {
+      const u = URL.createObjectURL(b);
+      urls.push(u);
+      return u;
+    };
+    (async () => {
+      const x = await getCase(id);
+      if (dead) return;
       setC(x ?? null);
+      const first = await getPhoto(id);
+      if (dead) return;
+      if (first) setPhoto(url(first));
       // Photos 2-3 of a multi-photo check.
-      const urls: string[] = [];
+      const more: string[] = [];
       for (let n = 2; n <= (x?.photo_count ?? 1); n++) {
         const b = await getPhoto(photoKey(id, n));
-        if (b) urls.push(URL.createObjectURL(b));
+        if (dead) return;
+        if (b) more.push(url(b));
       }
-      setMorePhotos(urls);
-    });
-    getPhoto(id).then((b) => b && setPhoto(URL.createObjectURL(b)));
-    getProfile().then((p) => setVariety(p.variety));
-    return () => stopAudio();
+      setMorePhotos(more);
+    })().catch(() => !dead && setC((x) => x ?? null)); // storage unreadable: show the empty state instead of a spinner forever
+    getProfile().then((p) => !dead && setVariety(p.variety)).catch(() => {});
+    return () => {
+      dead = true;
+      urls.forEach(URL.revokeObjectURL);
+      stopAudio();
+    };
   }, [id]);
 
   const card: RenderedCard | null = useMemo(() => {
@@ -139,12 +157,17 @@ function ResultView() {
     stopAudio();
     if (!yes || !c) return;
     const next: CaseRecord = { ...c, consent: true, share: "queued", share_photo: c.kind === "leaf" && sharePhoto, share_voice: !!c.has_voice && shareVoice };
-    await saveCase(next);
+    try {
+      await saveCase(next);
+    } catch {
+      toast.error(t("save_failed")); // storage full: nothing was queued, so don't pretend it was
+      return;
+    }
     setC(next);
     if (navigator.onLine) {
       setSyncing(true);
       await syncQueued();
-      setC((await getCase(next.id)) ?? next);
+      setC((await getCase(next.id).catch(() => undefined)) ?? next);
       setSyncing(false);
     }
   }
@@ -161,7 +184,7 @@ function ResultView() {
         </div>
       )}
 
-      <motion.section
+      <m.section
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         className={cn("flex items-center gap-3 rounded-3xl border-2 p-4", tone.box)}
@@ -191,7 +214,7 @@ function ResultView() {
             </span>
           )}
         </div>
-      </motion.section>
+      </m.section>
 
       <BigButton variant={playing || (card.tone === "unsure" && c.share === "local") ? "outline" : "primary"} onClick={listen}>
         {playing ? <Square className="size-5" /> : <Volume2 className="size-6" />}
@@ -278,7 +301,7 @@ function ResultView() {
         onChange={async (has) => {
           const next = { ...c, has_voice: has };
           setC(next);
-          await saveCase(next);
+          await saveCase(next).catch(() => toast.error(t("save_failed")));
         }}
       />
 
@@ -429,14 +452,14 @@ function ResultView() {
 
       <AnimatePresence>
         {consentOpen && (
-          <motion.div
+          <m.div
             className="fixed inset-0 z-50 flex items-end justify-center bg-black/45 sm:items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => share(false)}
           >
-            <motion.div
+            <m.div
               role="dialog"
               aria-modal="true"
               aria-labelledby="consent-title"
@@ -478,8 +501,8 @@ function ResultView() {
                 </BigButton>
                 <BigButton onClick={() => share(true)}>{t("share_yes")}</BigButton>
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

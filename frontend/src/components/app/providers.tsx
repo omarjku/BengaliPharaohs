@@ -1,6 +1,6 @@
 "use client";
 
-import { MotionConfig } from "motion/react";
+import { LazyMotion, MotionConfig } from "motion/react";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { LangProvider } from "@/lib/i18n";
@@ -36,7 +36,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <LangProvider>
-      <MotionConfig reducedMotion="user">{children}</MotionConfig>
+      {/* `m.*` components + only the animation/gesture features (not the full `motion` bundle). */}
+      <LazyMotion features={() => import("@/lib/motion-features").then((f) => f.default)}>
+        <MotionConfig reducedMotion="user">{children}</MotionConfig>
+      </LazyMotion>
     </LangProvider>
   );
 }

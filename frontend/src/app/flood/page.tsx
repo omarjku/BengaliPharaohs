@@ -1,8 +1,9 @@
 "use client";
 
 import { CalendarDays, Loader2, Minus, Plus } from "lucide-react";
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { BigButton, Choice, QuestionTitle, Steps } from "@/components/app/choice";
 import { UpazilaPicker } from "@/components/app/pickers";
@@ -54,7 +55,7 @@ export default function FloodPage() {
         variety_type: x.variety_type ?? v?.type,
         stage: x.stage ?? stageFromTransplant(p.transplant_date, date),
       }));
-    });
+    }).catch(() => {});
   }, [date]);
 
   const place = upazilaByCode(profile.upazila);
@@ -65,7 +66,13 @@ export default function FloodPage() {
 
   async function save(c: Omit<CaseRecord, "id" | "created_at" | "share" | "consent" | "date_used" | "simulated_date" | "upazila">) {
     const id = newId();
-    await saveCase({ ...c, id, created_at: new Date().toISOString(), share: "local", consent: false, date_used: date, simulated_date: simulated, upazila: profile.upazila });
+    try {
+      await saveCase({ ...c, id, created_at: new Date().toISOString(), share: "local", consent: false, date_used: date, simulated_date: simulated, upazila: profile.upazila });
+    } catch {
+      setBusy(false); // storage full: stay here and say so instead of a spinner that never ends
+      toast.error(t("save_failed"));
+      return;
+    }
     router.push(`/result/?id=${id}`);
   }
 
@@ -107,7 +114,7 @@ export default function FloodPage() {
         {simulated && <span className="ml-auto rounded-full bg-accent px-2 py-0.5 text-xs font-bold text-accent-foreground">{t("simulated")}</span>}
       </div>
 
-        <motion.div key={step} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
+        <m.div key={step} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
           {step === 1 && (
             <div className="flex flex-col gap-6">
               <Choice<"flood" | "drought">
@@ -127,7 +134,7 @@ export default function FloodPage() {
               <BigButton
                 disabled={!event || !profile.upazila || busy}
                 onClick={async () => {
-                  await saveProfile(profile);
+                  await saveProfile(profile).catch(() => {}); // the case save below reports a full phone
                   if (event === "drought") drought();
                   else setStep(2);
                 }}
@@ -254,7 +261,7 @@ export default function FloodPage() {
               </BigButton>
             </div>
           )}
-        </motion.div>
+        </m.div>
     </AppShell>
   );
 }
