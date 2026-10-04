@@ -4,8 +4,8 @@ export const dynamic = "force-static";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "ধানসাথী · DhanSathi",
-    short_name: "ধানসাথী",
+    name: "অ্যাগ্রোনমি · Agronomy",
+    short_name: "অ্যাগ্রোনমি",
     description: "Offline rice leaf check and after-flood advice in Bangla.",
     lang: "bn",
     start_url: "/",

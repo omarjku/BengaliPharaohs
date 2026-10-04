@@ -1,6 +1,6 @@
 # Demo path (golden path, timed)
 
-**One-liner:** DhanSathi helps a smallholder rice farmer in a flood-prone Bangladeshi upazila decide what to do after a flood or disease, offline, in Bangla, by checking a leaf photo on the phone and applying BRRI/DAE rules. When it is not sure, it hands off to her agriculture officer (SAAO).
+**One-liner:** Agronomy helps a smallholder rice farmer in a flood-prone Bangladeshi upazila decide what to do after a flood or disease, offline, in Bangla, by checking a leaf photo on the phone and applying BRRI/DAE rules. When it is not sure, it hands off to her agriculture officer (SAAO).
 
 **Persona:** Rahim, 42, Aman rice on ~1 ha in Sirajganj. Cheapest Android (~Tk 6,000 class), patchy 3G, one SAAO for ~900-2,000 families (verify year), helpline 16123 closed Fri/Sat/holidays. Keypad phones in the household, so SMS is shown as a simulated preview only.
 

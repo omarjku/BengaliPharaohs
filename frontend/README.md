@@ -1,4 +1,4 @@
-# DhanSathi frontend (owner: Zoha)
+# Agronomy frontend (owner: Zoha)
 
 Offline-first PWA: rice-leaf photo + farmer context → fixed Bangla card; after-flood advisor; consent-gated hand-off to the SAAO.
 Static export (`output: "export"`), so the whole app is plain files a service worker caches for airplane mode.

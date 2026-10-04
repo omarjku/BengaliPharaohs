@@ -1,4 +1,4 @@
-# Judge audit: DhanSathi vs the World Bank Challenge 04 brief
+# Judge audit: Agronomy vs the World Bank Challenge 04 brief
 
 Written Sun 4 Oct 2026 (deadline 15:00 Vienna, video by 13:00) as the Agriculture panel chair. Sources: the brief (`docs/challenges/04-...md`, §05-§09, Annex B), every doc in this repo, the code, and a Playwright walk of https://dhansathi-gilt.vercel.app at Pixel 5 size in Bangla and English (home, leaf check end to end with `blast-1.jpg`, flood, calendar, cases, profile). Owners: O = Omar, Z = Zoha. Code changes are listed, not made (frontend and backend belong to other agents).
 

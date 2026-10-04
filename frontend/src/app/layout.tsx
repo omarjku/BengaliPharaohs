@@ -10,9 +10,9 @@ const bangla = Hind_Siliguri({ variable: "--font-bangla", subsets: ["bengali", "
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ধানসাথী · DhanSathi",
+  title: "অ্যাগ্রোনমি · Agronomy",
   description: "Offline rice leaf check and after-flood advice in Bangla, with hand-off to the agriculture officer.",
-  appleWebApp: { capable: true, title: "ধানসাথী", statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "অ্যাগ্রোনমি", statusBarStyle: "default" },
   icons: { apple: "/icon-180.png" },
 };
 

@@ -1,7 +1,7 @@
 // Every UI string, Bangla first. Bangla = CLAUDE DRAFT: Zoha reviews every line (keep it everyday village Bangla).
 // Card texts live in public/data/cards.json; follow-up questions in public/data/knowledge.json.
 
-export const APP_NAME = { bn: "ধানসাথী", en: "DhanSathi" };
+export const APP_NAME = { bn: "অ্যাগ্রোনমি", en: "Agronomy" };
 
 export const S = {
   tagline: { bn: "ধানের পাতা আর বন্যার পরামর্শ — ইন্টারনেট ছাড়াই", en: "Rice leaf and flood advice — no internet needed" },

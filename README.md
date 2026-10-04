@@ -1,4 +1,4 @@
-# DhanSathi: an offline rice-leaf and after-flood advisor for Bangladesh
+# Agronomy: an offline rice-leaf and after-flood advisor for Bangladesh
 
 **A smallholder rice farmer checks a leaf photo and gets a fixed, Bangla, "do now / do not / ask your SAAO" card with no internet, and when the AI is not sure it says so and hands the case to a human.**
 Hack-Nation 7 x World Bank "Small AI for Development", Challenge 04, Agriculture. Team: Omar (backend, model, deploy) and Zoha (frontend, Bangla voice, pitch).

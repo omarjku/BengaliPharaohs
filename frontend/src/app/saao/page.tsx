@@ -115,8 +115,8 @@ function sms(c: ServerCase, lang: "bn" | "en") {
   const title = CARDS.cards[c.card ?? "C8"]?.title[lang] ?? "";
   const id = c.case_id.slice(0, 4).toUpperCase();
   return lang === "bn"
-    ? `ধানসাথী #${id}: ${title}। আপনার কৃষি অফিসার কেসটা পেয়েছেন, শিগগির যোগাযোগ করবেন। জরুরি হলে ১৬১২৩।`
-    : `DhanSathi #${id}: ${title}. Your SAAO received the case and will contact you soon. Urgent: 16123.`;
+    ? `অ্যাগ্রোনমি #${id}: ${title}। আপনার কৃষি অফিসার কেসটা পেয়েছেন, শিগগির যোগাযোগ করবেন। জরুরি হলে ১৬১২৩।`
+    : `Agronomy #${id}: ${title}. Your SAAO received the case and will contact you soon. Urgent: 16123.`;
 }
 
 export default function SaaoPage() {
@@ -241,7 +241,7 @@ export default function SaaoPage() {
               <div className="mx-auto w-64 rounded-[2rem] bg-neutral-800 p-4 pb-6 shadow-lg">
                 <div className="rounded-lg bg-[#b7c4a4] p-3 font-mono text-[13px] leading-snug text-neutral-900 shadow-inner">
                   <div className="mb-1 flex justify-between text-[10px] opacity-70">
-                    <span>SMS · DhanSathi</span>
+                    <span>SMS · Agronomy</span>
                     <span>▂▄▆</span>
                   </div>
                   {sms(selected, lang)}
