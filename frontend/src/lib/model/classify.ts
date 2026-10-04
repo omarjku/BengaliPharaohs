@@ -22,6 +22,25 @@ declare global {
 export type Model = { session: OrtSession; ort: Ort; labels: string[]; pre: Preprocess; th: ThresholdFile };
 let loading: Promise<Model> | null = null;
 
+/** Where model loading is, so the screen can say what it's waiting for instead of spinning silently. */
+export type ModelStage = "script" | "files" | "session" | "warmup" | "ready";
+let stage: ModelStage | null = null;
+const stageListeners = new Set<(s: ModelStage) => void>();
+function setStage(s: ModelStage) {
+  stage = s;
+  stageListeners.forEach((f) => f(s));
+}
+export function onModelStage(f: (s: ModelStage) => void): () => void {
+  stageListeners.add(f);
+  if (stage) f(stage);
+  return () => void stageListeners.delete(f);
+}
+
+/** Every step can stall on a cheap phone or a bad connection: never wait forever. */
+function within<T>(p: Promise<T>, ms: number, what: string): Promise<T> {
+  return Promise.race([p, new Promise<T>((_, rej) => setTimeout(() => rej(new Error(`timeout: ${what} (${ms / 1000} s)`)), ms))]);
+}
+
 function loadScript(src: string) {
   return new Promise<void>((resolve, reject) => {
     if (window.ort) return resolve();
@@ -38,19 +57,28 @@ const json = <T,>(url: string) => fetch(url).then((r) => (r.ok ? (r.json() as Pr
 /** Load once, warm up once. Safe to call many times. */
 export function loadModel(): Promise<Model> {
   loading ??= (async () => {
-    await loadScript("/ort/ort.wasm.min.js");
+    setStage("script");
+    await within(loadScript("/ort/ort.wasm.min.js"), 30_000, "engine script");
     const ort = window.ort!;
     ort.env.wasm.wasmPaths = "/ort/";
     ort.env.wasm.numThreads = 1; // multi-thread needs COOP/COEP headers; cheap phones gain little
-    const [labels, pre, th, bytes] = await Promise.all([
+    setStage("files");
+    const [labels, pre, th, bytes] = await within(Promise.all([
       json<string[]>("/model/labels.json"),
       json<Preprocess>("/model/preprocess.json"),
       json<ThresholdFile>("/model/threshold.json"),
-      fetch("/model/rice.onnx").then((r) => r.arrayBuffer()),
-    ]);
-    const session = await ort.InferenceSession.create(new Uint8Array(bytes), { executionProviders: ["wasm"], graphOptimizationLevel: "all" });
+      fetch("/model/rice.onnx").then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error(`/model/rice.onnx: ${r.status}`)))),
+    ]), 120_000, "model download");
+    setStage("session");
+    const session = await within(
+      ort.InferenceSession.create(new Uint8Array(bytes), { executionProviders: ["wasm"], graphOptimizationLevel: "all" }),
+      60_000,
+      "engine start",
+    );
     const m: Model = { session, ort, labels, pre, th };
-    await run(m, new Float32Array(3 * pre.size * pre.size)); // warm-up so the first real photo is fast
+    setStage("warmup");
+    await within(run(m, new Float32Array(3 * pre.size * pre.size)), 30_000, "warm-up"); // so the first real photo is fast
+    setStage("ready");
     return m;
   })().catch((e) => {
     loading = null;
@@ -102,7 +130,7 @@ export function softmax(logits: ArrayLike<number>, temperature = 1): number[] {
 export async function classify(img: Blob): Promise<{ pred: Prediction; ms: number; dummy: boolean; th: ThresholdFile }> {
   const m = await loadModel();
   const t0 = performance.now();
-  const probs = softmax(await run(m, await toTensor(img, m.pre)), m.th.temperature);
+  const probs = softmax(await within(toTensor(img, m.pre).then((x) => run(m, x)), 30_000, "reading the photo"), m.th.temperature);
   const ms = Math.round(performance.now() - t0);
   const order = probs.map((p, i) => [p, i] as const).sort((a, b) => b[0] - a[0]);
   const pred: Prediction = {
@@ -138,7 +166,7 @@ async function decodeSmall(img: Blob, maxSide: number): Promise<CanvasImageSourc
 
 /** Small JPEG copy for storage/sharing. Re-encoding through a canvas drops EXIF (GPS, phone model). */
 export async function shrinkPhoto(img: Blob, maxSide = 640): Promise<Blob> {
-  const bmp = await decodeSmall(img, maxSide);
+  const bmp = await within(decodeSmall(img, maxSide), 20_000, "opening the photo");
   const s = Math.min(1, maxSide / Math.max(bmp.width, bmp.height));
   const canvas = document.createElement("canvas");
   canvas.width = Math.round(bmp.width * s);

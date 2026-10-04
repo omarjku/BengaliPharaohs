@@ -13,7 +13,7 @@ import { crossCheck, DEFAULT_THRESHOLDS, KNOWLEDGE } from "@/lib/engine/crossche
 import type { Prediction, Season } from "@/lib/engine/types";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
-import { classify, loadModel, shrinkPhoto, type ThresholdFile } from "@/lib/model/classify";
+import { classify, loadModel, onModelStage, shrinkPhoto, type ModelStage, type ThresholdFile } from "@/lib/model/classify";
 import { upazilaByCode, varietyById } from "@/lib/places";
 import { useEffectiveDate } from "@/lib/settings";
 import { DB_BLOCKED_EVENT, getCase, getPhoto, getProfile, newId, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
@@ -110,6 +110,9 @@ export default function CheckPage() {
   const camRef = useRef<HTMLInputElement>(null);
   const galRef = useRef<HTMLInputElement>(null);
   const modelRun = useRef<Promise<ModelOut> | null>(null);
+  const lastPhoto = useRef<Blob | null>(null);
+  const [modelStage, setModelStage] = useState<ModelStage | null>(null);
+  useEffect(() => onModelStage(setModelStage), []);
 
   useEffect(() => {
     getProfile().then((p) => {
@@ -166,6 +169,7 @@ export default function CheckPage() {
   };
 
   function startModel(photo: Blob) {
+    lastPhoto.current = photo;
     setModel(null);
     modelRun.current = classify(photo).catch((e: Error) => ({ error: e.message }));
     modelRun.current.then(setModel);
@@ -328,7 +332,15 @@ export default function CheckPage() {
           <div className="min-w-0 flex-1 text-sm">
             {!model ? (
               <span className="flex items-center gap-2 font-medium text-muted-foreground">
-                <Loader2 className="size-4 animate-spin" /> {t("photo_reading")}
+                <Loader2 className="size-4 shrink-0 animate-spin" /> {t(modelStage ? `stage_${modelStage}` : "photo_reading")}
+              </span>
+            ) : "error" in model ? (
+              <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span className="font-medium text-bad">{t("model_failed")}</span>
+                <button type="button" className="min-h-9 rounded-full bg-primary px-3 text-sm font-semibold text-primary-foreground" onClick={() => lastPhoto.current && startModel(lastPhoto.current)}>
+                  {t("try_again")}
+                </button>
+                <span className="w-full text-xs text-muted-foreground">{model.error}</span>
               </span>
             ) : (
               <span className="font-medium text-ok">✓ {t("photo_saved_local")}</span>
