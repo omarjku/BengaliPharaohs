@@ -1,5 +1,9 @@
 # PROGRESS
 
+## 2026-10-04 burst-sync branch
+- Burst sync: POST /api/burst, time-budgeted drain (15 s), sync report + banner, area news rewrite (loadArea, always ends in a state). Fixed live 404 on real upazila codes (backend/mocks/upazila_codes.json). Details: docs/burst-sync.md.
+- Pending: Zoha reviews Bangla (burst_*/area_* strings at end of strings.ts); redeploy Railway so live gets /api/burst; real-phone LTE test.
+
 ## 2026-10-04 ~02:30
 - **v2 shipped** to `frontend/public/model/` (commit ea3addc): fine-tuned MobileNetV3-Small, 7 classes incl. not_rice, fp32 6.1 MB, min_prob 0.80 (95% rule on validation), T 0.85.
   Val macro-F1 0.912 · held-out AgML_BD 57% top-1, answers 63%, 74% right when answering · unseen bean leaves 100% NOT SURE.

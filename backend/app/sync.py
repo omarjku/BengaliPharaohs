@@ -58,17 +58,17 @@ class ReplyIn(BaseModel):
     by: Literal["saao"]
 
 
-@router.post("/cases/batch")
-def cases_batch(batch: BatchIn, session: Session = Depends(get_session)) -> dict:
+def store_cases(session: Session, device_id: str, cases: list[CaseIn]) -> tuple[list[str], list[dict]]:
+    """Upsert consented cases (shared by /cases/batch and /burst). Retries are idempotent."""
     accepted: list[str] = []
     rejected: list[dict] = []
-    for c in batch.cases:
+    for c in cases:
         cid = str(c.case_id)
         if c.consent is not True:
             rejected.append({"case_id": cid, "reason": "no_consent"})
             continue
         row = Case(
-            case_id=cid, device_id=batch.device_id, klass=c.class_,
+            case_id=cid, device_id=device_id, klass=c.class_,
             **c.model_dump(exclude={"case_id", "class_"}),
         )
         existing = session.get(Case, cid)
@@ -77,6 +77,12 @@ def cases_batch(batch: BatchIn, session: Session = Depends(get_session)) -> dict
         session.merge(row)  # merge = insert or update by primary key, so retries are idempotent
         accepted.append(cid)
     session.commit()
+    return accepted, rejected
+
+
+@router.post("/cases/batch")
+def cases_batch(batch: BatchIn, session: Session = Depends(get_session)) -> dict:
+    accepted, rejected = store_cases(session, batch.device_id, batch.cases)
     return {"accepted": accepted, "rejected": rejected}
 
 
