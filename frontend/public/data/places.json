@@ -1,0 +1,54 @@
+{
+ "upazilas": [
+  {
+   "code": "SIR",
+   "en": "Sirajganj Sadar",
+   "bn": "সিরাজগঞ্জ সদর",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "HAO",
+   "en": "Tahirpur",
+   "bn": "তাহিরপুর",
+   "region": "haor",
+   "north": false
+  },
+  {
+   "code": "COA",
+   "en": "Koyra",
+   "bn": "কয়রা",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "BAR",
+   "en": "Nachole",
+   "bn": "নাচোল",
+   "region": "barind",
+   "north": true
+  }
+ ],
+ "varieties": [
+  {
+   "id": "dhan52",
+   "en": "BRRI dhan52",
+   "bn": "ব্রি ধান৫২",
+   "type": "sub1",
+   "season": "aman"
+  },
+  {
+   "id": "dhan49",
+   "en": "BRRI dhan49",
+   "bn": "ব্রি ধান৪৯",
+   "type": "conventional",
+   "season": "aman"
+  },
+  {
+   "id": "local",
+   "en": "Local/unknown",
+   "bn": "স্থানীয়/জানি না",
+   "type": "unknown"
+  }
+ ]
+}
