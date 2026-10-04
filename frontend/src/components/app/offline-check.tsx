@@ -15,6 +15,11 @@ export function OfflineCheck() {
 
   useEffect(() => {
     let alive = true;
+    // Everything is cached: stop polling (each poll re-reads the manifest and matches every cached file).
+    const done = (n: number) => {
+      clearInterval(timer);
+      if (alive) setS({ kind: "ok", n });
+    };
     async function check() {
       if (process.env.NODE_ENV !== "production" || !("caches" in window)) return setS({ kind: "dev" });
       try {
@@ -27,19 +32,20 @@ export function OfflineCheck() {
         const urls: string[] = res?.ok ? (await res.json()).urls : [];
         const cache = await caches.open(name);
         // Offline the manifest fetch fails: then trust the cache we have (it was filled from a full manifest).
-        if (!urls.length) return alive && setS({ kind: "ok", n: (await cache.keys()).length });
+        if (!urls.length) return alive && setS({ kind: "ok", n: (await cache.keys()).length }); // unverified: keep polling
         let have = 0;
         for (const u of urls) if (await cache.match(u, { ignoreSearch: true })) have++;
-        if (alive) setS(have === urls.length ? { kind: "ok", n: have } : { kind: "missing", have, total: urls.length });
+        if (have === urls.length) done(have);
+        else if (alive) setS({ kind: "missing", have, total: urls.length });
       } catch {
         if (alive) setS({ kind: "missing", have: 0, total: 1 });
       }
     }
-    check();
-    const id = setInterval(check, 4000); // first install fills the cache in the background
+    const timer = setInterval(check, 4000);
+    check(); // first install fills the cache in the background
     return () => {
       alive = false;
-      clearInterval(id);
+      clearInterval(timer);
     };
   }, []);
 
