@@ -56,3 +56,9 @@ self.addEventListener("fetch", (event) => {
     })(),
   );
 });
+
+// Chrome-only Background Sync (bonus; iOS has none). The page owns the upload logic, so just wake it.
+self.addEventListener("sync", (event) => {
+  if (event.tag !== "drain") return;
+  event.waitUntil(self.clients.matchAll({ includeUncontrolled: true }).then((cs) => cs.forEach((c) => c.postMessage({ type: "drain" }))));
+});
