@@ -9,17 +9,17 @@ export const QUESTION_CLIPS = {
   "Q-PHOTO": { q: ["photo_title", "photo_tips"], opts: ["photo_camera", "photo_gallery"] },
   "Q-FIELD": { q: ["field_title", "field_sub"] },
   "Q-VARIETY": { q: ["profile_variety", "variety_hint"] },
-  "Q-UPAZILA": { q: ["profile_upazila"] },
+  "Q-UPAZILA": { q: ["profile_district", "profile_upazila"] },
   "Q-SEASON": { q: ["profile_season"], opts: ["season_aman", "season_aus", "season_boro"] },
   "Q-WHERE": {
     q: ["q_where", "pick_many"],
-    opts: ["where_tip_edge", "where_middle", "where_sheath", "where_panicle", "where_base"],
+    opts: ["where_tip_edge", "where_middle", "where_sheath", "where_panicle", "where_base", "where_none"],
   },
   "Q-PATTERN": {
-    q: ["q_pattern"],
-    opts: ["pattern_one_hill", "pattern_patches", "pattern_whole_field", "pattern_whole_field_dying"],
+    q: ["q_pattern", "q_pattern_hint"],
+    opts: ["pattern_one_hill", "pattern_patches", "pattern_whole_field", "pattern_whole_field_dying", "pattern_none"],
   },
-  "Q-FIRST": { q: ["q_first"], opts: ["first_old", "first_new"] },
+  "Q-FIRST": { q: ["q_first"], opts: ["first_old", "first_new", "first_none"] },
   "Q-INSECTS": {
     q: ["q_insects", "pick_many"],
     opts: [

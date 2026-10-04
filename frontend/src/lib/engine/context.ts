@@ -2,7 +2,8 @@
 import type { Region, Season, Stage } from "./types";
 
 export type Unknown = "unknown";
-export type Where = "tip_edge" | "middle" | "sheath" | "panicle" | "base";
+export const NO_PROBLEM = "no_problem_seen";
+export type Where = "tip_edge" | "middle" | "sheath" | "panicle" | "base" | "none";
 /** Pests Bangladeshi farmers know by name. Only hoppers, leafhoppers and stem borer change the engine; the rest go to the SAAO. */
 export const INSECTS = [
   "green_leafhopper",
@@ -24,8 +25,8 @@ export type LeafAnswers = {
   variety?: string;
   /** Several places can be affected at once; [] or ["unknown"] = not answered. */
   where?: (Where | Unknown)[];
-  pattern?: "one_hill" | "patches" | "whole_field" | "whole_field_dying" | Unknown;
-  first?: "old" | "new" | Unknown;
+  pattern?: "one_hill" | "patches" | "whole_field" | "whole_field_dying" | "none" | Unknown;
+  first?: "old" | "new" | "none" | Unknown;
   insects?: (Insect | "none" | Unknown)[];
   rain?: "none" | "some" | "heavy" | Unknown;
   flooded?: "yes" | "no" | Unknown;
@@ -54,8 +55,10 @@ export function conditionsFrom(a: LeafAnswers, p: { season?: Season; stage?: Sta
   if (p.stage === "seedbed" || p.stage === "early_tillering") c.push("stage_seedling");
   if (p.stage === "tillering") c.push("stage_tillering");
   if (p.stage === "pi_booting" || p.stage === "flowering" || p.stage === "grain_filling") c.push("stage_heading");
-  for (const w of a.where ?? []) if (w !== "unknown") c.push(`symptom_${w}`);
-  if (a.pattern && a.pattern !== "unknown") {
+  for (const w of a.where ?? []) if (w !== "unknown" && w !== "none") c.push(`symptom_${w}`);
+  // The farmer sees nothing wrong: counts for "healthy" in the cross-check, never for a disease.
+  if (a.where?.includes("none") || a.pattern === "none" || a.first === "none") c.push(NO_PROBLEM);
+  if (a.pattern && a.pattern !== "unknown" && a.pattern !== "none") {
     c.push(`pattern_${a.pattern}`);
     if (a.pattern === "whole_field_dying") c.push("pattern_whole_field");
   }

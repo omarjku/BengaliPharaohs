@@ -1,54 +1,6511 @@
 {
- "upazilas": [
+ "note": "Upazilas: all 494 from nuhil/bangladesh-geocode (MIT). Zoha's 16 original entries keep their codes/names/tags. region is APPROXIMATE, by district (haor = 7 haor districts; coastal = 12 exposed-coast districts; barind = Rajshahi, Naogaon, Chapainawabganj; north = Rajshahi or Rangpur division): check locally. aliases map the placeholder codes from commit fbe7d78. Varieties: Zoha's 18 kept as-is; BR1-26, BRRI dhan27-105, BINA dhan4-25, BRRI hybrid dhan1-7 added by number (NEEDS-CHECK that every number exists); tolerance flags only where a source verifies them (Sub1 51/52/79/BINA 11/12; drought 56/71; salt 47/61/67/97/99).",
+ "aliases": {
+  "SIR": "SRJ-SIRAJGANJ",
+  "HAO": "SUN-TAHIRPUR",
+  "COA": "KHULNA-KOYRA",
+  "BAR": "CHAPAINAWABGANJ-NACHOL"
+ },
+ "variety_aliases": {
+  "dhan52": "BRRI dhan52",
+  "dhan49": "BRRI dhan49",
+  "local": "unknown"
+ },
+ "districts": [
   {
-   "code": "SIR",
-   "en": "Sirajganj Sadar",
-   "bn": "সিরাজগঞ্জ সদর",
-   "region": "floodplain",
-   "north": true
-  },
-  {
-   "code": "HAO",
-   "en": "Tahirpur",
-   "bn": "তাহিরপুর",
-   "region": "haor",
-   "north": false
-  },
-  {
-   "code": "COA",
-   "en": "Koyra",
-   "bn": "কয়রা",
+   "code": "BAGERHAT",
+   "en": "Bagerhat",
+   "bn": "বাগেরহাট",
+   "division": "Khulna",
    "region": "coastal",
    "north": false
   },
   {
-   "code": "BAR",
-   "en": "Nachole",
-   "bn": "নাচোল",
+   "code": "BANDARBAN",
+   "en": "Bandarban",
+   "bn": "বান্দরবান",
+   "division": "Chattagram",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "BARGUNA",
+   "en": "Barguna",
+   "bn": "বরগুনা",
+   "division": "Barisal",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "BARISHAL",
+   "en": "Barishal",
+   "bn": "বরিশাল",
+   "division": "Barisal",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "BHOLA",
+   "en": "Bhola",
+   "bn": "ভোলা",
+   "division": "Barisal",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "BOGURA",
+   "en": "Bogura",
+   "bn": "বগুড়া",
+   "division": "Rajshahi",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "BRAHMANBARIA",
+   "en": "Brahmanbaria",
+   "bn": "ব্রাহ্মণবাড়িয়া",
+   "division": "Chattagram",
+   "region": "haor",
+   "north": false
+  },
+  {
+   "code": "CHANDPUR",
+   "en": "Chandpur",
+   "bn": "চাঁদপুর",
+   "division": "Chattagram",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "CHAPAINAWABGANJ",
+   "en": "Chapainawabganj",
+   "bn": "চাঁপাইনবাবগঞ্জ",
+   "division": "Rajshahi",
    "region": "barind",
    "north": true
+  },
+  {
+   "code": "CHATTOGRAM",
+   "en": "Chattogram",
+   "bn": "চট্টগ্রাম",
+   "division": "Chattagram",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "CHUADANGA",
+   "en": "Chuadanga",
+   "bn": "চুয়াডাঙ্গা",
+   "division": "Khulna",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "COX-S-BAZAR",
+   "en": "Cox's Bazar",
+   "bn": "কক্সবাজার",
+   "division": "Chattagram",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "CUMILLA",
+   "en": "Cumilla",
+   "bn": "কুমিল্লা",
+   "division": "Chattagram",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "DHAKA",
+   "en": "Dhaka",
+   "bn": "ঢাকা",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "DINAJPUR",
+   "en": "Dinajpur",
+   "bn": "দিনাজপুর",
+   "division": "Rangpur",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "FARIDPUR",
+   "en": "Faridpur",
+   "bn": "ফরিদপুর",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "FENI",
+   "en": "Feni",
+   "bn": "ফেনী",
+   "division": "Chattagram",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "GAIBANDHA",
+   "en": "Gaibandha",
+   "bn": "গাইবান্ধা",
+   "division": "Rangpur",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "GAZIPUR",
+   "en": "Gazipur",
+   "bn": "গাজীপুর",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "GOPALGANJ",
+   "en": "Gopalganj",
+   "bn": "গোপালগঞ্জ",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "HABIGANJ",
+   "en": "Habiganj",
+   "bn": "হবিগঞ্জ",
+   "division": "Sylhet",
+   "region": "haor",
+   "north": false
+  },
+  {
+   "code": "JAMALPUR",
+   "en": "Jamalpur",
+   "bn": "জামালপুর",
+   "division": "Mymensingh",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "JASHORE",
+   "en": "Jashore",
+   "bn": "যশোর",
+   "division": "Khulna",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "JHALOKATI",
+   "en": "Jhalokati",
+   "bn": "ঝালকাঠি",
+   "division": "Barisal",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "JHENAIDAH",
+   "en": "Jhenaidah",
+   "bn": "ঝিনাইদহ",
+   "division": "Khulna",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "JOYPURHAT",
+   "en": "Joypurhat",
+   "bn": "জয়পুরহাট",
+   "division": "Rajshahi",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "KHAGRACHHARI",
+   "en": "Khagrachhari",
+   "bn": "খাগড়াছড়ি",
+   "division": "Chattagram",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "KHULNA",
+   "en": "Khulna",
+   "bn": "খুলনা",
+   "division": "Khulna",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "KISHOREGANJ",
+   "en": "Kishoreganj",
+   "bn": "কিশোরগঞ্জ",
+   "division": "Dhaka",
+   "region": "haor",
+   "north": false
+  },
+  {
+   "code": "KURIGRAM",
+   "en": "Kurigram",
+   "bn": "কুড়িগ্রাম",
+   "division": "Rangpur",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "KUSHTIA",
+   "en": "Kushtia",
+   "bn": "কুষ্টিয়া",
+   "division": "Khulna",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "LAKSHMIPUR",
+   "en": "Lakshmipur",
+   "bn": "লক্ষ্মীপুর",
+   "division": "Chattagram",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "LALMONIRHAT",
+   "en": "Lalmonirhat",
+   "bn": "লালমনিরহাট",
+   "division": "Rangpur",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "MADARIPUR",
+   "en": "Madaripur",
+   "bn": "মাদারীপুর",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "MAGURA",
+   "en": "Magura",
+   "bn": "মাগুরা",
+   "division": "Khulna",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "MANIKGANJ",
+   "en": "Manikganj",
+   "bn": "মানিকগঞ্জ",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "MEHERPUR",
+   "en": "Meherpur",
+   "bn": "মেহেরপুর",
+   "division": "Khulna",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "MOULVIBAZAR",
+   "en": "Moulvibazar",
+   "bn": "মৌলভীবাজার",
+   "division": "Sylhet",
+   "region": "haor",
+   "north": false
+  },
+  {
+   "code": "MUNSHIGANJ",
+   "en": "Munshiganj",
+   "bn": "মুন্সিগঞ্জ",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "MYMENSINGH",
+   "en": "Mymensingh",
+   "bn": "ময়মনসিংহ",
+   "division": "Mymensingh",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "NAOGAON",
+   "en": "Naogaon",
+   "bn": "নওগাঁ",
+   "division": "Rajshahi",
+   "region": "barind",
+   "north": true
+  },
+  {
+   "code": "NARAIL",
+   "en": "Narail",
+   "bn": "নড়াইল",
+   "division": "Khulna",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "NARAYANGANJ",
+   "en": "Narayanganj",
+   "bn": "নারায়ণগঞ্জ",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "NARSINGDI",
+   "en": "Narsingdi",
+   "bn": "নরসিংদী",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "NATORE",
+   "en": "Natore",
+   "bn": "নাটোর",
+   "division": "Rajshahi",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "NETROKONA",
+   "en": "Netrokona",
+   "bn": "নেত্রকোণা",
+   "division": "Mymensingh",
+   "region": "haor",
+   "north": false
+  },
+  {
+   "code": "NILPHAMARI",
+   "en": "Nilphamari",
+   "bn": "নীলফামারী",
+   "division": "Rangpur",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "NOAKHALI",
+   "en": "Noakhali",
+   "bn": "নোয়াখালী",
+   "division": "Chattagram",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "PABNA",
+   "en": "Pabna",
+   "bn": "পাবনা",
+   "division": "Rajshahi",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "PANCHAGARH",
+   "en": "Panchagarh",
+   "bn": "পঞ্চগড়",
+   "division": "Rangpur",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "PATUAKHALI",
+   "en": "Patuakhali",
+   "bn": "পটুয়াখালী",
+   "division": "Barisal",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "PIROJPUR",
+   "en": "Pirojpur",
+   "bn": "পিরোজপুর",
+   "division": "Barisal",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "RAJBARI",
+   "en": "Rajbari",
+   "bn": "রাজবাড়ী",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "RAJSHAHI",
+   "en": "Rajshahi",
+   "bn": "রাজশাহী",
+   "division": "Rajshahi",
+   "region": "barind",
+   "north": true
+  },
+  {
+   "code": "RANGAMATI",
+   "en": "Rangamati",
+   "bn": "রাঙ্গামাটি",
+   "division": "Chattagram",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "RANGPUR",
+   "en": "Rangpur",
+   "bn": "রংপুর",
+   "division": "Rangpur",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "SATKHIRA",
+   "en": "Satkhira",
+   "bn": "সাতক্ষীরা",
+   "division": "Khulna",
+   "region": "coastal",
+   "north": false
+  },
+  {
+   "code": "SHARIATPUR",
+   "en": "Shariatpur",
+   "bn": "শরীয়তপুর",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "SHERPUR",
+   "en": "Sherpur",
+   "bn": "শেরপুর",
+   "division": "Mymensingh",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "SIRAJGANJ",
+   "en": "Sirajganj",
+   "bn": "সিরাজগঞ্জ",
+   "division": "Rajshahi",
+   "region": "floodplain",
+   "north": true
+  },
+  {
+   "code": "SUNAMGANJ",
+   "en": "Sunamganj",
+   "bn": "সুনামগঞ্জ",
+   "division": "Sylhet",
+   "region": "haor",
+   "north": false
+  },
+  {
+   "code": "SYLHET",
+   "en": "Sylhet",
+   "bn": "সিলেট",
+   "division": "Sylhet",
+   "region": "haor",
+   "north": false
+  },
+  {
+   "code": "TANGAIL",
+   "en": "Tangail",
+   "bn": "টাঙ্গাইল",
+   "division": "Dhaka",
+   "region": "floodplain",
+   "north": false
+  },
+  {
+   "code": "THAKURGAON",
+   "en": "Thakurgaon",
+   "bn": "ঠাকুরগাঁও",
+   "division": "Rangpur",
+   "region": "floodplain",
+   "north": true
+  }
+ ],
+ "upazilas": [
+  {
+   "code": "BAGERHAT-BAGERHAT-SADAR",
+   "en": "Bagerhat Sadar, Bagerhat",
+   "bn": "বাগেরহাট সদর, বাগেরহাট",
+   "region": "coastal",
+   "north": false,
+   "district": "BAGERHAT",
+   "name_en": "Bagerhat Sadar",
+   "name_bn": "বাগেরহাট সদর"
+  },
+  {
+   "code": "BAGERHAT-CHITALMARI",
+   "en": "Chitalmari, Bagerhat",
+   "bn": "চিতলমারী, বাগেরহাট",
+   "region": "coastal",
+   "north": false,
+   "district": "BAGERHAT",
+   "name_en": "Chitalmari",
+   "name_bn": "চিতলমারী"
+  },
+  {
+   "code": "BAGERHAT-FAKIRHAT",
+   "en": "Fakirhat, Bagerhat",
+   "bn": "ফকিরহাট, বাগেরহাট",
+   "region": "coastal",
+   "north": false,
+   "district": "BAGERHAT",
+   "name_en": "Fakirhat",
+   "name_bn": "ফকিরহাট"
+  },
+  {
+   "code": "BAGERHAT-KACHUA",
+   "en": "Kachua, Bagerhat",
+   "bn": "কচুয়া, বাগেরহাট",
+   "region": "coastal",
+   "north": false,
+   "district": "BAGERHAT",
+   "name_en": "Kachua",
+   "name_bn": "কচুয়া"
+  },
+  {
+   "code": "BAGERHAT-MOLLAHAT",
+   "en": "Mollahat, Bagerhat",
+   "bn": "মোল্লাহাট, বাগেরহাট",
+   "region": "coastal",
+   "north": false,
+   "district": "BAGERHAT",
+   "name_en": "Mollahat",
+   "name_bn": "মোল্লাহাট"
+  },
+  {
+   "code": "BAGERHAT-MONGLA",
+   "en": "Mongla, Bagerhat",
+   "bn": "মোংলা, বাগেরহাট",
+   "region": "coastal",
+   "north": false,
+   "district": "BAGERHAT",
+   "name_en": "Mongla",
+   "name_bn": "মোংলা"
+  },
+  {
+   "code": "BAGERHAT-MORRELGANJ",
+   "en": "Morrelganj, Bagerhat",
+   "bn": "মোড়েলগঞ্জ, বাগেরহাট",
+   "region": "coastal",
+   "north": false,
+   "district": "BAGERHAT",
+   "name_en": "Morrelganj",
+   "name_bn": "মোড়েলগঞ্জ"
+  },
+  {
+   "code": "BAGERHAT-RAMPAL",
+   "en": "Rampal, Bagerhat",
+   "bn": "রামপাল, বাগেরহাট",
+   "region": "coastal",
+   "north": false,
+   "district": "BAGERHAT",
+   "name_en": "Rampal",
+   "name_bn": "রামপাল"
+  },
+  {
+   "code": "BAGERHAT-SARANKHOLA",
+   "en": "Sarankhola, Bagerhat",
+   "bn": "শরণখোলা, বাগেরহাট",
+   "region": "coastal",
+   "north": false,
+   "district": "BAGERHAT",
+   "name_en": "Sarankhola",
+   "name_bn": "শরণখোলা"
+  },
+  {
+   "code": "BANDARBAN-ALIKADAM",
+   "en": "Alikadam, Bandarban",
+   "bn": "আলীকদম, বান্দরবান",
+   "region": "floodplain",
+   "north": false,
+   "district": "BANDARBAN",
+   "name_en": "Alikadam",
+   "name_bn": "আলীকদম"
+  },
+  {
+   "code": "BANDARBAN-BANDARBAN-SADAR",
+   "en": "Bandarban Sadar, Bandarban",
+   "bn": "বান্দরবান সদর, বান্দরবান",
+   "region": "floodplain",
+   "north": false,
+   "district": "BANDARBAN",
+   "name_en": "Bandarban Sadar",
+   "name_bn": "বান্দরবান সদর"
+  },
+  {
+   "code": "BANDARBAN-LAMA",
+   "en": "Lama, Bandarban",
+   "bn": "লামা, বান্দরবান",
+   "region": "floodplain",
+   "north": false,
+   "district": "BANDARBAN",
+   "name_en": "Lama",
+   "name_bn": "লামা"
+  },
+  {
+   "code": "BANDARBAN-NAIKHONGCHHARI",
+   "en": "Naikhongchhari, Bandarban",
+   "bn": "নাইক্ষ্যংছড়ি, বান্দরবান",
+   "region": "floodplain",
+   "north": false,
+   "district": "BANDARBAN",
+   "name_en": "Naikhongchhari",
+   "name_bn": "নাইক্ষ্যংছড়ি"
+  },
+  {
+   "code": "BANDARBAN-ROWANGCHHARI",
+   "en": "Rowangchhari, Bandarban",
+   "bn": "রোয়াংছড়ি, বান্দরবান",
+   "region": "floodplain",
+   "north": false,
+   "district": "BANDARBAN",
+   "name_en": "Rowangchhari",
+   "name_bn": "রোয়াংছড়ি"
+  },
+  {
+   "code": "BANDARBAN-RUMA",
+   "en": "Ruma, Bandarban",
+   "bn": "রুমা, বান্দরবান",
+   "region": "floodplain",
+   "north": false,
+   "district": "BANDARBAN",
+   "name_en": "Ruma",
+   "name_bn": "রুমা"
+  },
+  {
+   "code": "BANDARBAN-THANCHI",
+   "en": "Thanchi, Bandarban",
+   "bn": "থানচি, বান্দরবান",
+   "region": "floodplain",
+   "north": false,
+   "district": "BANDARBAN",
+   "name_en": "Thanchi",
+   "name_bn": "থানচি"
+  },
+  {
+   "code": "BARGUNA-AMTALI",
+   "en": "Amtali, Barguna",
+   "bn": "আমতলী, বরগুনা",
+   "region": "coastal",
+   "north": false,
+   "district": "BARGUNA",
+   "name_en": "Amtali",
+   "name_bn": "আমতলী"
+  },
+  {
+   "code": "BARGUNA-BAMNA",
+   "en": "Bamna, Barguna",
+   "bn": "বামনা, বরগুনা",
+   "region": "coastal",
+   "north": false,
+   "district": "BARGUNA",
+   "name_en": "Bamna",
+   "name_bn": "বামনা"
+  },
+  {
+   "code": "BARGUNA-BARGUNA-SADAR",
+   "en": "Barguna Sadar, Barguna",
+   "bn": "বরগুনা সদর, বরগুনা",
+   "region": "coastal",
+   "north": false,
+   "district": "BARGUNA",
+   "name_en": "Barguna Sadar",
+   "name_bn": "বরগুনা সদর"
+  },
+  {
+   "code": "BARGUNA-BETAGI",
+   "en": "Betagi, Barguna",
+   "bn": "বেতাগী, বরগুনা",
+   "region": "coastal",
+   "north": false,
+   "district": "BARGUNA",
+   "name_en": "Betagi",
+   "name_bn": "বেতাগী"
+  },
+  {
+   "code": "BARGUNA-PATHORGHATA",
+   "en": "Pathorghata, Barguna",
+   "bn": "পাথরঘাটা, বরগুনা",
+   "region": "coastal",
+   "north": false,
+   "district": "BARGUNA",
+   "name_en": "Pathorghata",
+   "name_bn": "পাথরঘাটা"
+  },
+  {
+   "code": "BARGUNA-TALTALI",
+   "en": "Taltali, Barguna",
+   "bn": "তালতলি, বরগুনা",
+   "region": "coastal",
+   "north": false,
+   "district": "BARGUNA",
+   "name_en": "Taltali",
+   "name_bn": "তালতলি"
+  },
+  {
+   "code": "BARISHAL-AGAILJHARA",
+   "en": "Agailjhara, Barishal",
+   "bn": "আগৈলঝাড়া, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Agailjhara",
+   "name_bn": "আগৈলঝাড়া"
+  },
+  {
+   "code": "BARISHAL-BABUGANJ",
+   "en": "Babuganj, Barishal",
+   "bn": "বাবুগঞ্জ, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Babuganj",
+   "name_bn": "বাবুগঞ্জ"
+  },
+  {
+   "code": "BARISHAL-BAKERGANJ",
+   "en": "Bakerganj, Barishal",
+   "bn": "বাকেরগঞ্জ, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Bakerganj",
+   "name_bn": "বাকেরগঞ্জ"
+  },
+  {
+   "code": "BARISHAL-BANARIPARA",
+   "en": "Banaripara, Barishal",
+   "bn": "বানারীপাড়া, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Banaripara",
+   "name_bn": "বানারীপাড়া"
+  },
+  {
+   "code": "BARISHAL-BARISAL-SADAR",
+   "en": "Barisal Sadar, Barishal",
+   "bn": "বরিশাল সদর, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Barisal Sadar",
+   "name_bn": "বরিশাল সদর"
+  },
+  {
+   "code": "BARISHAL-GOURNADI",
+   "en": "Gournadi, Barishal",
+   "bn": "গৌরনদী, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Gournadi",
+   "name_bn": "গৌরনদী"
+  },
+  {
+   "code": "BARISHAL-HIZLA",
+   "en": "Hizla, Barishal",
+   "bn": "হিজলা, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Hizla",
+   "name_bn": "হিজলা"
+  },
+  {
+   "code": "BARISHAL-MEHENDIGANJ",
+   "en": "Mehendiganj, Barishal",
+   "bn": "মেহেন্দিগঞ্জ, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Mehendiganj",
+   "name_bn": "মেহেন্দিগঞ্জ"
+  },
+  {
+   "code": "BARISHAL-MULADI",
+   "en": "Muladi, Barishal",
+   "bn": "মুলাদী, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Muladi",
+   "name_bn": "মুলাদী"
+  },
+  {
+   "code": "BARISHAL-WAZIRPUR",
+   "en": "Wazirpur, Barishal",
+   "bn": "উজিরপুর, বরিশাল",
+   "region": "floodplain",
+   "north": false,
+   "district": "BARISHAL",
+   "name_en": "Wazirpur",
+   "name_bn": "উজিরপুর"
+  },
+  {
+   "code": "BHOLA-BHOLA-SADAR",
+   "en": "Bhola Sadar, Bhola",
+   "bn": "ভোলা সদর, ভোলা",
+   "region": "coastal",
+   "north": false,
+   "district": "BHOLA",
+   "name_en": "Bhola Sadar",
+   "name_bn": "ভোলা সদর"
+  },
+  {
+   "code": "BHOLA-BORHAN-SDDIN",
+   "en": "Borhan Sddin, Bhola",
+   "bn": "বোরহান উদ্দিন, ভোলা",
+   "region": "coastal",
+   "north": false,
+   "district": "BHOLA",
+   "name_en": "Borhan Sddin",
+   "name_bn": "বোরহান উদ্দিন"
+  },
+  {
+   "code": "BHOLA-CHARFESSON",
+   "en": "Charfesson, Bhola",
+   "bn": "চরফ্যাশন, ভোলা",
+   "region": "coastal",
+   "north": false,
+   "district": "BHOLA",
+   "name_en": "Charfesson",
+   "name_bn": "চরফ্যাশন"
+  },
+  {
+   "code": "BHOLA-DOULATKHAN",
+   "en": "Doulatkhan, Bhola",
+   "bn": "দৌলতখান, ভোলা",
+   "region": "coastal",
+   "north": false,
+   "district": "BHOLA",
+   "name_en": "Doulatkhan",
+   "name_bn": "দৌলতখান"
+  },
+  {
+   "code": "BHOLA-LALMOHAN",
+   "en": "Lalmohan, Bhola",
+   "bn": "লালমোহন, ভোলা",
+   "region": "coastal",
+   "north": false,
+   "district": "BHOLA",
+   "name_en": "Lalmohan",
+   "name_bn": "লালমোহন"
+  },
+  {
+   "code": "BHOLA-MONPURA",
+   "en": "Monpura, Bhola",
+   "bn": "মনপুরা, ভোলা",
+   "region": "coastal",
+   "north": false,
+   "district": "BHOLA",
+   "name_en": "Monpura",
+   "name_bn": "মনপুরা"
+  },
+  {
+   "code": "BHOLA-TAZUMUDDIN",
+   "en": "Tazumuddin, Bhola",
+   "bn": "তজুমদ্দিন, ভোলা",
+   "region": "coastal",
+   "north": false,
+   "district": "BHOLA",
+   "name_en": "Tazumuddin",
+   "name_bn": "তজুমদ্দিন"
+  },
+  {
+   "code": "BOGURA-ADAMDIGHI",
+   "en": "Adamdighi, Bogura",
+   "bn": "আদমদিঘি, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Adamdighi",
+   "name_bn": "আদমদিঘি"
+  },
+  {
+   "code": "BOGURA-BOGRA-SADAR",
+   "en": "Bogra Sadar, Bogura",
+   "bn": "বগুড়া সদর, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Bogra Sadar",
+   "name_bn": "বগুড়া সদর"
+  },
+  {
+   "code": "BOGURA-DHUNOT",
+   "en": "Dhunot, Bogura",
+   "bn": "ধুনট, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Dhunot",
+   "name_bn": "ধুনট"
+  },
+  {
+   "code": "BOGURA-DUPCHANCHIA",
+   "en": "Dupchanchia, Bogura",
+   "bn": "দুপচাচিঁয়া, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Dupchanchia",
+   "name_bn": "দুপচাচিঁয়া"
+  },
+  {
+   "code": "BOGURA-GABTALI",
+   "en": "Gabtali, Bogura",
+   "bn": "গাবতলী, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Gabtali",
+   "name_bn": "গাবতলী"
+  },
+  {
+   "code": "BOGURA-KAHALOO",
+   "en": "Kahaloo, Bogura",
+   "bn": "কাহালু, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Kahaloo",
+   "name_bn": "কাহালু"
+  },
+  {
+   "code": "BOGURA-NONDIGRAM",
+   "en": "Nondigram, Bogura",
+   "bn": "নন্দিগ্রাম, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Nondigram",
+   "name_bn": "নন্দিগ্রাম"
+  },
+  {
+   "code": "BOGURA-SHAJAHANPUR",
+   "en": "Shajahanpur, Bogura",
+   "bn": "শাজাহানপুর, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Shajahanpur",
+   "name_bn": "শাজাহানপুর"
+  },
+  {
+   "code": "BOG-SARIAKANDI",
+   "en": "Sariakandi, Bogura",
+   "bn": "সারিয়াকান্দি, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Sariakandi",
+   "name_bn": "সারিয়াকান্দি"
+  },
+  {
+   "code": "BOGURA-SHERPUR",
+   "en": "Sherpur, Bogura",
+   "bn": "শেরপুর, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Sherpur",
+   "name_bn": "শেরপুর"
+  },
+  {
+   "code": "BOGURA-SHIBGANJ",
+   "en": "Shibganj, Bogura",
+   "bn": "শিবগঞ্জ, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Shibganj",
+   "name_bn": "শিবগঞ্জ"
+  },
+  {
+   "code": "BOGURA-SONATALA",
+   "en": "Sonatala, Bogura",
+   "bn": "সোনাতলা, বগুড়া",
+   "region": "floodplain",
+   "north": true,
+   "district": "BOGURA",
+   "name_en": "Sonatala",
+   "name_bn": "সোনাতলা"
+  },
+  {
+   "code": "BRAHMANBARIA-AKHAURA",
+   "en": "Akhaura, Brahmanbaria",
+   "bn": "আখাউড়া, ব্রাহ্মণবাড়িয়া",
+   "region": "haor",
+   "north": false,
+   "district": "BRAHMANBARIA",
+   "name_en": "Akhaura",
+   "name_bn": "আখাউড়া"
+  },
+  {
+   "code": "BRAHMANBARIA-ASHUGANJ",
+   "en": "Ashuganj, Brahmanbaria",
+   "bn": "আশুগঞ্জ, ব্রাহ্মণবাড়িয়া",
+   "region": "haor",
+   "north": false,
+   "district": "BRAHMANBARIA",
+   "name_en": "Ashuganj",
+   "name_bn": "আশুগঞ্জ"
+  },
+  {
+   "code": "BRAHMANBARIA-BANCHARAMPUR",
+   "en": "Bancharampur, Brahmanbaria",
+   "bn": "বাঞ্ছারামপুর, ব্রাহ্মণবাড়িয়া",
+   "region": "haor",
+   "north": false,
+   "district": "BRAHMANBARIA",
+   "name_en": "Bancharampur",
+   "name_bn": "বাঞ্ছারামপুর"
+  },
+  {
+   "code": "BRAHMANBARIA-BIJOYNAGAR",
+   "en": "Bijoynagar, Brahmanbaria",
+   "bn": "বিজয়নগর, ব্রাহ্মণবাড়িয়া",
+   "region": "haor",
+   "north": false,
+   "district": "BRAHMANBARIA",
+   "name_en": "Bijoynagar",
+   "name_bn": "বিজয়নগর"
+  },
+  {
+   "code": "BRAHMANBARIA-BRAHMANBARIA-SADAR",
+   "en": "Brahmanbaria Sadar, Brahmanbaria",
+   "bn": "ব্রাহ্মণবাড়িয়া সদর, ব্রাহ্মণবাড়িয়া",
+   "region": "haor",
+   "north": false,
+   "district": "BRAHMANBARIA",
+   "name_en": "Brahmanbaria Sadar",
+   "name_bn": "ব্রাহ্মণবাড়িয়া সদর"
+  },
+  {
+   "code": "BRAHMANBARIA-KASBA",
+   "en": "Kasba, Brahmanbaria",
+   "bn": "কসবা, ব্রাহ্মণবাড়িয়া",
+   "region": "haor",
+   "north": false,
+   "district": "BRAHMANBARIA",
+   "name_en": "Kasba",
+   "name_bn": "কসবা"
+  },
+  {
+   "code": "BRAHMANBARIA-NABINAGAR",
+   "en": "Nabinagar, Brahmanbaria",
+   "bn": "নবীনগর, ব্রাহ্মণবাড়িয়া",
+   "region": "haor",
+   "north": false,
+   "district": "BRAHMANBARIA",
+   "name_en": "Nabinagar",
+   "name_bn": "নবীনগর"
+  },
+  {
+   "code": "BRAHMANBARIA-NASIRNAGAR",
+   "en": "Nasirnagar, Brahmanbaria",
+   "bn": "নাসিরনগর, ব্রাহ্মণবাড়িয়া",
+   "region": "haor",
+   "north": false,
+   "district": "BRAHMANBARIA",
+   "name_en": "Nasirnagar",
+   "name_bn": "নাসিরনগর"
+  },
+  {
+   "code": "BRAHMANBARIA-SARAIL",
+   "en": "Sarail, Brahmanbaria",
+   "bn": "সরাইল, ব্রাহ্মণবাড়িয়া",
+   "region": "haor",
+   "north": false,
+   "district": "BRAHMANBARIA",
+   "name_en": "Sarail",
+   "name_bn": "সরাইল"
+  },
+  {
+   "code": "CHANDPUR-CHANDPUR-SADAR",
+   "en": "Chandpur Sadar, Chandpur",
+   "bn": "চাঁদপুর সদর, চাঁদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHANDPUR",
+   "name_en": "Chandpur Sadar",
+   "name_bn": "চাঁদপুর সদর"
+  },
+  {
+   "code": "CHANDPUR-FARIDGONJ",
+   "en": "Faridgonj, Chandpur",
+   "bn": "ফরিদগঞ্জ, চাঁদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHANDPUR",
+   "name_en": "Faridgonj",
+   "name_bn": "ফরিদগঞ্জ"
+  },
+  {
+   "code": "CHANDPUR-HAIMCHAR",
+   "en": "Haimchar, Chandpur",
+   "bn": "হাইমচর, চাঁদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHANDPUR",
+   "name_en": "Haimchar",
+   "name_bn": "হাইমচর"
+  },
+  {
+   "code": "CHANDPUR-HAJIGANJ",
+   "en": "Hajiganj, Chandpur",
+   "bn": "হাজীগঞ্জ, চাঁদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHANDPUR",
+   "name_en": "Hajiganj",
+   "name_bn": "হাজীগঞ্জ"
+  },
+  {
+   "code": "CHANDPUR-KACHUA",
+   "en": "Kachua, Chandpur",
+   "bn": "কচুয়া, চাঁদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHANDPUR",
+   "name_en": "Kachua",
+   "name_bn": "কচুয়া"
+  },
+  {
+   "code": "CHANDPUR-MATLAB-NORTH",
+   "en": "Matlab North, Chandpur",
+   "bn": "মতলব উত্তর, চাঁদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHANDPUR",
+   "name_en": "Matlab North",
+   "name_bn": "মতলব উত্তর"
+  },
+  {
+   "code": "CHANDPUR-MATLAB-SOUTH",
+   "en": "Matlab South, Chandpur",
+   "bn": "মতলব দক্ষিণ, চাঁদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHANDPUR",
+   "name_en": "Matlab South",
+   "name_bn": "মতলব দক্ষিণ"
+  },
+  {
+   "code": "CHANDPUR-SHAHRASTI",
+   "en": "Shahrasti, Chandpur",
+   "bn": "শাহরাস্তি\t, চাঁদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHANDPUR",
+   "name_en": "Shahrasti",
+   "name_bn": "শাহরাস্তি\t"
+  },
+  {
+   "code": "CHAPAINAWABGANJ-BHOLAHAT",
+   "en": "Bholahat, Chapainawabganj",
+   "bn": "ভোলাহাট, চাঁপাইনবাবগঞ্জ",
+   "region": "barind",
+   "north": true,
+   "district": "CHAPAINAWABGANJ",
+   "name_en": "Bholahat",
+   "name_bn": "ভোলাহাট"
+  },
+  {
+   "code": "CHAPAINAWABGANJ-CHAPAINAWABGANJ-SADAR",
+   "en": "Chapainawabganj Sadar, Chapainawabganj",
+   "bn": "চাঁপাইনবাবগঞ্জ সদর, চাঁপাইনবাবগঞ্জ",
+   "region": "barind",
+   "north": true,
+   "district": "CHAPAINAWABGANJ",
+   "name_en": "Chapainawabganj Sadar",
+   "name_bn": "চাঁপাইনবাবগঞ্জ সদর"
+  },
+  {
+   "code": "CHAPAINAWABGANJ-GOMOSTAPUR",
+   "en": "Gomostapur, Chapainawabganj",
+   "bn": "গোমস্তাপুর, চাঁপাইনবাবগঞ্জ",
+   "region": "barind",
+   "north": true,
+   "district": "CHAPAINAWABGANJ",
+   "name_en": "Gomostapur",
+   "name_bn": "গোমস্তাপুর"
+  },
+  {
+   "code": "CHAPAINAWABGANJ-NACHOL",
+   "en": "Nachol, Chapainawabganj",
+   "bn": "নাচোল, চাঁপাইনবাবগঞ্জ",
+   "region": "barind",
+   "north": true,
+   "district": "CHAPAINAWABGANJ",
+   "name_en": "Nachol",
+   "name_bn": "নাচোল"
+  },
+  {
+   "code": "CHAPAINAWABGANJ-SHIBGANJ",
+   "en": "Shibganj, Chapainawabganj",
+   "bn": "শিবগঞ্জ, চাঁপাইনবাবগঞ্জ",
+   "region": "barind",
+   "north": true,
+   "district": "CHAPAINAWABGANJ",
+   "name_en": "Shibganj",
+   "name_bn": "শিবগঞ্জ"
+  },
+  {
+   "code": "CHATTOGRAM-ANWARA",
+   "en": "Anwara, Chattogram",
+   "bn": "আনোয়ারা, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Anwara",
+   "name_bn": "আনোয়ারা"
+  },
+  {
+   "code": "CHATTOGRAM-BANSHKHALI",
+   "en": "Banshkhali, Chattogram",
+   "bn": "বাঁশখালী, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Banshkhali",
+   "name_bn": "বাঁশখালী"
+  },
+  {
+   "code": "CHATTOGRAM-BOALKHALI",
+   "en": "Boalkhali, Chattogram",
+   "bn": "বোয়ালখালী, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Boalkhali",
+   "name_bn": "বোয়ালখালী"
+  },
+  {
+   "code": "CHATTOGRAM-CHANDANAISH",
+   "en": "Chandanaish, Chattogram",
+   "bn": "চন্দনাইশ, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Chandanaish",
+   "name_bn": "চন্দনাইশ"
+  },
+  {
+   "code": "CHATTOGRAM-FATIKCHHARI",
+   "en": "Fatikchhari, Chattogram",
+   "bn": "ফটিকছড়ি, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Fatikchhari",
+   "name_bn": "ফটিকছড়ি"
+  },
+  {
+   "code": "CHATTOGRAM-HATHAZARI",
+   "en": "Hathazari, Chattogram",
+   "bn": "হাটহাজারী, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Hathazari",
+   "name_bn": "হাটহাজারী"
+  },
+  {
+   "code": "CHATTOGRAM-KARNAFULI",
+   "en": "Karnafuli, Chattogram",
+   "bn": "কর্ণফুলী, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Karnafuli",
+   "name_bn": "কর্ণফুলী"
+  },
+  {
+   "code": "CHATTOGRAM-LOHAGARA",
+   "en": "Lohagara, Chattogram",
+   "bn": "লোহাগাড়া, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Lohagara",
+   "name_bn": "লোহাগাড়া"
+  },
+  {
+   "code": "CHATTOGRAM-MIRSHARAI",
+   "en": "Mirsharai, Chattogram",
+   "bn": "মীরসরাই, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Mirsharai",
+   "name_bn": "মীরসরাই"
+  },
+  {
+   "code": "CHATTOGRAM-PATIYA",
+   "en": "Patiya, Chattogram",
+   "bn": "পটিয়া, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Patiya",
+   "name_bn": "পটিয়া"
+  },
+  {
+   "code": "CHATTOGRAM-RANGUNIA",
+   "en": "Rangunia, Chattogram",
+   "bn": "রাঙ্গুনিয়া, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Rangunia",
+   "name_bn": "রাঙ্গুনিয়া"
+  },
+  {
+   "code": "CHATTOGRAM-RAOZAN",
+   "en": "Raozan, Chattogram",
+   "bn": "রাউজান, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Raozan",
+   "name_bn": "রাউজান"
+  },
+  {
+   "code": "CHATTOGRAM-SANDWIP",
+   "en": "Sandwip, Chattogram",
+   "bn": "সন্দ্বীপ, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Sandwip",
+   "name_bn": "সন্দ্বীপ"
+  },
+  {
+   "code": "CHATTOGRAM-SATKANIA",
+   "en": "Satkania, Chattogram",
+   "bn": "সাতকানিয়া, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Satkania",
+   "name_bn": "সাতকানিয়া"
+  },
+  {
+   "code": "CHATTOGRAM-SITAKUNDA",
+   "en": "Sitakunda, Chattogram",
+   "bn": "সীতাকুন্ড, চট্টগ্রাম",
+   "region": "coastal",
+   "north": false,
+   "district": "CHATTOGRAM",
+   "name_en": "Sitakunda",
+   "name_bn": "সীতাকুন্ড"
+  },
+  {
+   "code": "CHUADANGA-ALAMDANGA",
+   "en": "Alamdanga, Chuadanga",
+   "bn": "আলমডাঙ্গা, চুয়াডাঙ্গা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHUADANGA",
+   "name_en": "Alamdanga",
+   "name_bn": "আলমডাঙ্গা"
+  },
+  {
+   "code": "CHUADANGA-CHUADANGA-SADAR",
+   "en": "Chuadanga Sadar, Chuadanga",
+   "bn": "চুয়াডাঙ্গা সদর, চুয়াডাঙ্গা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHUADANGA",
+   "name_en": "Chuadanga Sadar",
+   "name_bn": "চুয়াডাঙ্গা সদর"
+  },
+  {
+   "code": "CHUADANGA-DAMURHUDA",
+   "en": "Damurhuda, Chuadanga",
+   "bn": "দামুড়হুদা, চুয়াডাঙ্গা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHUADANGA",
+   "name_en": "Damurhuda",
+   "name_bn": "দামুড়হুদা"
+  },
+  {
+   "code": "CHUADANGA-JIBANNAGAR",
+   "en": "Jibannagar, Chuadanga",
+   "bn": "জীবননগর, চুয়াডাঙ্গা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CHUADANGA",
+   "name_en": "Jibannagar",
+   "name_bn": "জীবননগর"
+  },
+  {
+   "code": "COX-S-BAZAR-CHAKARIA",
+   "en": "Chakaria, Cox's Bazar",
+   "bn": "চকরিয়া, কক্সবাজার",
+   "region": "coastal",
+   "north": false,
+   "district": "COX-S-BAZAR",
+   "name_en": "Chakaria",
+   "name_bn": "চকরিয়া"
+  },
+  {
+   "code": "COX-S-BAZAR-COXSBAZAR-SADAR",
+   "en": "Coxsbazar Sadar, Cox's Bazar",
+   "bn": "কক্সবাজার সদর, কক্সবাজার",
+   "region": "coastal",
+   "north": false,
+   "district": "COX-S-BAZAR",
+   "name_en": "Coxsbazar Sadar",
+   "name_bn": "কক্সবাজার সদর"
+  },
+  {
+   "code": "COX-S-BAZAR-EIDGAON",
+   "en": "Eidgaon, Cox's Bazar",
+   "bn": "ঈদগাঁও, কক্সবাজার",
+   "region": "coastal",
+   "north": false,
+   "district": "COX-S-BAZAR",
+   "name_en": "Eidgaon",
+   "name_bn": "ঈদগাঁও"
+  },
+  {
+   "code": "COX-S-BAZAR-KUTUBDIA",
+   "en": "Kutubdia, Cox's Bazar",
+   "bn": "কুতুবদিয়া, কক্সবাজার",
+   "region": "coastal",
+   "north": false,
+   "district": "COX-S-BAZAR",
+   "name_en": "Kutubdia",
+   "name_bn": "কুতুবদিয়া"
+  },
+  {
+   "code": "COX-S-BAZAR-MOHESHKHALI",
+   "en": "Moheshkhali, Cox's Bazar",
+   "bn": "মহেশখালী, কক্সবাজার",
+   "region": "coastal",
+   "north": false,
+   "district": "COX-S-BAZAR",
+   "name_en": "Moheshkhali",
+   "name_bn": "মহেশখালী"
+  },
+  {
+   "code": "COX-S-BAZAR-PEKUA",
+   "en": "Pekua, Cox's Bazar",
+   "bn": "পেকুয়া, কক্সবাজার",
+   "region": "coastal",
+   "north": false,
+   "district": "COX-S-BAZAR",
+   "name_en": "Pekua",
+   "name_bn": "পেকুয়া"
+  },
+  {
+   "code": "COX-S-BAZAR-RAMU",
+   "en": "Ramu, Cox's Bazar",
+   "bn": "রামু, কক্সবাজার",
+   "region": "coastal",
+   "north": false,
+   "district": "COX-S-BAZAR",
+   "name_en": "Ramu",
+   "name_bn": "রামু"
+  },
+  {
+   "code": "COX-S-BAZAR-TEKNAF",
+   "en": "Teknaf, Cox's Bazar",
+   "bn": "টেকনাফ, কক্সবাজার",
+   "region": "coastal",
+   "north": false,
+   "district": "COX-S-BAZAR",
+   "name_en": "Teknaf",
+   "name_bn": "টেকনাফ"
+  },
+  {
+   "code": "COX-S-BAZAR-UKHIYA",
+   "en": "Ukhiya, Cox's Bazar",
+   "bn": "উখিয়া, কক্সবাজার",
+   "region": "coastal",
+   "north": false,
+   "district": "COX-S-BAZAR",
+   "name_en": "Ukhiya",
+   "name_bn": "উখিয়া"
+  },
+  {
+   "code": "CUMILLA-BARURA",
+   "en": "Barura, Cumilla",
+   "bn": "বরুড়া, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Barura",
+   "name_bn": "বরুড়া"
+  },
+  {
+   "code": "CUMILLA-BRAHMANPARA",
+   "en": "Brahmanpara, Cumilla",
+   "bn": "ব্রাহ্মণপাড়া, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Brahmanpara",
+   "name_bn": "ব্রাহ্মণপাড়া"
+  },
+  {
+   "code": "COM-BURICHANG",
+   "en": "Burichang, Cumilla",
+   "bn": "বুড়িচং, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Burichang",
+   "name_bn": "বুড়িচং"
+  },
+  {
+   "code": "CUMILLA-CHANDINA",
+   "en": "Chandina, Cumilla",
+   "bn": "চান্দিনা, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Chandina",
+   "name_bn": "চান্দিনা"
+  },
+  {
+   "code": "CUMILLA-CHAUDDAGRAM",
+   "en": "Chauddagram, Cumilla",
+   "bn": "চৌদ্দগ্রাম, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Chauddagram",
+   "name_bn": "চৌদ্দগ্রাম"
+  },
+  {
+   "code": "CUMILLA-COMILLA-SADAR",
+   "en": "Comilla Sadar, Cumilla",
+   "bn": "কুমিল্লা সদর, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Comilla Sadar",
+   "name_bn": "কুমিল্লা সদর"
+  },
+  {
+   "code": "CUMILLA-DAUDKANDI",
+   "en": "Daudkandi, Cumilla",
+   "bn": "দাউদকান্দি, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Daudkandi",
+   "name_bn": "দাউদকান্দি"
+  },
+  {
+   "code": "CUMILLA-DEBIDWAR",
+   "en": "Debidwar, Cumilla",
+   "bn": "দেবিদ্বার, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Debidwar",
+   "name_bn": "দেবিদ্বার"
+  },
+  {
+   "code": "CUMILLA-HOMNA",
+   "en": "Homna, Cumilla",
+   "bn": "হোমনা, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Homna",
+   "name_bn": "হোমনা"
+  },
+  {
+   "code": "CUMILLA-LAKSAM",
+   "en": "Laksam, Cumilla",
+   "bn": "লাকসাম, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Laksam",
+   "name_bn": "লাকসাম"
+  },
+  {
+   "code": "CUMILLA-LALMAI",
+   "en": "Lalmai, Cumilla",
+   "bn": "লালমাই, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Lalmai",
+   "name_bn": "লালমাই"
+  },
+  {
+   "code": "CUMILLA-MEGHNA",
+   "en": "Meghna, Cumilla",
+   "bn": "মেঘনা, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Meghna",
+   "name_bn": "মেঘনা"
+  },
+  {
+   "code": "CUMILLA-MONOHARGONJ",
+   "en": "Monohargonj, Cumilla",
+   "bn": "মনোহরগঞ্জ, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Monohargonj",
+   "name_bn": "মনোহরগঞ্জ"
+  },
+  {
+   "code": "CUMILLA-MURADNAGAR",
+   "en": "Muradnagar, Cumilla",
+   "bn": "মুরাদনগর, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Muradnagar",
+   "name_bn": "মুরাদনগর"
+  },
+  {
+   "code": "CUMILLA-NANGALKOT",
+   "en": "Nangalkot, Cumilla",
+   "bn": "নাঙ্গলকোট, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Nangalkot",
+   "name_bn": "নাঙ্গলকোট"
+  },
+  {
+   "code": "CUMILLA-SADARSOUTH",
+   "en": "Sadarsouth, Cumilla",
+   "bn": "সদর দক্ষিণ, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Sadarsouth",
+   "name_bn": "সদর দক্ষিণ"
+  },
+  {
+   "code": "CUMILLA-TITAS",
+   "en": "Titas, Cumilla",
+   "bn": "তিতাস, কুমিল্লা",
+   "region": "floodplain",
+   "north": false,
+   "district": "CUMILLA",
+   "name_en": "Titas",
+   "name_bn": "তিতাস"
+  },
+  {
+   "code": "DHAKA-DHAMRAI",
+   "en": "Dhamrai, Dhaka",
+   "bn": "ধামরাই, ঢাকা",
+   "region": "floodplain",
+   "north": false,
+   "district": "DHAKA",
+   "name_en": "Dhamrai",
+   "name_bn": "ধামরাই"
+  },
+  {
+   "code": "DHAKA-DOHAR",
+   "en": "Dohar, Dhaka",
+   "bn": "দোহার, ঢাকা",
+   "region": "floodplain",
+   "north": false,
+   "district": "DHAKA",
+   "name_en": "Dohar",
+   "name_bn": "দোহার"
+  },
+  {
+   "code": "DHAKA-KERANIGANJ",
+   "en": "Keraniganj, Dhaka",
+   "bn": "কেরাণীগঞ্জ, ঢাকা",
+   "region": "floodplain",
+   "north": false,
+   "district": "DHAKA",
+   "name_en": "Keraniganj",
+   "name_bn": "কেরাণীগঞ্জ"
+  },
+  {
+   "code": "DHAKA-NAWABGANJ",
+   "en": "Nawabganj, Dhaka",
+   "bn": "নবাবগঞ্জ, ঢাকা",
+   "region": "floodplain",
+   "north": false,
+   "district": "DHAKA",
+   "name_en": "Nawabganj",
+   "name_bn": "নবাবগঞ্জ"
+  },
+  {
+   "code": "DHAKA-SAVAR",
+   "en": "Savar, Dhaka",
+   "bn": "সাভার, ঢাকা",
+   "region": "floodplain",
+   "north": false,
+   "district": "DHAKA",
+   "name_en": "Savar",
+   "name_bn": "সাভার"
+  },
+  {
+   "code": "DINAJPUR-BIRAMPUR",
+   "en": "Birampur, Dinajpur",
+   "bn": "বিরামপুর, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Birampur",
+   "name_bn": "বিরামপুর"
+  },
+  {
+   "code": "DINAJPUR-BIRGANJ",
+   "en": "Birganj, Dinajpur",
+   "bn": "বীরগঞ্জ, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Birganj",
+   "name_bn": "বীরগঞ্জ"
+  },
+  {
+   "code": "DINAJPUR-BIROL",
+   "en": "Birol, Dinajpur",
+   "bn": "বিরল, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Birol",
+   "name_bn": "বিরল"
+  },
+  {
+   "code": "DINAJPUR-BOCHAGANJ",
+   "en": "Bochaganj, Dinajpur",
+   "bn": "বোচাগঞ্জ, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Bochaganj",
+   "name_bn": "বোচাগঞ্জ"
+  },
+  {
+   "code": "DINAJPUR-CHIRIRBANDAR",
+   "en": "Chirirbandar, Dinajpur",
+   "bn": "চিরিরবন্দর, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Chirirbandar",
+   "name_bn": "চিরিরবন্দর"
+  },
+  {
+   "code": "DINAJPUR-DINAJPUR-SADAR",
+   "en": "Dinajpur Sadar, Dinajpur",
+   "bn": "দিনাজপুর সদর, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Dinajpur Sadar",
+   "name_bn": "দিনাজপুর সদর"
+  },
+  {
+   "code": "DINAJPUR-FULBARI",
+   "en": "Fulbari, Dinajpur",
+   "bn": "ফুলবাড়ী, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Fulbari",
+   "name_bn": "ফুলবাড়ী"
+  },
+  {
+   "code": "DINAJPUR-GHORAGHAT",
+   "en": "Ghoraghat, Dinajpur",
+   "bn": "ঘোড়াঘাট, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Ghoraghat",
+   "name_bn": "ঘোড়াঘাট"
+  },
+  {
+   "code": "DINAJPUR-HAKIMPUR",
+   "en": "Hakimpur, Dinajpur",
+   "bn": "হাকিমপুর, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Hakimpur",
+   "name_bn": "হাকিমপুর"
+  },
+  {
+   "code": "DINAJPUR-KAHAROL",
+   "en": "Kaharol, Dinajpur",
+   "bn": "কাহারোল, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Kaharol",
+   "name_bn": "কাহারোল"
+  },
+  {
+   "code": "DINAJPUR-KHANSAMA",
+   "en": "Khansama, Dinajpur",
+   "bn": "খানসামা, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Khansama",
+   "name_bn": "খানসামা"
+  },
+  {
+   "code": "DINAJPUR-NAWABGANJ",
+   "en": "Nawabganj, Dinajpur",
+   "bn": "নবাবগঞ্জ, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Nawabganj",
+   "name_bn": "নবাবগঞ্জ"
+  },
+  {
+   "code": "DINAJPUR-PARBATIPUR",
+   "en": "Parbatipur, Dinajpur",
+   "bn": "পার্বতীপুর, দিনাজপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "DINAJPUR",
+   "name_en": "Parbatipur",
+   "name_bn": "পার্বতীপুর"
+  },
+  {
+   "code": "FARIDPUR-ALFADANGA",
+   "en": "Alfadanga, Faridpur",
+   "bn": "আলফাডাঙ্গা, ফরিদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "FARIDPUR",
+   "name_en": "Alfadanga",
+   "name_bn": "আলফাডাঙ্গা"
+  },
+  {
+   "code": "FARIDPUR-BHANGA",
+   "en": "Bhanga, Faridpur",
+   "bn": "ভাঙ্গা, ফরিদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "FARIDPUR",
+   "name_en": "Bhanga",
+   "name_bn": "ভাঙ্গা"
+  },
+  {
+   "code": "FARIDPUR-BOALMARI",
+   "en": "Boalmari, Faridpur",
+   "bn": "বোয়ালমারী, ফরিদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "FARIDPUR",
+   "name_en": "Boalmari",
+   "name_bn": "বোয়ালমারী"
+  },
+  {
+   "code": "FARIDPUR-CHARBHADRASAN",
+   "en": "Charbhadrasan, Faridpur",
+   "bn": "চরভদ্রাসন, ফরিদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "FARIDPUR",
+   "name_en": "Charbhadrasan",
+   "name_bn": "চরভদ্রাসন"
+  },
+  {
+   "code": "FARIDPUR-FARIDPUR-SADAR",
+   "en": "Faridpur Sadar, Faridpur",
+   "bn": "ফরিদপুর সদর, ফরিদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "FARIDPUR",
+   "name_en": "Faridpur Sadar",
+   "name_bn": "ফরিদপুর সদর"
+  },
+  {
+   "code": "FARIDPUR-MADHUKHALI",
+   "en": "Madhukhali, Faridpur",
+   "bn": "মধুখালী, ফরিদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "FARIDPUR",
+   "name_en": "Madhukhali",
+   "name_bn": "মধুখালী"
+  },
+  {
+   "code": "FARIDPUR-NAGARKANDA",
+   "en": "Nagarkanda, Faridpur",
+   "bn": "নগরকান্দা, ফরিদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "FARIDPUR",
+   "name_en": "Nagarkanda",
+   "name_bn": "নগরকান্দা"
+  },
+  {
+   "code": "FARIDPUR-SADARPUR",
+   "en": "Sadarpur, Faridpur",
+   "bn": "সদরপুর, ফরিদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "FARIDPUR",
+   "name_en": "Sadarpur",
+   "name_bn": "সদরপুর"
+  },
+  {
+   "code": "FARIDPUR-SALTHA",
+   "en": "Saltha, Faridpur",
+   "bn": "সালথা, ফরিদপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "FARIDPUR",
+   "name_en": "Saltha",
+   "name_bn": "সালথা"
+  },
+  {
+   "code": "FENI-CHHAGALNAIYA",
+   "en": "Chhagalnaiya, Feni",
+   "bn": "ছাগলনাইয়া, ফেনী",
+   "region": "coastal",
+   "north": false,
+   "district": "FENI",
+   "name_en": "Chhagalnaiya",
+   "name_bn": "ছাগলনাইয়া"
+  },
+  {
+   "code": "FENI-DAGANBHUIYAN",
+   "en": "Daganbhuiyan, Feni",
+   "bn": "দাগনভূঞা, ফেনী",
+   "region": "coastal",
+   "north": false,
+   "district": "FENI",
+   "name_en": "Daganbhuiyan",
+   "name_bn": "দাগনভূঞা"
+  },
+  {
+   "code": "FENI-FENI-SADAR",
+   "en": "Feni Sadar, Feni",
+   "bn": "ফেনী সদর, ফেনী",
+   "region": "coastal",
+   "north": false,
+   "district": "FENI",
+   "name_en": "Feni Sadar",
+   "name_bn": "ফেনী সদর"
+  },
+  {
+   "code": "FENI-FULGAZI",
+   "en": "Fulgazi, Feni",
+   "bn": "ফুলগাজী, ফেনী",
+   "region": "coastal",
+   "north": false,
+   "district": "FENI",
+   "name_en": "Fulgazi",
+   "name_bn": "ফুলগাজী"
+  },
+  {
+   "code": "FEN-PARSHURAM",
+   "en": "Parshuram, Feni",
+   "bn": "পরশুরাম, ফেনী",
+   "region": "floodplain",
+   "north": false,
+   "district": "FENI",
+   "name_en": "Parshuram",
+   "name_bn": "পরশুরাম"
+  },
+  {
+   "code": "FENI-SONAGAZI",
+   "en": "Sonagazi, Feni",
+   "bn": "সোনাগাজী, ফেনী",
+   "region": "coastal",
+   "north": false,
+   "district": "FENI",
+   "name_en": "Sonagazi",
+   "name_bn": "সোনাগাজী"
+  },
+  {
+   "code": "GAIBANDHA-GAIBANDHA-SADAR",
+   "en": "Gaibandha Sadar, Gaibandha",
+   "bn": "গাইবান্ধা সদর, গাইবান্ধা",
+   "region": "floodplain",
+   "north": true,
+   "district": "GAIBANDHA",
+   "name_en": "Gaibandha Sadar",
+   "name_bn": "গাইবান্ধা সদর"
+  },
+  {
+   "code": "GAIBANDHA-GOBINDAGANJ",
+   "en": "Gobindaganj, Gaibandha",
+   "bn": "গোবিন্দগঞ্জ, গাইবান্ধা",
+   "region": "floodplain",
+   "north": true,
+   "district": "GAIBANDHA",
+   "name_en": "Gobindaganj",
+   "name_bn": "গোবিন্দগঞ্জ"
+  },
+  {
+   "code": "GAIBANDHA-PALASHBARI",
+   "en": "Palashbari, Gaibandha",
+   "bn": "পলাশবাড়ী, গাইবান্ধা",
+   "region": "floodplain",
+   "north": true,
+   "district": "GAIBANDHA",
+   "name_en": "Palashbari",
+   "name_bn": "পলাশবাড়ী"
+  },
+  {
+   "code": "GAI-FULCHHARI",
+   "en": "Fulchhari, Gaibandha",
+   "bn": "ফুলছড়ি, গাইবান্ধা",
+   "region": "floodplain",
+   "north": true,
+   "district": "GAIBANDHA",
+   "name_en": "Fulchhari",
+   "name_bn": "ফুলছড়ি"
+  },
+  {
+   "code": "GAIBANDHA-SADULLAPUR",
+   "en": "Sadullapur, Gaibandha",
+   "bn": "সাদুল্লাপুর, গাইবান্ধা",
+   "region": "floodplain",
+   "north": true,
+   "district": "GAIBANDHA",
+   "name_en": "Sadullapur",
+   "name_bn": "সাদুল্লাপুর"
+  },
+  {
+   "code": "GAIBANDHA-SAGHATA",
+   "en": "Saghata, Gaibandha",
+   "bn": "সাঘাটা, গাইবান্ধা",
+   "region": "floodplain",
+   "north": true,
+   "district": "GAIBANDHA",
+   "name_en": "Saghata",
+   "name_bn": "সাঘাটা"
+  },
+  {
+   "code": "GAIBANDHA-SUNDARGANJ",
+   "en": "Sundarganj, Gaibandha",
+   "bn": "সুন্দরগঞ্জ, গাইবান্ধা",
+   "region": "floodplain",
+   "north": true,
+   "district": "GAIBANDHA",
+   "name_en": "Sundarganj",
+   "name_bn": "সুন্দরগঞ্জ"
+  },
+  {
+   "code": "GAZIPUR-GAZIPUR-SADAR",
+   "en": "Gazipur Sadar, Gazipur",
+   "bn": "গাজীপুর সদর, গাজীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "GAZIPUR",
+   "name_en": "Gazipur Sadar",
+   "name_bn": "গাজীপুর সদর"
+  },
+  {
+   "code": "GAZIPUR-KALIAKAIR",
+   "en": "Kaliakair, Gazipur",
+   "bn": "কালিয়াকৈর, গাজীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "GAZIPUR",
+   "name_en": "Kaliakair",
+   "name_bn": "কালিয়াকৈর"
+  },
+  {
+   "code": "GAZIPUR-KALIGANJ",
+   "en": "Kaliganj, Gazipur",
+   "bn": "কালীগঞ্জ, গাজীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "GAZIPUR",
+   "name_en": "Kaliganj",
+   "name_bn": "কালীগঞ্জ"
+  },
+  {
+   "code": "GAZIPUR-KAPASIA",
+   "en": "Kapasia, Gazipur",
+   "bn": "কাপাসিয়া, গাজীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "GAZIPUR",
+   "name_en": "Kapasia",
+   "name_bn": "কাপাসিয়া"
+  },
+  {
+   "code": "GAZIPUR-SREEPUR",
+   "en": "Sreepur, Gazipur",
+   "bn": "শ্রীপুর, গাজীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "GAZIPUR",
+   "name_en": "Sreepur",
+   "name_bn": "শ্রীপুর"
+  },
+  {
+   "code": "GOPALGANJ-GOPALGANJ-SADAR",
+   "en": "Gopalganj Sadar, Gopalganj",
+   "bn": "গোপালগঞ্জ সদর, গোপালগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "GOPALGANJ",
+   "name_en": "Gopalganj Sadar",
+   "name_bn": "গোপালগঞ্জ সদর"
+  },
+  {
+   "code": "GOPALGANJ-KASHIANI",
+   "en": "Kashiani, Gopalganj",
+   "bn": "কাশিয়ানী, গোপালগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "GOPALGANJ",
+   "name_en": "Kashiani",
+   "name_bn": "কাশিয়ানী"
+  },
+  {
+   "code": "GOPALGANJ-KOTALIPARA",
+   "en": "Kotalipara, Gopalganj",
+   "bn": "কোটালীপাড়া, গোপালগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "GOPALGANJ",
+   "name_en": "Kotalipara",
+   "name_bn": "কোটালীপাড়া"
+  },
+  {
+   "code": "GOPALGANJ-MUKSUDPUR",
+   "en": "Muksudpur, Gopalganj",
+   "bn": "মুকসুদপুর, গোপালগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "GOPALGANJ",
+   "name_en": "Muksudpur",
+   "name_bn": "মুকসুদপুর"
+  },
+  {
+   "code": "GOPALGANJ-TUNGIPARA",
+   "en": "Tungipara, Gopalganj",
+   "bn": "টুংগীপাড়া, গোপালগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "GOPALGANJ",
+   "name_en": "Tungipara",
+   "name_bn": "টুংগীপাড়া"
+  },
+  {
+   "code": "HABIGANJ-AJMIRIGANJ",
+   "en": "Ajmiriganj, Habiganj",
+   "bn": "আজমিরীগঞ্জ, হবিগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "HABIGANJ",
+   "name_en": "Ajmiriganj",
+   "name_bn": "আজমিরীগঞ্জ"
+  },
+  {
+   "code": "HABIGANJ-BAHUBAL",
+   "en": "Bahubal, Habiganj",
+   "bn": "বাহুবল, হবিগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "HABIGANJ",
+   "name_en": "Bahubal",
+   "name_bn": "বাহুবল"
+  },
+  {
+   "code": "HABIGANJ-BANIACHONG",
+   "en": "Baniachong, Habiganj",
+   "bn": "বানিয়াচং, হবিগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "HABIGANJ",
+   "name_en": "Baniachong",
+   "name_bn": "বানিয়াচং"
+  },
+  {
+   "code": "HABIGANJ-CHUNARUGHAT",
+   "en": "Chunarughat, Habiganj",
+   "bn": "চুনারুঘাট, হবিগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "HABIGANJ",
+   "name_en": "Chunarughat",
+   "name_bn": "চুনারুঘাট"
+  },
+  {
+   "code": "HABIGANJ-HABIGANJ-SADAR",
+   "en": "Habiganj Sadar, Habiganj",
+   "bn": "হবিগঞ্জ সদর, হবিগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "HABIGANJ",
+   "name_en": "Habiganj Sadar",
+   "name_bn": "হবিগঞ্জ সদর"
+  },
+  {
+   "code": "HABIGANJ-LAKHAI",
+   "en": "Lakhai, Habiganj",
+   "bn": "লাখাই, হবিগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "HABIGANJ",
+   "name_en": "Lakhai",
+   "name_bn": "লাখাই"
+  },
+  {
+   "code": "HABIGANJ-MADHABPUR",
+   "en": "Madhabpur, Habiganj",
+   "bn": "মাধবপুর, হবিগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "HABIGANJ",
+   "name_en": "Madhabpur",
+   "name_bn": "মাধবপুর"
+  },
+  {
+   "code": "HABIGANJ-NABIGANJ",
+   "en": "Nabiganj, Habiganj",
+   "bn": "নবীগঞ্জ, হবিগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "HABIGANJ",
+   "name_en": "Nabiganj",
+   "name_bn": "নবীগঞ্জ"
+  },
+  {
+   "code": "JAMALPUR-BOKSHIGANJ",
+   "en": "Bokshiganj, Jamalpur",
+   "bn": "বকশীগঞ্জ, জামালপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JAMALPUR",
+   "name_en": "Bokshiganj",
+   "name_bn": "বকশীগঞ্জ"
+  },
+  {
+   "code": "JAMALPUR-DEWANGONJ",
+   "en": "Dewangonj, Jamalpur",
+   "bn": "দেওয়ানগঞ্জ, জামালপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JAMALPUR",
+   "name_en": "Dewangonj",
+   "name_bn": "দেওয়ানগঞ্জ"
+  },
+  {
+   "code": "JAM-ISLAMPUR",
+   "en": "Islampur, Jamalpur",
+   "bn": "ইসলামপুর, জামালপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JAMALPUR",
+   "name_en": "Islampur",
+   "name_bn": "ইসলামপুর"
+  },
+  {
+   "code": "JAMALPUR-JAMALPUR-SADAR",
+   "en": "Jamalpur Sadar, Jamalpur",
+   "bn": "জামালপুর সদর, জামালপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JAMALPUR",
+   "name_en": "Jamalpur Sadar",
+   "name_bn": "জামালপুর সদর"
+  },
+  {
+   "code": "JAMALPUR-MADARGANJ",
+   "en": "Madarganj, Jamalpur",
+   "bn": "মাদারগঞ্জ, জামালপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JAMALPUR",
+   "name_en": "Madarganj",
+   "name_bn": "মাদারগঞ্জ"
+  },
+  {
+   "code": "JAMALPUR-MELANDAH",
+   "en": "Melandah, Jamalpur",
+   "bn": "মেলান্দহ, জামালপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JAMALPUR",
+   "name_en": "Melandah",
+   "name_bn": "মেলান্দহ"
+  },
+  {
+   "code": "JAMALPUR-SARISHABARI",
+   "en": "Sarishabari, Jamalpur",
+   "bn": "সরিষাবাড়ী, জামালপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JAMALPUR",
+   "name_en": "Sarishabari",
+   "name_bn": "সরিষাবাড়ী"
+  },
+  {
+   "code": "JASHORE-ABHAYNAGAR",
+   "en": "Abhaynagar, Jashore",
+   "bn": "অভয়নগর, যশোর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JASHORE",
+   "name_en": "Abhaynagar",
+   "name_bn": "অভয়নগর"
+  },
+  {
+   "code": "JASHORE-BAGHERPARA",
+   "en": "Bagherpara, Jashore",
+   "bn": "বাঘারপাড়া, যশোর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JASHORE",
+   "name_en": "Bagherpara",
+   "name_bn": "বাঘারপাড়া"
+  },
+  {
+   "code": "JASHORE-CHOUGACHHA",
+   "en": "Chougachha, Jashore",
+   "bn": "চৌগাছা, যশোর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JASHORE",
+   "name_en": "Chougachha",
+   "name_bn": "চৌগাছা"
+  },
+  {
+   "code": "JASHORE-JESSORE-SADAR",
+   "en": "Jessore Sadar, Jashore",
+   "bn": "যশোর সদর, যশোর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JASHORE",
+   "name_en": "Jessore Sadar",
+   "name_bn": "যশোর সদর"
+  },
+  {
+   "code": "JASHORE-JHIKARGACHA",
+   "en": "Jhikargacha, Jashore",
+   "bn": "ঝিকরগাছা, যশোর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JASHORE",
+   "name_en": "Jhikargacha",
+   "name_bn": "ঝিকরগাছা"
+  },
+  {
+   "code": "JASHORE-KESHABPUR",
+   "en": "Keshabpur, Jashore",
+   "bn": "কেশবপুর, যশোর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JASHORE",
+   "name_en": "Keshabpur",
+   "name_bn": "কেশবপুর"
+  },
+  {
+   "code": "JASHORE-MANIRAMPUR",
+   "en": "Manirampur, Jashore",
+   "bn": "মণিরামপুর, যশোর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JASHORE",
+   "name_en": "Manirampur",
+   "name_bn": "মণিরামপুর"
+  },
+  {
+   "code": "JASHORE-SHARSHA",
+   "en": "Sharsha, Jashore",
+   "bn": "শার্শা, যশোর",
+   "region": "floodplain",
+   "north": false,
+   "district": "JASHORE",
+   "name_en": "Sharsha",
+   "name_bn": "শার্শা"
+  },
+  {
+   "code": "JHALOKATI-JHALAKATHI-SADAR",
+   "en": "Jhalakathi Sadar, Jhalokati",
+   "bn": "ঝালকাঠি সদর, ঝালকাঠি",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHALOKATI",
+   "name_en": "Jhalakathi Sadar",
+   "name_bn": "ঝালকাঠি সদর"
+  },
+  {
+   "code": "JHALOKATI-KATHALIA",
+   "en": "Kathalia, Jhalokati",
+   "bn": "কাঠালিয়া, ঝালকাঠি",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHALOKATI",
+   "name_en": "Kathalia",
+   "name_bn": "কাঠালিয়া"
+  },
+  {
+   "code": "JHALOKATI-NALCHITY",
+   "en": "Nalchity, Jhalokati",
+   "bn": "নলছিটি, ঝালকাঠি",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHALOKATI",
+   "name_en": "Nalchity",
+   "name_bn": "নলছিটি"
+  },
+  {
+   "code": "JHALOKATI-RAJAPUR",
+   "en": "Rajapur, Jhalokati",
+   "bn": "রাজাপুর, ঝালকাঠি",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHALOKATI",
+   "name_en": "Rajapur",
+   "name_bn": "রাজাপুর"
+  },
+  {
+   "code": "JHENAIDAH-HARINAKUNDU",
+   "en": "Harinakundu, Jhenaidah",
+   "bn": "হরিণাকুন্ডু, ঝিনাইদহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHENAIDAH",
+   "name_en": "Harinakundu",
+   "name_bn": "হরিণাকুন্ডু"
+  },
+  {
+   "code": "JHENAIDAH-JHENAIDAH-SADAR",
+   "en": "Jhenaidah Sadar, Jhenaidah",
+   "bn": "ঝিনাইদহ সদর, ঝিনাইদহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHENAIDAH",
+   "name_en": "Jhenaidah Sadar",
+   "name_bn": "ঝিনাইদহ সদর"
+  },
+  {
+   "code": "JHENAIDAH-KALIGANJ",
+   "en": "Kaliganj, Jhenaidah",
+   "bn": "কালীগঞ্জ, ঝিনাইদহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHENAIDAH",
+   "name_en": "Kaliganj",
+   "name_bn": "কালীগঞ্জ"
+  },
+  {
+   "code": "JHENAIDAH-KOTCHANDPUR",
+   "en": "Kotchandpur, Jhenaidah",
+   "bn": "কোটচাঁদপুর, ঝিনাইদহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHENAIDAH",
+   "name_en": "Kotchandpur",
+   "name_bn": "কোটচাঁদপুর"
+  },
+  {
+   "code": "JHENAIDAH-MOHESHPUR",
+   "en": "Moheshpur, Jhenaidah",
+   "bn": "মহেশপুর, ঝিনাইদহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHENAIDAH",
+   "name_en": "Moheshpur",
+   "name_bn": "মহেশপুর"
+  },
+  {
+   "code": "JHENAIDAH-SHAILKUPA",
+   "en": "Shailkupa, Jhenaidah",
+   "bn": "শৈলকুপা, ঝিনাইদহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "JHENAIDAH",
+   "name_en": "Shailkupa",
+   "name_bn": "শৈলকুপা"
+  },
+  {
+   "code": "JOYPURHAT-AKKELPUR",
+   "en": "Akkelpur, Joypurhat",
+   "bn": "আক্কেলপুর, জয়পুরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "JOYPURHAT",
+   "name_en": "Akkelpur",
+   "name_bn": "আক্কেলপুর"
+  },
+  {
+   "code": "JOYPURHAT-JOYPURHAT-SADAR",
+   "en": "Joypurhat Sadar, Joypurhat",
+   "bn": "জয়পুরহাট সদর, জয়পুরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "JOYPURHAT",
+   "name_en": "Joypurhat Sadar",
+   "name_bn": "জয়পুরহাট সদর"
+  },
+  {
+   "code": "JOYPURHAT-KALAI",
+   "en": "Kalai, Joypurhat",
+   "bn": "কালাই, জয়পুরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "JOYPURHAT",
+   "name_en": "Kalai",
+   "name_bn": "কালাই"
+  },
+  {
+   "code": "JOYPURHAT-KHETLAL",
+   "en": "Khetlal, Joypurhat",
+   "bn": "ক্ষেতলাল, জয়পুরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "JOYPURHAT",
+   "name_en": "Khetlal",
+   "name_bn": "ক্ষেতলাল"
+  },
+  {
+   "code": "JOYPURHAT-PANCHBIBI",
+   "en": "Panchbibi, Joypurhat",
+   "bn": "পাঁচবিবি, জয়পুরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "JOYPURHAT",
+   "name_en": "Panchbibi",
+   "name_bn": "পাঁচবিবি"
+  },
+  {
+   "code": "KHAGRACHHARI-DIGHINALA",
+   "en": "Dighinala, Khagrachhari",
+   "bn": "দিঘীনালা, খাগড়াছড়ি",
+   "region": "floodplain",
+   "north": false,
+   "district": "KHAGRACHHARI",
+   "name_en": "Dighinala",
+   "name_bn": "দিঘীনালা"
+  },
+  {
+   "code": "KHAGRACHHARI-GUIMARA",
+   "en": "Guimara, Khagrachhari",
+   "bn": "গুইমারা, খাগড়াছড়ি",
+   "region": "floodplain",
+   "north": false,
+   "district": "KHAGRACHHARI",
+   "name_en": "Guimara",
+   "name_bn": "গুইমারা"
+  },
+  {
+   "code": "KHAGRACHHARI-KHAGRACHHARI-SADAR",
+   "en": "Khagrachhari Sadar, Khagrachhari",
+   "bn": "খাগড়াছড়ি সদর, খাগড়াছড়ি",
+   "region": "floodplain",
+   "north": false,
+   "district": "KHAGRACHHARI",
+   "name_en": "Khagrachhari Sadar",
+   "name_bn": "খাগড়াছড়ি সদর"
+  },
+  {
+   "code": "KHAGRACHHARI-LAXMICHHARI",
+   "en": "Laxmichhari, Khagrachhari",
+   "bn": "লক্ষীছড়ি, খাগড়াছড়ি",
+   "region": "floodplain",
+   "north": false,
+   "district": "KHAGRACHHARI",
+   "name_en": "Laxmichhari",
+   "name_bn": "লক্ষীছড়ি"
+  },
+  {
+   "code": "KHAGRACHHARI-MANIKCHARI",
+   "en": "Manikchari, Khagrachhari",
+   "bn": "মানিকছড়ি, খাগড়াছড়ি",
+   "region": "floodplain",
+   "north": false,
+   "district": "KHAGRACHHARI",
+   "name_en": "Manikchari",
+   "name_bn": "মানিকছড়ি"
+  },
+  {
+   "code": "KHAGRACHHARI-MATIRANGA",
+   "en": "Matiranga, Khagrachhari",
+   "bn": "মাটিরাঙ্গা, খাগড়াছড়ি",
+   "region": "floodplain",
+   "north": false,
+   "district": "KHAGRACHHARI",
+   "name_en": "Matiranga",
+   "name_bn": "মাটিরাঙ্গা"
+  },
+  {
+   "code": "KHAGRACHHARI-MOHALCHARI",
+   "en": "Mohalchari, Khagrachhari",
+   "bn": "মহালছড়ি, খাগড়াছড়ি",
+   "region": "floodplain",
+   "north": false,
+   "district": "KHAGRACHHARI",
+   "name_en": "Mohalchari",
+   "name_bn": "মহালছড়ি"
+  },
+  {
+   "code": "KHAGRACHHARI-PANCHARI",
+   "en": "Panchari, Khagrachhari",
+   "bn": "পানছড়ি, খাগড়াছড়ি",
+   "region": "floodplain",
+   "north": false,
+   "district": "KHAGRACHHARI",
+   "name_en": "Panchari",
+   "name_bn": "পানছড়ি"
+  },
+  {
+   "code": "KHAGRACHHARI-RAMGARH",
+   "en": "Ramgarh, Khagrachhari",
+   "bn": "রামগড়, খাগড়াছড়ি",
+   "region": "floodplain",
+   "north": false,
+   "district": "KHAGRACHHARI",
+   "name_en": "Ramgarh",
+   "name_bn": "রামগড়"
+  },
+  {
+   "code": "KHULNA-BOTIAGHATA",
+   "en": "Botiaghata, Khulna",
+   "bn": "বটিয়াঘাটা, খুলনা",
+   "region": "coastal",
+   "north": false,
+   "district": "KHULNA",
+   "name_en": "Botiaghata",
+   "name_bn": "বটিয়াঘাটা"
+  },
+  {
+   "code": "KHU-DACOPE",
+   "en": "Dacope, Khulna",
+   "bn": "দাকোপ, খুলনা",
+   "region": "coastal",
+   "north": false,
+   "district": "KHULNA",
+   "name_en": "Dacope",
+   "name_bn": "দাকোপ"
+  },
+  {
+   "code": "KHULNA-DIGHOLIA",
+   "en": "Digholia, Khulna",
+   "bn": "দিঘলিয়া, খুলনা",
+   "region": "coastal",
+   "north": false,
+   "district": "KHULNA",
+   "name_en": "Digholia",
+   "name_bn": "দিঘলিয়া"
+  },
+  {
+   "code": "KHULNA-DUMURIA",
+   "en": "Dumuria, Khulna",
+   "bn": "ডুমুরিয়া, খুলনা",
+   "region": "coastal",
+   "north": false,
+   "district": "KHULNA",
+   "name_en": "Dumuria",
+   "name_bn": "ডুমুরিয়া"
+  },
+  {
+   "code": "KHULNA-FULTOLA",
+   "en": "Fultola, Khulna",
+   "bn": "ফুলতলা, খুলনা",
+   "region": "coastal",
+   "north": false,
+   "district": "KHULNA",
+   "name_en": "Fultola",
+   "name_bn": "ফুলতলা"
+  },
+  {
+   "code": "KHULNA-KOYRA",
+   "en": "Koyra, Khulna",
+   "bn": "কয়রা, খুলনা",
+   "region": "coastal",
+   "north": false,
+   "district": "KHULNA",
+   "name_en": "Koyra",
+   "name_bn": "কয়রা"
+  },
+  {
+   "code": "KHULNA-PAIKGASA",
+   "en": "Paikgasa, Khulna",
+   "bn": "পাইকগাছা, খুলনা",
+   "region": "coastal",
+   "north": false,
+   "district": "KHULNA",
+   "name_en": "Paikgasa",
+   "name_bn": "পাইকগাছা"
+  },
+  {
+   "code": "KHULNA-RUPSHA",
+   "en": "Rupsha, Khulna",
+   "bn": "রূপসা, খুলনা",
+   "region": "coastal",
+   "north": false,
+   "district": "KHULNA",
+   "name_en": "Rupsha",
+   "name_bn": "রূপসা"
+  },
+  {
+   "code": "KHULNA-TEROKHADA",
+   "en": "Terokhada, Khulna",
+   "bn": "তেরখাদা, খুলনা",
+   "region": "coastal",
+   "north": false,
+   "district": "KHULNA",
+   "name_en": "Terokhada",
+   "name_bn": "তেরখাদা"
+  },
+  {
+   "code": "KISHOREGANJ-AUSTAGRAM",
+   "en": "Austagram, Kishoreganj",
+   "bn": "অষ্টগ্রাম, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Austagram",
+   "name_bn": "অষ্টগ্রাম"
+  },
+  {
+   "code": "KISHOREGANJ-BAJITPUR",
+   "en": "Bajitpur, Kishoreganj",
+   "bn": "বাজিতপুর, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Bajitpur",
+   "name_bn": "বাজিতপুর"
+  },
+  {
+   "code": "KISHOREGANJ-BHAIRAB",
+   "en": "Bhairab, Kishoreganj",
+   "bn": "ভৈরব, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Bhairab",
+   "name_bn": "ভৈরব"
+  },
+  {
+   "code": "KISHOREGANJ-HOSSAINPUR",
+   "en": "Hossainpur, Kishoreganj",
+   "bn": "হোসেনপুর, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Hossainpur",
+   "name_bn": "হোসেনপুর"
+  },
+  {
+   "code": "KIS-ITNA",
+   "en": "Itna, Kishoreganj",
+   "bn": "ইটনা, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Itna",
+   "name_bn": "ইটনা"
+  },
+  {
+   "code": "KISHOREGANJ-KARIMGONJ",
+   "en": "Karimgonj, Kishoreganj",
+   "bn": "করিমগঞ্জ, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Karimgonj",
+   "name_bn": "করিমগঞ্জ"
+  },
+  {
+   "code": "KISHOREGANJ-KATIADI",
+   "en": "Katiadi, Kishoreganj",
+   "bn": "কটিয়াদী, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Katiadi",
+   "name_bn": "কটিয়াদী"
+  },
+  {
+   "code": "KISHOREGANJ-KISHOREGANJ-SADAR",
+   "en": "Kishoreganj Sadar, Kishoreganj",
+   "bn": "কিশোরগঞ্জ সদর, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Kishoreganj Sadar",
+   "name_bn": "কিশোরগঞ্জ সদর"
+  },
+  {
+   "code": "KISHOREGANJ-KULIARCHAR",
+   "en": "Kuliarchar, Kishoreganj",
+   "bn": "কুলিয়ারচর, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Kuliarchar",
+   "name_bn": "কুলিয়ারচর"
+  },
+  {
+   "code": "KISHOREGANJ-MITHAMOIN",
+   "en": "Mithamoin, Kishoreganj",
+   "bn": "মিঠামইন, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Mithamoin",
+   "name_bn": "মিঠামইন"
+  },
+  {
+   "code": "KISHOREGANJ-NIKLI",
+   "en": "Nikli, Kishoreganj",
+   "bn": "নিকলী, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Nikli",
+   "name_bn": "নিকলী"
+  },
+  {
+   "code": "KISHOREGANJ-PAKUNDIA",
+   "en": "Pakundia, Kishoreganj",
+   "bn": "পাকুন্দিয়া, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Pakundia",
+   "name_bn": "পাকুন্দিয়া"
+  },
+  {
+   "code": "KISHOREGANJ-TARAIL",
+   "en": "Tarail, Kishoreganj",
+   "bn": "তাড়াইল, কিশোরগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "KISHOREGANJ",
+   "name_en": "Tarail",
+   "name_bn": "তাড়াইল"
+  },
+  {
+   "code": "KURIGRAM-BHURUNGAMARI",
+   "en": "Bhurungamari, Kurigram",
+   "bn": "ভুরুঙ্গামারী, কুড়িগ্রাম",
+   "region": "floodplain",
+   "north": true,
+   "district": "KURIGRAM",
+   "name_en": "Bhurungamari",
+   "name_bn": "ভুরুঙ্গামারী"
+  },
+  {
+   "code": "KURIGRAM-CHARRAJIBPUR",
+   "en": "Charrajibpur, Kurigram",
+   "bn": "চর রাজিবপুর, কুড়িগ্রাম",
+   "region": "floodplain",
+   "north": true,
+   "district": "KURIGRAM",
+   "name_en": "Charrajibpur",
+   "name_bn": "চর রাজিবপুর"
+  },
+  {
+   "code": "KUR-CHILMARI",
+   "en": "Chilmari, Kurigram",
+   "bn": "চিলমারী, কুড়িগ্রাম",
+   "region": "floodplain",
+   "north": true,
+   "district": "KURIGRAM",
+   "name_en": "Chilmari",
+   "name_bn": "চিলমারী"
+  },
+  {
+   "code": "KURIGRAM-KURIGRAM-SADAR",
+   "en": "Kurigram Sadar, Kurigram",
+   "bn": "কুড়িগ্রাম সদর, কুড়িগ্রাম",
+   "region": "floodplain",
+   "north": true,
+   "district": "KURIGRAM",
+   "name_en": "Kurigram Sadar",
+   "name_bn": "কুড়িগ্রাম সদর"
+  },
+  {
+   "code": "KURIGRAM-NAGESHWARI",
+   "en": "Nageshwari, Kurigram",
+   "bn": "নাগেশ্বরী, কুড়িগ্রাম",
+   "region": "floodplain",
+   "north": true,
+   "district": "KURIGRAM",
+   "name_en": "Nageshwari",
+   "name_bn": "নাগেশ্বরী"
+  },
+  {
+   "code": "KURIGRAM-PHULBARI",
+   "en": "Phulbari, Kurigram",
+   "bn": "ফুলবাড়ী, কুড়িগ্রাম",
+   "region": "floodplain",
+   "north": true,
+   "district": "KURIGRAM",
+   "name_en": "Phulbari",
+   "name_bn": "ফুলবাড়ী"
+  },
+  {
+   "code": "KURIGRAM-RAJARHAT",
+   "en": "Rajarhat, Kurigram",
+   "bn": "রাজারহাট, কুড়িগ্রাম",
+   "region": "floodplain",
+   "north": true,
+   "district": "KURIGRAM",
+   "name_en": "Rajarhat",
+   "name_bn": "রাজারহাট"
+  },
+  {
+   "code": "KURIGRAM-ROWMARI",
+   "en": "Rowmari, Kurigram",
+   "bn": "রৌমারী, কুড়িগ্রাম",
+   "region": "floodplain",
+   "north": true,
+   "district": "KURIGRAM",
+   "name_en": "Rowmari",
+   "name_bn": "রৌমারী"
+  },
+  {
+   "code": "KURIGRAM-ULIPUR",
+   "en": "Ulipur, Kurigram",
+   "bn": "উলিপুর, কুড়িগ্রাম",
+   "region": "floodplain",
+   "north": true,
+   "district": "KURIGRAM",
+   "name_en": "Ulipur",
+   "name_bn": "উলিপুর"
+  },
+  {
+   "code": "KUSHTIA-BHERAMARA",
+   "en": "Bheramara, Kushtia",
+   "bn": "ভেড়ামারা, কুষ্টিয়া",
+   "region": "floodplain",
+   "north": false,
+   "district": "KUSHTIA",
+   "name_en": "Bheramara",
+   "name_bn": "ভেড়ামারা"
+  },
+  {
+   "code": "KUSHTIA-DAULATPUR",
+   "en": "Daulatpur, Kushtia",
+   "bn": "দৌলতপুর, কুষ্টিয়া",
+   "region": "floodplain",
+   "north": false,
+   "district": "KUSHTIA",
+   "name_en": "Daulatpur",
+   "name_bn": "দৌলতপুর"
+  },
+  {
+   "code": "KUSHTIA-KHOKSA",
+   "en": "Khoksa, Kushtia",
+   "bn": "খোকসা, কুষ্টিয়া",
+   "region": "floodplain",
+   "north": false,
+   "district": "KUSHTIA",
+   "name_en": "Khoksa",
+   "name_bn": "খোকসা"
+  },
+  {
+   "code": "KUSHTIA-KUMARKHALI",
+   "en": "Kumarkhali, Kushtia",
+   "bn": "কুমারখালী, কুষ্টিয়া",
+   "region": "floodplain",
+   "north": false,
+   "district": "KUSHTIA",
+   "name_en": "Kumarkhali",
+   "name_bn": "কুমারখালী"
+  },
+  {
+   "code": "KUSHTIA-KUSHTIA-SADAR",
+   "en": "Kushtia Sadar, Kushtia",
+   "bn": "কুষ্টিয়া সদর, কুষ্টিয়া",
+   "region": "floodplain",
+   "north": false,
+   "district": "KUSHTIA",
+   "name_en": "Kushtia Sadar",
+   "name_bn": "কুষ্টিয়া সদর"
+  },
+  {
+   "code": "KUSHTIA-MIRPUR",
+   "en": "Mirpur, Kushtia",
+   "bn": "মিরপুর, কুষ্টিয়া",
+   "region": "floodplain",
+   "north": false,
+   "district": "KUSHTIA",
+   "name_en": "Mirpur",
+   "name_bn": "মিরপুর"
+  },
+  {
+   "code": "LAKSHMIPUR-KAMALNAGAR",
+   "en": "Kamalnagar, Lakshmipur",
+   "bn": "কমলনগর, লক্ষ্মীপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "LAKSHMIPUR",
+   "name_en": "Kamalnagar",
+   "name_bn": "কমলনগর"
+  },
+  {
+   "code": "LAKSHMIPUR-LAKSHMIPUR-SADAR",
+   "en": "Lakshmipur Sadar, Lakshmipur",
+   "bn": "লক্ষ্মীপুর সদর, লক্ষ্মীপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "LAKSHMIPUR",
+   "name_en": "Lakshmipur Sadar",
+   "name_bn": "লক্ষ্মীপুর সদর"
+  },
+  {
+   "code": "LAKSHMIPUR-RAIPUR",
+   "en": "Raipur, Lakshmipur",
+   "bn": "রায়পুর, লক্ষ্মীপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "LAKSHMIPUR",
+   "name_en": "Raipur",
+   "name_bn": "রায়পুর"
+  },
+  {
+   "code": "LAKSHMIPUR-RAMGANJ",
+   "en": "Ramganj, Lakshmipur",
+   "bn": "রামগঞ্জ, লক্ষ্মীপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "LAKSHMIPUR",
+   "name_en": "Ramganj",
+   "name_bn": "রামগঞ্জ"
+  },
+  {
+   "code": "LAKSHMIPUR-RAMGATI",
+   "en": "Ramgati, Lakshmipur",
+   "bn": "রামগতি, লক্ষ্মীপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "LAKSHMIPUR",
+   "name_en": "Ramgati",
+   "name_bn": "রামগতি"
+  },
+  {
+   "code": "LALMONIRHAT-ADITMARI",
+   "en": "Aditmari, Lalmonirhat",
+   "bn": "আদিতমারী, লালমনিরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "LALMONIRHAT",
+   "name_en": "Aditmari",
+   "name_bn": "আদিতমারী"
+  },
+  {
+   "code": "LALMONIRHAT-HATIBANDHA",
+   "en": "Hatibandha, Lalmonirhat",
+   "bn": "হাতীবান্ধা, লালমনিরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "LALMONIRHAT",
+   "name_en": "Hatibandha",
+   "name_bn": "হাতীবান্ধা"
+  },
+  {
+   "code": "LALMONIRHAT-KALIGANJ",
+   "en": "Kaliganj, Lalmonirhat",
+   "bn": "কালীগঞ্জ, লালমনিরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "LALMONIRHAT",
+   "name_en": "Kaliganj",
+   "name_bn": "কালীগঞ্জ"
+  },
+  {
+   "code": "LALMONIRHAT-LALMONIRHAT-SADAR",
+   "en": "Lalmonirhat Sadar, Lalmonirhat",
+   "bn": "লালমনিরহাট সদর, লালমনিরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "LALMONIRHAT",
+   "name_en": "Lalmonirhat Sadar",
+   "name_bn": "লালমনিরহাট সদর"
+  },
+  {
+   "code": "LALMONIRHAT-PATGRAM",
+   "en": "Patgram, Lalmonirhat",
+   "bn": "পাটগ্রাম, লালমনিরহাট",
+   "region": "floodplain",
+   "north": true,
+   "district": "LALMONIRHAT",
+   "name_en": "Patgram",
+   "name_bn": "পাটগ্রাম"
+  },
+  {
+   "code": "MADARIPUR-DASAR",
+   "en": "Dasar, Madaripur",
+   "bn": "ডাসার, মাদারীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "MADARIPUR",
+   "name_en": "Dasar",
+   "name_bn": "ডাসার"
+  },
+  {
+   "code": "MADARIPUR-KALKINI",
+   "en": "Kalkini, Madaripur",
+   "bn": "কালকিনি, মাদারীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "MADARIPUR",
+   "name_en": "Kalkini",
+   "name_bn": "কালকিনি"
+  },
+  {
+   "code": "MADARIPUR-MADARIPUR-SADAR",
+   "en": "Madaripur Sadar, Madaripur",
+   "bn": "মাদারীপুর সদর, মাদারীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "MADARIPUR",
+   "name_en": "Madaripur Sadar",
+   "name_bn": "মাদারীপুর সদর"
+  },
+  {
+   "code": "MADARIPUR-RAJOIR",
+   "en": "Rajoir, Madaripur",
+   "bn": "রাজৈর, মাদারীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "MADARIPUR",
+   "name_en": "Rajoir",
+   "name_bn": "রাজৈর"
+  },
+  {
+   "code": "MADARIPUR-SHIBCHAR",
+   "en": "Shibchar, Madaripur",
+   "bn": "শিবচর, মাদারীপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "MADARIPUR",
+   "name_en": "Shibchar",
+   "name_bn": "শিবচর"
+  },
+  {
+   "code": "MAGURA-MAGURA-SADAR",
+   "en": "Magura Sadar, Magura",
+   "bn": "মাগুরা সদর, মাগুরা",
+   "region": "floodplain",
+   "north": false,
+   "district": "MAGURA",
+   "name_en": "Magura Sadar",
+   "name_bn": "মাগুরা সদর"
+  },
+  {
+   "code": "MAGURA-MOHAMMADPUR",
+   "en": "Mohammadpur, Magura",
+   "bn": "মহম্মদপুর, মাগুরা",
+   "region": "floodplain",
+   "north": false,
+   "district": "MAGURA",
+   "name_en": "Mohammadpur",
+   "name_bn": "মহম্মদপুর"
+  },
+  {
+   "code": "MAGURA-SHALIKHA",
+   "en": "Shalikha, Magura",
+   "bn": "শালিখা, মাগুরা",
+   "region": "floodplain",
+   "north": false,
+   "district": "MAGURA",
+   "name_en": "Shalikha",
+   "name_bn": "শালিখা"
+  },
+  {
+   "code": "MAGURA-SREEPUR",
+   "en": "Sreepur, Magura",
+   "bn": "শ্রীপুর, মাগুরা",
+   "region": "floodplain",
+   "north": false,
+   "district": "MAGURA",
+   "name_en": "Sreepur",
+   "name_bn": "শ্রীপুর"
+  },
+  {
+   "code": "MANIKGANJ-DOULATPUR",
+   "en": "Doulatpur, Manikganj",
+   "bn": "দৌলতপুর, মানিকগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MANIKGANJ",
+   "name_en": "Doulatpur",
+   "name_bn": "দৌলতপুর"
+  },
+  {
+   "code": "MANIKGANJ-GIOR",
+   "en": "Gior, Manikganj",
+   "bn": "ঘিওর, মানিকগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MANIKGANJ",
+   "name_en": "Gior",
+   "name_bn": "ঘিওর"
+  },
+  {
+   "code": "MANIKGANJ-HARIRAMPUR",
+   "en": "Harirampur, Manikganj",
+   "bn": "হরিরামপুর, মানিকগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MANIKGANJ",
+   "name_en": "Harirampur",
+   "name_bn": "হরিরামপুর"
+  },
+  {
+   "code": "MANIKGANJ-MANIKGANJ-SADAR",
+   "en": "Manikganj Sadar, Manikganj",
+   "bn": "মানিকগঞ্জ সদর, মানিকগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MANIKGANJ",
+   "name_en": "Manikganj Sadar",
+   "name_bn": "মানিকগঞ্জ সদর"
+  },
+  {
+   "code": "MANIKGANJ-SATURIA",
+   "en": "Saturia, Manikganj",
+   "bn": "সাটুরিয়া, মানিকগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MANIKGANJ",
+   "name_en": "Saturia",
+   "name_bn": "সাটুরিয়া"
+  },
+  {
+   "code": "MANIKGANJ-SHIBALOY",
+   "en": "Shibaloy, Manikganj",
+   "bn": "শিবালয়, মানিকগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MANIKGANJ",
+   "name_en": "Shibaloy",
+   "name_bn": "শিবালয়"
+  },
+  {
+   "code": "MANIKGANJ-SINGIAR",
+   "en": "Singiar, Manikganj",
+   "bn": "সিংগাইর, মানিকগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MANIKGANJ",
+   "name_en": "Singiar",
+   "name_bn": "সিংগাইর"
+  },
+  {
+   "code": "MEHERPUR-GANGNI",
+   "en": "Gangni, Meherpur",
+   "bn": "গাংনী, মেহেরপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "MEHERPUR",
+   "name_en": "Gangni",
+   "name_bn": "গাংনী"
+  },
+  {
+   "code": "MEHERPUR-MEHERPUR-SADAR",
+   "en": "Meherpur Sadar, Meherpur",
+   "bn": "মেহেরপুর সদর, মেহেরপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "MEHERPUR",
+   "name_en": "Meherpur Sadar",
+   "name_bn": "মেহেরপুর সদর"
+  },
+  {
+   "code": "MEHERPUR-MUJIBNAGAR",
+   "en": "Mujibnagar, Meherpur",
+   "bn": "মুজিবনগর, মেহেরপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "MEHERPUR",
+   "name_en": "Mujibnagar",
+   "name_bn": "মুজিবনগর"
+  },
+  {
+   "code": "MOULVIBAZAR-BARLEKHA",
+   "en": "Barlekha, Moulvibazar",
+   "bn": "বড়লেখা, মৌলভীবাজার",
+   "region": "haor",
+   "north": false,
+   "district": "MOULVIBAZAR",
+   "name_en": "Barlekha",
+   "name_bn": "বড়লেখা"
+  },
+  {
+   "code": "MOULVIBAZAR-JURI",
+   "en": "Juri, Moulvibazar",
+   "bn": "জুড়ী, মৌলভীবাজার",
+   "region": "haor",
+   "north": false,
+   "district": "MOULVIBAZAR",
+   "name_en": "Juri",
+   "name_bn": "জুড়ী"
+  },
+  {
+   "code": "MOULVIBAZAR-KAMOLGANJ",
+   "en": "Kamolganj, Moulvibazar",
+   "bn": "কমলগঞ্জ, মৌলভীবাজার",
+   "region": "haor",
+   "north": false,
+   "district": "MOULVIBAZAR",
+   "name_en": "Kamolganj",
+   "name_bn": "কমলগঞ্জ"
+  },
+  {
+   "code": "MOULVIBAZAR-KULAURA",
+   "en": "Kulaura, Moulvibazar",
+   "bn": "কুলাউড়া, মৌলভীবাজার",
+   "region": "haor",
+   "north": false,
+   "district": "MOULVIBAZAR",
+   "name_en": "Kulaura",
+   "name_bn": "কুলাউড়া"
+  },
+  {
+   "code": "MOULVIBAZAR-MOULVIBAZAR-SADAR",
+   "en": "Moulvibazar Sadar, Moulvibazar",
+   "bn": "মৌলভীবাজার সদর, মৌলভীবাজার",
+   "region": "haor",
+   "north": false,
+   "district": "MOULVIBAZAR",
+   "name_en": "Moulvibazar Sadar",
+   "name_bn": "মৌলভীবাজার সদর"
+  },
+  {
+   "code": "MOULVIBAZAR-RAJNAGAR",
+   "en": "Rajnagar, Moulvibazar",
+   "bn": "রাজনগর, মৌলভীবাজার",
+   "region": "haor",
+   "north": false,
+   "district": "MOULVIBAZAR",
+   "name_en": "Rajnagar",
+   "name_bn": "রাজনগর"
+  },
+  {
+   "code": "MOULVIBAZAR-SREEMANGAL",
+   "en": "Sreemangal, Moulvibazar",
+   "bn": "শ্রীমঙ্গল, মৌলভীবাজার",
+   "region": "haor",
+   "north": false,
+   "district": "MOULVIBAZAR",
+   "name_en": "Sreemangal",
+   "name_bn": "শ্রীমঙ্গল"
+  },
+  {
+   "code": "MUNSHIGANJ-GAJARIA",
+   "en": "Gajaria, Munshiganj",
+   "bn": "গজারিয়া, মুন্সিগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MUNSHIGANJ",
+   "name_en": "Gajaria",
+   "name_bn": "গজারিয়া"
+  },
+  {
+   "code": "MUNSHIGANJ-LOUHAJANJ",
+   "en": "Louhajanj, Munshiganj",
+   "bn": "লৌহজং, মুন্সিগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MUNSHIGANJ",
+   "name_en": "Louhajanj",
+   "name_bn": "লৌহজং"
+  },
+  {
+   "code": "MUNSHIGANJ-MUNSHIGANJ-SADAR",
+   "en": "Munshiganj Sadar, Munshiganj",
+   "bn": "মুন্সিগঞ্জ সদর, মুন্সিগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MUNSHIGANJ",
+   "name_en": "Munshiganj Sadar",
+   "name_bn": "মুন্সিগঞ্জ সদর"
+  },
+  {
+   "code": "MUNSHIGANJ-SIRAJDIKHAN",
+   "en": "Sirajdikhan, Munshiganj",
+   "bn": "সিরাজদিখান, মুন্সিগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MUNSHIGANJ",
+   "name_en": "Sirajdikhan",
+   "name_bn": "সিরাজদিখান"
+  },
+  {
+   "code": "MUNSHIGANJ-SREENAGAR",
+   "en": "Sreenagar, Munshiganj",
+   "bn": "শ্রীনগর, মুন্সিগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MUNSHIGANJ",
+   "name_en": "Sreenagar",
+   "name_bn": "শ্রীনগর"
+  },
+  {
+   "code": "MUNSHIGANJ-TONGIBARI",
+   "en": "Tongibari, Munshiganj",
+   "bn": "টংগীবাড়ি, মুন্সিগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MUNSHIGANJ",
+   "name_en": "Tongibari",
+   "name_bn": "টংগীবাড়ি"
+  },
+  {
+   "code": "MYMENSINGH-BHALUKA",
+   "en": "Bhaluka, Mymensingh",
+   "bn": "ভালুকা, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Bhaluka",
+   "name_bn": "ভালুকা"
+  },
+  {
+   "code": "MYMENSINGH-DHOBAURA",
+   "en": "Dhobaura, Mymensingh",
+   "bn": "ধোবাউড়া, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Dhobaura",
+   "name_bn": "ধোবাউড়া"
+  },
+  {
+   "code": "MYMENSINGH-FULBARIA",
+   "en": "Fulbaria, Mymensingh",
+   "bn": "ফুলবাড়ীয়া, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Fulbaria",
+   "name_bn": "ফুলবাড়ীয়া"
+  },
+  {
+   "code": "MYMENSINGH-GAFARGAON",
+   "en": "Gafargaon, Mymensingh",
+   "bn": "গফরগাঁও, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Gafargaon",
+   "name_bn": "গফরগাঁও"
+  },
+  {
+   "code": "MYMENSINGH-GOURIPUR",
+   "en": "Gouripur, Mymensingh",
+   "bn": "গৌরীপুর, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Gouripur",
+   "name_bn": "গৌরীপুর"
+  },
+  {
+   "code": "MYMENSINGH-HALUAGHAT",
+   "en": "Haluaghat, Mymensingh",
+   "bn": "হালুয়াঘাট, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Haluaghat",
+   "name_bn": "হালুয়াঘাট"
+  },
+  {
+   "code": "MYMENSINGH-ISWARGANJ",
+   "en": "Iswarganj, Mymensingh",
+   "bn": "ঈশ্বরগঞ্জ, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Iswarganj",
+   "name_bn": "ঈশ্বরগঞ্জ"
+  },
+  {
+   "code": "MYMENSINGH-MUKTAGACHA",
+   "en": "Muktagacha, Mymensingh",
+   "bn": "মুক্তাগাছা, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Muktagacha",
+   "name_bn": "মুক্তাগাছা"
+  },
+  {
+   "code": "MYMENSINGH-MYMENSINGH-SADAR",
+   "en": "Mymensingh Sadar, Mymensingh",
+   "bn": "ময়মনসিংহ সদর, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Mymensingh Sadar",
+   "name_bn": "ময়মনসিংহ সদর"
+  },
+  {
+   "code": "MYMENSINGH-NANDAIL",
+   "en": "Nandail, Mymensingh",
+   "bn": "নান্দাইল, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Nandail",
+   "name_bn": "নান্দাইল"
+  },
+  {
+   "code": "MYMENSINGH-PHULPUR",
+   "en": "Phulpur, Mymensingh",
+   "bn": "ফুলপুর, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Phulpur",
+   "name_bn": "ফুলপুর"
+  },
+  {
+   "code": "MYMENSINGH-TARAKANDA",
+   "en": "Tarakanda, Mymensingh",
+   "bn": "তারাকান্দা, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Tarakanda",
+   "name_bn": "তারাকান্দা"
+  },
+  {
+   "code": "MYMENSINGH-TRISHAL",
+   "en": "Trishal, Mymensingh",
+   "bn": "ত্রিশাল, ময়মনসিংহ",
+   "region": "floodplain",
+   "north": false,
+   "district": "MYMENSINGH",
+   "name_en": "Trishal",
+   "name_bn": "ত্রিশাল"
+  },
+  {
+   "code": "NAOGAON-ATRAI",
+   "en": "Atrai, Naogaon",
+   "bn": "আত্রাই, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Atrai",
+   "name_bn": "আত্রাই"
+  },
+  {
+   "code": "NAOGAON-BADALGACHI",
+   "en": "Badalgachi, Naogaon",
+   "bn": "বদলগাছী, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Badalgachi",
+   "name_bn": "বদলগাছী"
+  },
+  {
+   "code": "NAOGAON-DHAMOIRHAT",
+   "en": "Dhamoirhat, Naogaon",
+   "bn": "ধামইরহাট, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Dhamoirhat",
+   "name_bn": "ধামইরহাট"
+  },
+  {
+   "code": "NAOGAON-MANDA",
+   "en": "Manda, Naogaon",
+   "bn": "মান্দা, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Manda",
+   "name_bn": "মান্দা"
+  },
+  {
+   "code": "NAOGAON-MOHADEVPUR",
+   "en": "Mohadevpur, Naogaon",
+   "bn": "মহাদেবপুর, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Mohadevpur",
+   "name_bn": "মহাদেবপুর"
+  },
+  {
+   "code": "NAOGAON-NAOGAON-SADAR",
+   "en": "Naogaon Sadar, Naogaon",
+   "bn": "নওগাঁ সদর, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Naogaon Sadar",
+   "name_bn": "নওগাঁ সদর"
+  },
+  {
+   "code": "NAOGAON-NIAMATPUR",
+   "en": "Niamatpur, Naogaon",
+   "bn": "নিয়ামতপুর, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Niamatpur",
+   "name_bn": "নিয়ামতপুর"
+  },
+  {
+   "code": "NAOGAON-PATNITALA",
+   "en": "Patnitala, Naogaon",
+   "bn": "পত্নিতলা, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Patnitala",
+   "name_bn": "পত্নিতলা"
+  },
+  {
+   "code": "NAO-PORSHA",
+   "en": "Porsha, Naogaon",
+   "bn": "পোরশা, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Porsha",
+   "name_bn": "পোরশা"
+  },
+  {
+   "code": "NAOGAON-RANINAGAR",
+   "en": "Raninagar, Naogaon",
+   "bn": "রাণীনগর, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Raninagar",
+   "name_bn": "রাণীনগর"
+  },
+  {
+   "code": "NAOGAON-SAPAHAR",
+   "en": "Sapahar, Naogaon",
+   "bn": "সাপাহার, নওগাঁ",
+   "region": "barind",
+   "north": true,
+   "district": "NAOGAON",
+   "name_en": "Sapahar",
+   "name_bn": "সাপাহার"
+  },
+  {
+   "code": "NARAIL-KALIA",
+   "en": "Kalia, Narail",
+   "bn": "কালিয়া, নড়াইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARAIL",
+   "name_en": "Kalia",
+   "name_bn": "কালিয়া"
+  },
+  {
+   "code": "NARAIL-LOHAGARA",
+   "en": "Lohagara, Narail",
+   "bn": "লোহাগড়া, নড়াইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARAIL",
+   "name_en": "Lohagara",
+   "name_bn": "লোহাগড়া"
+  },
+  {
+   "code": "NARAIL-NARAIL-SADAR",
+   "en": "Narail Sadar, Narail",
+   "bn": "নড়াইল সদর, নড়াইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARAIL",
+   "name_en": "Narail Sadar",
+   "name_bn": "নড়াইল সদর"
+  },
+  {
+   "code": "NARAYANGANJ-ARAIHAZAR",
+   "en": "Araihazar, Narayanganj",
+   "bn": "আড়াইহাজার, নারায়ণগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARAYANGANJ",
+   "name_en": "Araihazar",
+   "name_bn": "আড়াইহাজার"
+  },
+  {
+   "code": "NARAYANGANJ-BANDAR",
+   "en": "Bandar, Narayanganj",
+   "bn": "বন্দর, নারায়ণগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARAYANGANJ",
+   "name_en": "Bandar",
+   "name_bn": "বন্দর"
+  },
+  {
+   "code": "NARAYANGANJ-NARAYANGANJ-SADAR",
+   "en": "Narayanganj Sadar, Narayanganj",
+   "bn": "নারায়নগঞ্জ সদর, নারায়ণগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARAYANGANJ",
+   "name_en": "Narayanganj Sadar",
+   "name_bn": "নারায়নগঞ্জ সদর"
+  },
+  {
+   "code": "NARAYANGANJ-RUPGANJ",
+   "en": "Rupganj, Narayanganj",
+   "bn": "রূপগঞ্জ, নারায়ণগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARAYANGANJ",
+   "name_en": "Rupganj",
+   "name_bn": "রূপগঞ্জ"
+  },
+  {
+   "code": "NARAYANGANJ-SONARGAON",
+   "en": "Sonargaon, Narayanganj",
+   "bn": "সোনারগাঁ, নারায়ণগঞ্জ",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARAYANGANJ",
+   "name_en": "Sonargaon",
+   "name_bn": "সোনারগাঁ"
+  },
+  {
+   "code": "NARSINGDI-BELABO",
+   "en": "Belabo, Narsingdi",
+   "bn": "বেলাবো, নরসিংদী",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARSINGDI",
+   "name_en": "Belabo",
+   "name_bn": "বেলাবো"
+  },
+  {
+   "code": "NARSINGDI-MONOHARDI",
+   "en": "Monohardi, Narsingdi",
+   "bn": "মনোহরদী, নরসিংদী",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARSINGDI",
+   "name_en": "Monohardi",
+   "name_bn": "মনোহরদী"
+  },
+  {
+   "code": "NARSINGDI-NARSINGDI-SADAR",
+   "en": "Narsingdi Sadar, Narsingdi",
+   "bn": "নরসিংদী সদর, নরসিংদী",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARSINGDI",
+   "name_en": "Narsingdi Sadar",
+   "name_bn": "নরসিংদী সদর"
+  },
+  {
+   "code": "NARSINGDI-PALASH",
+   "en": "Palash, Narsingdi",
+   "bn": "পলাশ, নরসিংদী",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARSINGDI",
+   "name_en": "Palash",
+   "name_bn": "পলাশ"
+  },
+  {
+   "code": "NARSINGDI-RAIPURA",
+   "en": "Raipura, Narsingdi",
+   "bn": "রায়পুরা, নরসিংদী",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARSINGDI",
+   "name_en": "Raipura",
+   "name_bn": "রায়পুরা"
+  },
+  {
+   "code": "NARSINGDI-SHIBPUR",
+   "en": "Shibpur, Narsingdi",
+   "bn": "শিবপুর, নরসিংদী",
+   "region": "floodplain",
+   "north": false,
+   "district": "NARSINGDI",
+   "name_en": "Shibpur",
+   "name_bn": "শিবপুর"
+  },
+  {
+   "code": "NATORE-BAGATIPARA",
+   "en": "Bagatipara, Natore",
+   "bn": "বাগাতিপাড়া, নাটোর",
+   "region": "floodplain",
+   "north": true,
+   "district": "NATORE",
+   "name_en": "Bagatipara",
+   "name_bn": "বাগাতিপাড়া"
+  },
+  {
+   "code": "NATORE-BARAIGRAM",
+   "en": "Baraigram, Natore",
+   "bn": "বড়াইগ্রাম, নাটোর",
+   "region": "floodplain",
+   "north": true,
+   "district": "NATORE",
+   "name_en": "Baraigram",
+   "name_bn": "বড়াইগ্রাম"
+  },
+  {
+   "code": "NATORE-GURUDASPUR",
+   "en": "Gurudaspur, Natore",
+   "bn": "গুরুদাসপুর, নাটোর",
+   "region": "floodplain",
+   "north": true,
+   "district": "NATORE",
+   "name_en": "Gurudaspur",
+   "name_bn": "গুরুদাসপুর"
+  },
+  {
+   "code": "NATORE-LALPUR",
+   "en": "Lalpur, Natore",
+   "bn": "লালপুর, নাটোর",
+   "region": "floodplain",
+   "north": true,
+   "district": "NATORE",
+   "name_en": "Lalpur",
+   "name_bn": "লালপুর"
+  },
+  {
+   "code": "NATORE-NALDANGA",
+   "en": "Naldanga, Natore",
+   "bn": "নলডাঙ্গা, নাটোর",
+   "region": "floodplain",
+   "north": true,
+   "district": "NATORE",
+   "name_en": "Naldanga",
+   "name_bn": "নলডাঙ্গা"
+  },
+  {
+   "code": "NATORE-NATORE-SADAR",
+   "en": "Natore Sadar, Natore",
+   "bn": "নাটোর সদর, নাটোর",
+   "region": "floodplain",
+   "north": true,
+   "district": "NATORE",
+   "name_en": "Natore Sadar",
+   "name_bn": "নাটোর সদর"
+  },
+  {
+   "code": "NATORE-SINGRA",
+   "en": "Singra, Natore",
+   "bn": "সিংড়া, নাটোর",
+   "region": "floodplain",
+   "north": true,
+   "district": "NATORE",
+   "name_en": "Singra",
+   "name_bn": "সিংড়া"
+  },
+  {
+   "code": "NETROKONA-ATPARA",
+   "en": "Atpara, Netrokona",
+   "bn": "আটপাড়া, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Atpara",
+   "name_bn": "আটপাড়া"
+  },
+  {
+   "code": "NETROKONA-BARHATTA",
+   "en": "Barhatta, Netrokona",
+   "bn": "বারহাট্টা, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Barhatta",
+   "name_bn": "বারহাট্টা"
+  },
+  {
+   "code": "NETROKONA-DURGAPUR",
+   "en": "Durgapur, Netrokona",
+   "bn": "দুর্গাপুর, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Durgapur",
+   "name_bn": "দুর্গাপুর"
+  },
+  {
+   "code": "NETROKONA-KALMAKANDA",
+   "en": "Kalmakanda, Netrokona",
+   "bn": "কলমাকান্দা, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Kalmakanda",
+   "name_bn": "কলমাকান্দা"
+  },
+  {
+   "code": "NETROKONA-KENDUA",
+   "en": "Kendua, Netrokona",
+   "bn": "কেন্দুয়া, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Kendua",
+   "name_bn": "কেন্দুয়া"
+  },
+  {
+   "code": "NETROKONA-KHALIAJURI",
+   "en": "Khaliajuri, Netrokona",
+   "bn": "খালিয়াজুরী, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Khaliajuri",
+   "name_bn": "খালিয়াজুরী"
+  },
+  {
+   "code": "NETROKONA-MADAN",
+   "en": "Madan, Netrokona",
+   "bn": "মদন, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Madan",
+   "name_bn": "মদন"
+  },
+  {
+   "code": "NETROKONA-MOHONGONJ",
+   "en": "Mohongonj, Netrokona",
+   "bn": "মোহনগঞ্জ, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Mohongonj",
+   "name_bn": "মোহনগঞ্জ"
+  },
+  {
+   "code": "NETROKONA-NETROKONA-SADAR",
+   "en": "Netrokona Sadar, Netrokona",
+   "bn": "নেত্রকোণা সদর, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Netrokona Sadar",
+   "name_bn": "নেত্রকোণা সদর"
+  },
+  {
+   "code": "NETROKONA-PURBADHALA",
+   "en": "Purbadhala, Netrokona",
+   "bn": "পূর্বধলা, নেত্রকোণা",
+   "region": "haor",
+   "north": false,
+   "district": "NETROKONA",
+   "name_en": "Purbadhala",
+   "name_bn": "পূর্বধলা"
+  },
+  {
+   "code": "NILPHAMARI-DIMLA",
+   "en": "Dimla, Nilphamari",
+   "bn": "ডিমলা, নীলফামারী",
+   "region": "floodplain",
+   "north": true,
+   "district": "NILPHAMARI",
+   "name_en": "Dimla",
+   "name_bn": "ডিমলা"
+  },
+  {
+   "code": "NILPHAMARI-DOMAR",
+   "en": "Domar, Nilphamari",
+   "bn": "ডোমার, নীলফামারী",
+   "region": "floodplain",
+   "north": true,
+   "district": "NILPHAMARI",
+   "name_en": "Domar",
+   "name_bn": "ডোমার"
+  },
+  {
+   "code": "NILPHAMARI-JALDHAKA",
+   "en": "Jaldhaka, Nilphamari",
+   "bn": "জলঢাকা, নীলফামারী",
+   "region": "floodplain",
+   "north": true,
+   "district": "NILPHAMARI",
+   "name_en": "Jaldhaka",
+   "name_bn": "জলঢাকা"
+  },
+  {
+   "code": "NILPHAMARI-KISHORGANJ",
+   "en": "Kishorganj, Nilphamari",
+   "bn": "কিশোরগঞ্জ, নীলফামারী",
+   "region": "floodplain",
+   "north": true,
+   "district": "NILPHAMARI",
+   "name_en": "Kishorganj",
+   "name_bn": "কিশোরগঞ্জ"
+  },
+  {
+   "code": "NILPHAMARI-NILPHAMARI-SADAR",
+   "en": "Nilphamari Sadar, Nilphamari",
+   "bn": "নীলফামারী সদর, নীলফামারী",
+   "region": "floodplain",
+   "north": true,
+   "district": "NILPHAMARI",
+   "name_en": "Nilphamari Sadar",
+   "name_bn": "নীলফামারী সদর"
+  },
+  {
+   "code": "NILPHAMARI-SYEDPUR",
+   "en": "Syedpur, Nilphamari",
+   "bn": "সৈয়দপুর, নীলফামারী",
+   "region": "floodplain",
+   "north": true,
+   "district": "NILPHAMARI",
+   "name_en": "Syedpur",
+   "name_bn": "সৈয়দপুর"
+  },
+  {
+   "code": "NOAKHALI-BEGUMGANJ",
+   "en": "Begumganj, Noakhali",
+   "bn": "বেগমগঞ্জ, নোয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "NOAKHALI",
+   "name_en": "Begumganj",
+   "name_bn": "বেগমগঞ্জ"
+  },
+  {
+   "code": "NOAKHALI-CHATKHIL",
+   "en": "Chatkhil, Noakhali",
+   "bn": "চাটখিল, নোয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "NOAKHALI",
+   "name_en": "Chatkhil",
+   "name_bn": "চাটখিল"
+  },
+  {
+   "code": "NOAKHALI-COMPANIGANJ",
+   "en": "Companiganj, Noakhali",
+   "bn": "কোম্পানীগঞ্জ, নোয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "NOAKHALI",
+   "name_en": "Companiganj",
+   "name_bn": "কোম্পানীগঞ্জ"
+  },
+  {
+   "code": "NOAKHALI-HATIA",
+   "en": "Hatia, Noakhali",
+   "bn": "হাতিয়া, নোয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "NOAKHALI",
+   "name_en": "Hatia",
+   "name_bn": "হাতিয়া"
+  },
+  {
+   "code": "NOAKHALI-KABIRHAT",
+   "en": "Kabirhat, Noakhali",
+   "bn": "কবিরহাট, নোয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "NOAKHALI",
+   "name_en": "Kabirhat",
+   "name_bn": "কবিরহাট"
+  },
+  {
+   "code": "NOAKHALI-NOAKHALI-SADAR",
+   "en": "Noakhali Sadar, Noakhali",
+   "bn": "নোয়াখালী সদর, নোয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "NOAKHALI",
+   "name_en": "Noakhali Sadar",
+   "name_bn": "নোয়াখালী সদর"
+  },
+  {
+   "code": "NOAKHALI-SENBUG",
+   "en": "Senbug, Noakhali",
+   "bn": "সেনবাগ, নোয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "NOAKHALI",
+   "name_en": "Senbug",
+   "name_bn": "সেনবাগ"
+  },
+  {
+   "code": "NOAKHALI-SONAIMORI",
+   "en": "Sonaimori, Noakhali",
+   "bn": "সোনাইমুড়ী, নোয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "NOAKHALI",
+   "name_en": "Sonaimori",
+   "name_bn": "সোনাইমুড়ী"
+  },
+  {
+   "code": "NOAKHALI-SUBARNACHAR",
+   "en": "Subarnachar, Noakhali",
+   "bn": "সুবর্ণচর, নোয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "NOAKHALI",
+   "name_en": "Subarnachar",
+   "name_bn": "সুবর্ণচর"
+  },
+  {
+   "code": "PABNA-ATGHORIA",
+   "en": "Atghoria, Pabna",
+   "bn": "আটঘরিয়া, পাবনা",
+   "region": "floodplain",
+   "north": true,
+   "district": "PABNA",
+   "name_en": "Atghoria",
+   "name_bn": "আটঘরিয়া"
+  },
+  {
+   "code": "PABNA-BERA",
+   "en": "Bera, Pabna",
+   "bn": "বেড়া, পাবনা",
+   "region": "floodplain",
+   "north": true,
+   "district": "PABNA",
+   "name_en": "Bera",
+   "name_bn": "বেড়া"
+  },
+  {
+   "code": "PABNA-BHANGURA",
+   "en": "Bhangura, Pabna",
+   "bn": "ভাঙ্গুড়া, পাবনা",
+   "region": "floodplain",
+   "north": true,
+   "district": "PABNA",
+   "name_en": "Bhangura",
+   "name_bn": "ভাঙ্গুড়া"
+  },
+  {
+   "code": "PABNA-CHATMOHAR",
+   "en": "Chatmohar, Pabna",
+   "bn": "চাটমোহর, পাবনা",
+   "region": "floodplain",
+   "north": true,
+   "district": "PABNA",
+   "name_en": "Chatmohar",
+   "name_bn": "চাটমোহর"
+  },
+  {
+   "code": "PABNA-FARIDPUR",
+   "en": "Faridpur, Pabna",
+   "bn": "ফরিদপুর, পাবনা",
+   "region": "floodplain",
+   "north": true,
+   "district": "PABNA",
+   "name_en": "Faridpur",
+   "name_bn": "ফরিদপুর"
+  },
+  {
+   "code": "PABNA-ISHURDI",
+   "en": "Ishurdi, Pabna",
+   "bn": "ঈশ্বরদী, পাবনা",
+   "region": "floodplain",
+   "north": true,
+   "district": "PABNA",
+   "name_en": "Ishurdi",
+   "name_bn": "ঈশ্বরদী"
+  },
+  {
+   "code": "PABNA-PABNA-SADAR",
+   "en": "Pabna Sadar, Pabna",
+   "bn": "পাবনা সদর, পাবনা",
+   "region": "floodplain",
+   "north": true,
+   "district": "PABNA",
+   "name_en": "Pabna Sadar",
+   "name_bn": "পাবনা সদর"
+  },
+  {
+   "code": "PABNA-SANTHIA",
+   "en": "Santhia, Pabna",
+   "bn": "সাঁথিয়া, পাবনা",
+   "region": "floodplain",
+   "north": true,
+   "district": "PABNA",
+   "name_en": "Santhia",
+   "name_bn": "সাঁথিয়া"
+  },
+  {
+   "code": "PABNA-SUJANAGAR",
+   "en": "Sujanagar, Pabna",
+   "bn": "সুজানগর, পাবনা",
+   "region": "floodplain",
+   "north": true,
+   "district": "PABNA",
+   "name_en": "Sujanagar",
+   "name_bn": "সুজানগর"
+  },
+  {
+   "code": "PANCHAGARH-ATWARI",
+   "en": "Atwari, Panchagarh",
+   "bn": "আটোয়ারী, পঞ্চগড়",
+   "region": "floodplain",
+   "north": true,
+   "district": "PANCHAGARH",
+   "name_en": "Atwari",
+   "name_bn": "আটোয়ারী"
+  },
+  {
+   "code": "PANCHAGARH-BODA",
+   "en": "Boda, Panchagarh",
+   "bn": "বোদা, পঞ্চগড়",
+   "region": "floodplain",
+   "north": true,
+   "district": "PANCHAGARH",
+   "name_en": "Boda",
+   "name_bn": "বোদা"
+  },
+  {
+   "code": "PANCHAGARH-DEBIGANJ",
+   "en": "Debiganj, Panchagarh",
+   "bn": "দেবীগঞ্জ, পঞ্চগড়",
+   "region": "floodplain",
+   "north": true,
+   "district": "PANCHAGARH",
+   "name_en": "Debiganj",
+   "name_bn": "দেবীগঞ্জ"
+  },
+  {
+   "code": "PANCHAGARH-PANCHAGARH-SADAR",
+   "en": "Panchagarh Sadar, Panchagarh",
+   "bn": "পঞ্চগড় সদর, পঞ্চগড়",
+   "region": "floodplain",
+   "north": true,
+   "district": "PANCHAGARH",
+   "name_en": "Panchagarh Sadar",
+   "name_bn": "পঞ্চগড় সদর"
+  },
+  {
+   "code": "PANCHAGARH-TETULIA",
+   "en": "Tetulia, Panchagarh",
+   "bn": "তেতুলিয়া, পঞ্চগড়",
+   "region": "floodplain",
+   "north": true,
+   "district": "PANCHAGARH",
+   "name_en": "Tetulia",
+   "name_bn": "তেতুলিয়া"
+  },
+  {
+   "code": "PATUAKHALI-BAUPHAL",
+   "en": "Bauphal, Patuakhali",
+   "bn": "বাউফল, পটুয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "PATUAKHALI",
+   "name_en": "Bauphal",
+   "name_bn": "বাউফল"
+  },
+  {
+   "code": "PATUAKHALI-DASHMINA",
+   "en": "Dashmina, Patuakhali",
+   "bn": "দশমিনা, পটুয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "PATUAKHALI",
+   "name_en": "Dashmina",
+   "name_bn": "দশমিনা"
+  },
+  {
+   "code": "PATUAKHALI-DUMKI",
+   "en": "Dumki, Patuakhali",
+   "bn": "দুমকি, পটুয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "PATUAKHALI",
+   "name_en": "Dumki",
+   "name_bn": "দুমকি"
+  },
+  {
+   "code": "PATUAKHALI-GALACHIPA",
+   "en": "Galachipa, Patuakhali",
+   "bn": "গলাচিপা, পটুয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "PATUAKHALI",
+   "name_en": "Galachipa",
+   "name_bn": "গলাচিপা"
+  },
+  {
+   "code": "PAT-KALAPARA",
+   "en": "Kalapara, Patuakhali",
+   "bn": "কলাপাড়া, পটুয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "PATUAKHALI",
+   "name_en": "Kalapara",
+   "name_bn": "কলাপাড়া"
+  },
+  {
+   "code": "PATUAKHALI-MIRZAGANJ",
+   "en": "Mirzaganj, Patuakhali",
+   "bn": "মির্জাগঞ্জ, পটুয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "PATUAKHALI",
+   "name_en": "Mirzaganj",
+   "name_bn": "মির্জাগঞ্জ"
+  },
+  {
+   "code": "PATUAKHALI-PATUAKHALI-SADAR",
+   "en": "Patuakhali Sadar, Patuakhali",
+   "bn": "পটুয়াখালী সদর, পটুয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "PATUAKHALI",
+   "name_en": "Patuakhali Sadar",
+   "name_bn": "পটুয়াখালী সদর"
+  },
+  {
+   "code": "PATUAKHALI-RANGABALI",
+   "en": "Rangabali, Patuakhali",
+   "bn": "রাঙ্গাবালী, পটুয়াখালী",
+   "region": "coastal",
+   "north": false,
+   "district": "PATUAKHALI",
+   "name_en": "Rangabali",
+   "name_bn": "রাঙ্গাবালী"
+  },
+  {
+   "code": "PIROJPUR-BHANDARIA",
+   "en": "Bhandaria, Pirojpur",
+   "bn": "ভান্ডারিয়া, পিরোজপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "PIROJPUR",
+   "name_en": "Bhandaria",
+   "name_bn": "ভান্ডারিয়া"
+  },
+  {
+   "code": "PIROJPUR-KAWKHALI",
+   "en": "Kawkhali, Pirojpur",
+   "bn": "কাউখালী, পিরোজপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "PIROJPUR",
+   "name_en": "Kawkhali",
+   "name_bn": "কাউখালী"
+  },
+  {
+   "code": "PIROJPUR-MATHBARIA",
+   "en": "Mathbaria, Pirojpur",
+   "bn": "মঠবাড়ীয়া, পিরোজপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "PIROJPUR",
+   "name_en": "Mathbaria",
+   "name_bn": "মঠবাড়ীয়া"
+  },
+  {
+   "code": "PIROJPUR-NAZIRPUR",
+   "en": "Nazirpur, Pirojpur",
+   "bn": "নাজিরপুর, পিরোজপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "PIROJPUR",
+   "name_en": "Nazirpur",
+   "name_bn": "নাজিরপুর"
+  },
+  {
+   "code": "PIROJPUR-NESARABAD",
+   "en": "Nesarabad, Pirojpur",
+   "bn": "নেছারাবাদ, পিরোজপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "PIROJPUR",
+   "name_en": "Nesarabad",
+   "name_bn": "নেছারাবাদ"
+  },
+  {
+   "code": "PIROJPUR-PIROJPUR-SADAR",
+   "en": "Pirojpur Sadar, Pirojpur",
+   "bn": "পিরোজপুর সদর, পিরোজপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "PIROJPUR",
+   "name_en": "Pirojpur Sadar",
+   "name_bn": "পিরোজপুর সদর"
+  },
+  {
+   "code": "PIROJPUR-ZIANAGAR",
+   "en": "Zianagar, Pirojpur",
+   "bn": "জিয়ানগর, পিরোজপুর",
+   "region": "coastal",
+   "north": false,
+   "district": "PIROJPUR",
+   "name_en": "Zianagar",
+   "name_bn": "জিয়ানগর"
+  },
+  {
+   "code": "RAJBARI-BALIAKANDI",
+   "en": "Baliakandi, Rajbari",
+   "bn": "বালিয়াকান্দি, রাজবাড়ী",
+   "region": "floodplain",
+   "north": false,
+   "district": "RAJBARI",
+   "name_en": "Baliakandi",
+   "name_bn": "বালিয়াকান্দি"
+  },
+  {
+   "code": "RAJBARI-GOALANDA",
+   "en": "Goalanda, Rajbari",
+   "bn": "গোয়ালন্দ, রাজবাড়ী",
+   "region": "floodplain",
+   "north": false,
+   "district": "RAJBARI",
+   "name_en": "Goalanda",
+   "name_bn": "গোয়ালন্দ"
+  },
+  {
+   "code": "RAJBARI-KALUKHALI",
+   "en": "Kalukhali, Rajbari",
+   "bn": "কালুখালী, রাজবাড়ী",
+   "region": "floodplain",
+   "north": false,
+   "district": "RAJBARI",
+   "name_en": "Kalukhali",
+   "name_bn": "কালুখালী"
+  },
+  {
+   "code": "RAJBARI-PANGSA",
+   "en": "Pangsa, Rajbari",
+   "bn": "পাংশা, রাজবাড়ী",
+   "region": "floodplain",
+   "north": false,
+   "district": "RAJBARI",
+   "name_en": "Pangsa",
+   "name_bn": "পাংশা"
+  },
+  {
+   "code": "RAJBARI-RAJBARI-SADAR",
+   "en": "Rajbari Sadar, Rajbari",
+   "bn": "রাজবাড়ী সদর, রাজবাড়ী",
+   "region": "floodplain",
+   "north": false,
+   "district": "RAJBARI",
+   "name_en": "Rajbari Sadar",
+   "name_bn": "রাজবাড়ী সদর"
+  },
+  {
+   "code": "RAJSHAHI-BAGHA",
+   "en": "Bagha, Rajshahi",
+   "bn": "বাঘা, রাজশাহী",
+   "region": "barind",
+   "north": true,
+   "district": "RAJSHAHI",
+   "name_en": "Bagha",
+   "name_bn": "বাঘা"
+  },
+  {
+   "code": "RAJSHAHI-BAGMARA",
+   "en": "Bagmara, Rajshahi",
+   "bn": "বাগমারা, রাজশাহী",
+   "region": "barind",
+   "north": true,
+   "district": "RAJSHAHI",
+   "name_en": "Bagmara",
+   "name_bn": "বাগমারা"
+  },
+  {
+   "code": "RAJSHAHI-CHARGHAT",
+   "en": "Charghat, Rajshahi",
+   "bn": "চারঘাট, রাজশাহী",
+   "region": "barind",
+   "north": true,
+   "district": "RAJSHAHI",
+   "name_en": "Charghat",
+   "name_bn": "চারঘাট"
+  },
+  {
+   "code": "RAJSHAHI-DURGAPUR",
+   "en": "Durgapur, Rajshahi",
+   "bn": "দুর্গাপুর, রাজশাহী",
+   "region": "barind",
+   "north": true,
+   "district": "RAJSHAHI",
+   "name_en": "Durgapur",
+   "name_bn": "দুর্গাপুর"
+  },
+  {
+   "code": "RAJ-GODAGARI",
+   "en": "Godagari, Rajshahi",
+   "bn": "গোদাগাড়ী, রাজশাহী",
+   "region": "barind",
+   "north": true,
+   "district": "RAJSHAHI",
+   "name_en": "Godagari",
+   "name_bn": "গোদাগাড়ী"
+  },
+  {
+   "code": "RAJSHAHI-MOHONPUR",
+   "en": "Mohonpur, Rajshahi",
+   "bn": "মোহনপুর, রাজশাহী",
+   "region": "barind",
+   "north": true,
+   "district": "RAJSHAHI",
+   "name_en": "Mohonpur",
+   "name_bn": "মোহনপুর"
+  },
+  {
+   "code": "RAJSHAHI-PABA",
+   "en": "Paba, Rajshahi",
+   "bn": "পবা, রাজশাহী",
+   "region": "barind",
+   "north": true,
+   "district": "RAJSHAHI",
+   "name_en": "Paba",
+   "name_bn": "পবা"
+  },
+  {
+   "code": "RAJSHAHI-PUTHIA",
+   "en": "Puthia, Rajshahi",
+   "bn": "পুঠিয়া, রাজশাহী",
+   "region": "barind",
+   "north": true,
+   "district": "RAJSHAHI",
+   "name_en": "Puthia",
+   "name_bn": "পুঠিয়া"
+  },
+  {
+   "code": "RAJSHAHI-TANORE",
+   "en": "Tanore, Rajshahi",
+   "bn": "তানোর, রাজশাহী",
+   "region": "barind",
+   "north": true,
+   "district": "RAJSHAHI",
+   "name_en": "Tanore",
+   "name_bn": "তানোর"
+  },
+  {
+   "code": "RANGAMATI-BAGHAICHARI",
+   "en": "Baghaichari, Rangamati",
+   "bn": "বাঘাইছড়ি, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Baghaichari",
+   "name_bn": "বাঘাইছড়ি"
+  },
+  {
+   "code": "RANGAMATI-BARKAL",
+   "en": "Barkal, Rangamati",
+   "bn": "বরকল, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Barkal",
+   "name_bn": "বরকল"
+  },
+  {
+   "code": "RANGAMATI-BELAICHARI",
+   "en": "Belaichari, Rangamati",
+   "bn": "বিলাইছড়ি, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Belaichari",
+   "name_bn": "বিলাইছড়ি"
+  },
+  {
+   "code": "RANGAMATI-JURAICHARI",
+   "en": "Juraichari, Rangamati",
+   "bn": "জুরাছড়ি, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Juraichari",
+   "name_bn": "জুরাছড়ি"
+  },
+  {
+   "code": "RANGAMATI-KAPTAI",
+   "en": "Kaptai, Rangamati",
+   "bn": "কাপ্তাই, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Kaptai",
+   "name_bn": "কাপ্তাই"
+  },
+  {
+   "code": "RANGAMATI-KAWKHALI",
+   "en": "Kawkhali, Rangamati",
+   "bn": "কাউখালী, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Kawkhali",
+   "name_bn": "কাউখালী"
+  },
+  {
+   "code": "RANGAMATI-LANGADU",
+   "en": "Langadu, Rangamati",
+   "bn": "লংগদু, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Langadu",
+   "name_bn": "লংগদু"
+  },
+  {
+   "code": "RANGAMATI-NANIARCHAR",
+   "en": "Naniarchar, Rangamati",
+   "bn": "নানিয়ারচর, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Naniarchar",
+   "name_bn": "নানিয়ারচর"
+  },
+  {
+   "code": "RANGAMATI-RAJASTHALI",
+   "en": "Rajasthali, Rangamati",
+   "bn": "রাজস্থলী, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Rajasthali",
+   "name_bn": "রাজস্থলী"
+  },
+  {
+   "code": "RANGAMATI-RANGAMATI-SADAR",
+   "en": "Rangamati Sadar, Rangamati",
+   "bn": "রাঙ্গামাটি সদর, রাঙ্গামাটি",
+   "region": "floodplain",
+   "north": false,
+   "district": "RANGAMATI",
+   "name_en": "Rangamati Sadar",
+   "name_bn": "রাঙ্গামাটি সদর"
+  },
+  {
+   "code": "RANGPUR-BADARGONJ",
+   "en": "Badargonj, Rangpur",
+   "bn": "বদরগঞ্জ, রংপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "RANGPUR",
+   "name_en": "Badargonj",
+   "name_bn": "বদরগঞ্জ"
+  },
+  {
+   "code": "RANGPUR-GANGACHARA",
+   "en": "Gangachara, Rangpur",
+   "bn": "গংগাচড়া, রংপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "RANGPUR",
+   "name_en": "Gangachara",
+   "name_bn": "গংগাচড়া"
+  },
+  {
+   "code": "RANGPUR-KAUNIA",
+   "en": "Kaunia, Rangpur",
+   "bn": "কাউনিয়া, রংপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "RANGPUR",
+   "name_en": "Kaunia",
+   "name_bn": "কাউনিয়া"
+  },
+  {
+   "code": "RANGPUR-MITHAPUKUR",
+   "en": "Mithapukur, Rangpur",
+   "bn": "মিঠাপুকুর, রংপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "RANGPUR",
+   "name_en": "Mithapukur",
+   "name_bn": "মিঠাপুকুর"
+  },
+  {
+   "code": "RANGPUR-PIRGACHA",
+   "en": "Pirgacha, Rangpur",
+   "bn": "পীরগাছা, রংপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "RANGPUR",
+   "name_en": "Pirgacha",
+   "name_bn": "পীরগাছা"
+  },
+  {
+   "code": "RANGPUR-PIRGONJ",
+   "en": "Pirgonj, Rangpur",
+   "bn": "পীরগঞ্জ, রংপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "RANGPUR",
+   "name_en": "Pirgonj",
+   "name_bn": "পীরগঞ্জ"
+  },
+  {
+   "code": "RANGPUR-RANGPUR-SADAR",
+   "en": "Rangpur Sadar, Rangpur",
+   "bn": "রংপুর সদর, রংপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "RANGPUR",
+   "name_en": "Rangpur Sadar",
+   "name_bn": "রংপুর সদর"
+  },
+  {
+   "code": "RANGPUR-TARAGONJ",
+   "en": "Taragonj, Rangpur",
+   "bn": "তারাগঞ্জ, রংপুর",
+   "region": "floodplain",
+   "north": true,
+   "district": "RANGPUR",
+   "name_en": "Taragonj",
+   "name_bn": "তারাগঞ্জ"
+  },
+  {
+   "code": "SATKHIRA-ASSASUNI",
+   "en": "Assasuni, Satkhira",
+   "bn": "আশাশুনি, সাতক্ষীরা",
+   "region": "coastal",
+   "north": false,
+   "district": "SATKHIRA",
+   "name_en": "Assasuni",
+   "name_bn": "আশাশুনি"
+  },
+  {
+   "code": "SATKHIRA-DEBHATA",
+   "en": "Debhata, Satkhira",
+   "bn": "দেবহাটা, সাতক্ষীরা",
+   "region": "coastal",
+   "north": false,
+   "district": "SATKHIRA",
+   "name_en": "Debhata",
+   "name_bn": "দেবহাটা"
+  },
+  {
+   "code": "SATKHIRA-KALAROA",
+   "en": "Kalaroa, Satkhira",
+   "bn": "কলারোয়া, সাতক্ষীরা",
+   "region": "coastal",
+   "north": false,
+   "district": "SATKHIRA",
+   "name_en": "Kalaroa",
+   "name_bn": "কলারোয়া"
+  },
+  {
+   "code": "SATKHIRA-KALIGANJ",
+   "en": "Kaliganj, Satkhira",
+   "bn": "কালিগঞ্জ, সাতক্ষীরা",
+   "region": "coastal",
+   "north": false,
+   "district": "SATKHIRA",
+   "name_en": "Kaliganj",
+   "name_bn": "কালিগঞ্জ"
+  },
+  {
+   "code": "SATKHIRA-SATKHIRA-SADAR",
+   "en": "Satkhira Sadar, Satkhira",
+   "bn": "সাতক্ষীরা সদর, সাতক্ষীরা",
+   "region": "coastal",
+   "north": false,
+   "district": "SATKHIRA",
+   "name_en": "Satkhira Sadar",
+   "name_bn": "সাতক্ষীরা সদর"
+  },
+  {
+   "code": "SAT-SHYAMNAGAR",
+   "en": "Shyamnagar, Satkhira",
+   "bn": "শ্যামনগর, সাতক্ষীরা",
+   "region": "coastal",
+   "north": false,
+   "district": "SATKHIRA",
+   "name_en": "Shyamnagar",
+   "name_bn": "শ্যামনগর"
+  },
+  {
+   "code": "SATKHIRA-TALA",
+   "en": "Tala, Satkhira",
+   "bn": "তালা, সাতক্ষীরা",
+   "region": "coastal",
+   "north": false,
+   "district": "SATKHIRA",
+   "name_en": "Tala",
+   "name_bn": "তালা"
+  },
+  {
+   "code": "SHARIATPUR-BHEDARGANJ",
+   "en": "Bhedarganj, Shariatpur",
+   "bn": "ভেদরগঞ্জ, শরীয়তপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHARIATPUR",
+   "name_en": "Bhedarganj",
+   "name_bn": "ভেদরগঞ্জ"
+  },
+  {
+   "code": "SHARIATPUR-DAMUDYA",
+   "en": "Damudya, Shariatpur",
+   "bn": "ডামুড্যা, শরীয়তপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHARIATPUR",
+   "name_en": "Damudya",
+   "name_bn": "ডামুড্যা"
+  },
+  {
+   "code": "SHARIATPUR-GOSAIRHAT",
+   "en": "Gosairhat, Shariatpur",
+   "bn": "গোসাইরহাট, শরীয়তপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHARIATPUR",
+   "name_en": "Gosairhat",
+   "name_bn": "গোসাইরহাট"
+  },
+  {
+   "code": "SHARIATPUR-NARIA",
+   "en": "Naria, Shariatpur",
+   "bn": "নড়িয়া, শরীয়তপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHARIATPUR",
+   "name_en": "Naria",
+   "name_bn": "নড়িয়া"
+  },
+  {
+   "code": "SHARIATPUR-SHARIATPUR-SADAR",
+   "en": "Shariatpur Sadar, Shariatpur",
+   "bn": "শরিয়তপুর সদর, শরীয়তপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHARIATPUR",
+   "name_en": "Shariatpur Sadar",
+   "name_bn": "শরিয়তপুর সদর"
+  },
+  {
+   "code": "SHARIATPUR-ZAJIRA",
+   "en": "Zajira, Shariatpur",
+   "bn": "জাজিরা, শরীয়তপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHARIATPUR",
+   "name_en": "Zajira",
+   "name_bn": "জাজিরা"
+  },
+  {
+   "code": "SHERPUR-JHENAIGATI",
+   "en": "Jhenaigati, Sherpur",
+   "bn": "ঝিনাইগাতী, শেরপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHERPUR",
+   "name_en": "Jhenaigati",
+   "name_bn": "ঝিনাইগাতী"
+  },
+  {
+   "code": "SHERPUR-NALITABARI",
+   "en": "Nalitabari, Sherpur",
+   "bn": "নালিতাবাড়ী, শেরপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHERPUR",
+   "name_en": "Nalitabari",
+   "name_bn": "নালিতাবাড়ী"
+  },
+  {
+   "code": "SHERPUR-NOKLA",
+   "en": "Nokla, Sherpur",
+   "bn": "নকলা, শেরপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHERPUR",
+   "name_en": "Nokla",
+   "name_bn": "নকলা"
+  },
+  {
+   "code": "SHERPUR-SHERPUR-SADAR",
+   "en": "Sherpur Sadar, Sherpur",
+   "bn": "শেরপুর সদর, শেরপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHERPUR",
+   "name_en": "Sherpur Sadar",
+   "name_bn": "শেরপুর সদর"
+  },
+  {
+   "code": "SHERPUR-SREEBORDI",
+   "en": "Sreebordi, Sherpur",
+   "bn": "শ্রীবরদী, শেরপুর",
+   "region": "floodplain",
+   "north": false,
+   "district": "SHERPUR",
+   "name_en": "Sreebordi",
+   "name_bn": "শ্রীবরদী"
+  },
+  {
+   "code": "SIRAJGANJ-BELKUCHI",
+   "en": "Belkuchi, Sirajganj",
+   "bn": "বেলকুচি, সিরাজগঞ্জ",
+   "region": "floodplain",
+   "north": true,
+   "district": "SIRAJGANJ",
+   "name_en": "Belkuchi",
+   "name_bn": "বেলকুচি"
+  },
+  {
+   "code": "SRJ-CHAUHALI",
+   "en": "Chauhali, Sirajganj",
+   "bn": "চৌহালী, সিরাজগঞ্জ",
+   "region": "floodplain",
+   "north": true,
+   "district": "SIRAJGANJ",
+   "name_en": "Chauhali",
+   "name_bn": "চৌহালী"
+  },
+  {
+   "code": "SIRAJGANJ-KAMARKHAND",
+   "en": "Kamarkhand, Sirajganj",
+   "bn": "কামারখন্দ, সিরাজগঞ্জ",
+   "region": "floodplain",
+   "north": true,
+   "district": "SIRAJGANJ",
+   "name_en": "Kamarkhand",
+   "name_bn": "কামারখন্দ"
+  },
+  {
+   "code": "SRJ-KAZIPUR",
+   "en": "Kazipur, Sirajganj",
+   "bn": "কাজীপুর, সিরাজগঞ্জ",
+   "region": "floodplain",
+   "north": true,
+   "district": "SIRAJGANJ",
+   "name_en": "Kazipur",
+   "name_bn": "কাজীপুর"
+  },
+  {
+   "code": "SIRAJGANJ-RAIGONJ",
+   "en": "Raigonj, Sirajganj",
+   "bn": "রায়গঞ্জ, সিরাজগঞ্জ",
+   "region": "floodplain",
+   "north": true,
+   "district": "SIRAJGANJ",
+   "name_en": "Raigonj",
+   "name_bn": "রায়গঞ্জ"
+  },
+  {
+   "code": "SIRAJGANJ-SHAHJADPUR",
+   "en": "Shahjadpur, Sirajganj",
+   "bn": "শাহজাদপুর, সিরাজগঞ্জ",
+   "region": "floodplain",
+   "north": true,
+   "district": "SIRAJGANJ",
+   "name_en": "Shahjadpur",
+   "name_bn": "শাহজাদপুর"
+  },
+  {
+   "code": "SRJ-SIRAJGANJ",
+   "en": "Sirajganj Sadar, Sirajganj",
+   "bn": "সিরাজগঞ্জ সদর, সিরাজগঞ্জ",
+   "region": "floodplain",
+   "north": true,
+   "district": "SIRAJGANJ",
+   "name_en": "Sirajganj Sadar",
+   "name_bn": "সিরাজগঞ্জ সদর"
+  },
+  {
+   "code": "SIRAJGANJ-TARASH",
+   "en": "Tarash, Sirajganj",
+   "bn": "তাড়াশ, সিরাজগঞ্জ",
+   "region": "floodplain",
+   "north": true,
+   "district": "SIRAJGANJ",
+   "name_en": "Tarash",
+   "name_bn": "তাড়াশ"
+  },
+  {
+   "code": "SIRAJGANJ-ULLAPARA",
+   "en": "Ullapara, Sirajganj",
+   "bn": "উল্লাপাড়া, সিরাজগঞ্জ",
+   "region": "floodplain",
+   "north": true,
+   "district": "SIRAJGANJ",
+   "name_en": "Ullapara",
+   "name_bn": "উল্লাপাড়া"
+  },
+  {
+   "code": "SUNAMGANJ-BISHWAMBARPUR",
+   "en": "Bishwambarpur, Sunamganj",
+   "bn": "বিশ্বম্ভরপুর, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Bishwambarpur",
+   "name_bn": "বিশ্বম্ভরপুর"
+  },
+  {
+   "code": "SUNAMGANJ-CHHATAK",
+   "en": "Chhatak, Sunamganj",
+   "bn": "ছাতক, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Chhatak",
+   "name_bn": "ছাতক"
+  },
+  {
+   "code": "SUNAMGANJ-DERAI",
+   "en": "Derai, Sunamganj",
+   "bn": "দিরাই, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Derai",
+   "name_bn": "দিরাই"
+  },
+  {
+   "code": "SUNAMGANJ-DHARMAPASHA",
+   "en": "Dharmapasha, Sunamganj",
+   "bn": "ধর্মপাশা, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Dharmapasha",
+   "name_bn": "ধর্মপাশা"
+  },
+  {
+   "code": "SUNAMGANJ-DOWARABAZAR",
+   "en": "Dowarabazar, Sunamganj",
+   "bn": "দোয়ারাবাজার, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Dowarabazar",
+   "name_bn": "দোয়ারাবাজার"
+  },
+  {
+   "code": "SUNAMGANJ-JAGANNATHPUR",
+   "en": "Jagannathpur, Sunamganj",
+   "bn": "জগন্নাথপুর, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Jagannathpur",
+   "name_bn": "জগন্নাথপুর"
+  },
+  {
+   "code": "SUNAMGANJ-JAMALGANJ",
+   "en": "Jamalganj, Sunamganj",
+   "bn": "জামালগঞ্জ, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Jamalganj",
+   "name_bn": "জামালগঞ্জ"
+  },
+  {
+   "code": "SUNAMGANJ-MADHYANAGAR",
+   "en": "Madhyanagar, Sunamganj",
+   "bn": "মধ্যনগর, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Madhyanagar",
+   "name_bn": "মধ্যনগর"
+  },
+  {
+   "code": "SUNAMGANJ-SHALLA",
+   "en": "Shalla, Sunamganj",
+   "bn": "শাল্লা, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Shalla",
+   "name_bn": "শাল্লা"
+  },
+  {
+   "code": "SUNAMGANJ-SOUTH-SUNAMGANJ",
+   "en": "South Sunamganj, Sunamganj",
+   "bn": "দক্ষিণ সুনামগঞ্জ, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "South Sunamganj",
+   "name_bn": "দক্ষিণ সুনামগঞ্জ"
+  },
+  {
+   "code": "SUNAMGANJ-SUNAMGANJ-SADAR",
+   "en": "Sunamganj Sadar, Sunamganj",
+   "bn": "সুনামগঞ্জ সদর, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Sunamganj Sadar",
+   "name_bn": "সুনামগঞ্জ সদর"
+  },
+  {
+   "code": "SUN-TAHIRPUR",
+   "en": "Tahirpur, Sunamganj",
+   "bn": "তাহিরপুর, সুনামগঞ্জ",
+   "region": "haor",
+   "north": false,
+   "district": "SUNAMGANJ",
+   "name_en": "Tahirpur",
+   "name_bn": "তাহিরপুর"
+  },
+  {
+   "code": "SYLHET-BALAGANJ",
+   "en": "Balaganj, Sylhet",
+   "bn": "বালাগঞ্জ, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Balaganj",
+   "name_bn": "বালাগঞ্জ"
+  },
+  {
+   "code": "SYLHET-BEANIBAZAR",
+   "en": "Beanibazar, Sylhet",
+   "bn": "বিয়ানীবাজার, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Beanibazar",
+   "name_bn": "বিয়ানীবাজার"
+  },
+  {
+   "code": "SYLHET-BISHWANATH",
+   "en": "Bishwanath, Sylhet",
+   "bn": "বিশ্বনাথ, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Bishwanath",
+   "name_bn": "বিশ্বনাথ"
+  },
+  {
+   "code": "SYLHET-COMPANIGANJ",
+   "en": "Companiganj, Sylhet",
+   "bn": "কোম্পানীগঞ্জ, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Companiganj",
+   "name_bn": "কোম্পানীগঞ্জ"
+  },
+  {
+   "code": "SYLHET-DAKSHINSURMA",
+   "en": "Dakshinsurma, Sylhet",
+   "bn": "দক্ষিণ সুরমা, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Dakshinsurma",
+   "name_bn": "দক্ষিণ সুরমা"
+  },
+  {
+   "code": "SYLHET-FENCHUGANJ",
+   "en": "Fenchuganj, Sylhet",
+   "bn": "ফেঞ্চুগঞ্জ, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Fenchuganj",
+   "name_bn": "ফেঞ্চুগঞ্জ"
+  },
+  {
+   "code": "SYLHET-GOLAPGANJ",
+   "en": "Golapganj, Sylhet",
+   "bn": "গোলাপগঞ্জ, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Golapganj",
+   "name_bn": "গোলাপগঞ্জ"
+  },
+  {
+   "code": "SYLHET-GOWAINGHAT",
+   "en": "Gowainghat, Sylhet",
+   "bn": "গোয়াইনঘাট, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Gowainghat",
+   "name_bn": "গোয়াইনঘাট"
+  },
+  {
+   "code": "SYLHET-JAINTIAPUR",
+   "en": "Jaintiapur, Sylhet",
+   "bn": "জৈন্তাপুর, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Jaintiapur",
+   "name_bn": "জৈন্তাপুর"
+  },
+  {
+   "code": "SYLHET-KANAIGHAT",
+   "en": "Kanaighat, Sylhet",
+   "bn": "কানাইঘাট, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Kanaighat",
+   "name_bn": "কানাইঘাট"
+  },
+  {
+   "code": "SYLHET-OSMANINAGAR",
+   "en": "Osmaninagar, Sylhet",
+   "bn": "ওসমানী নগর, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Osmaninagar",
+   "name_bn": "ওসমানী নগর"
+  },
+  {
+   "code": "SYLHET-SYLHET-SADAR",
+   "en": "Sylhet Sadar, Sylhet",
+   "bn": "সিলেট সদর, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Sylhet Sadar",
+   "name_bn": "সিলেট সদর"
+  },
+  {
+   "code": "SYLHET-ZAKIGANJ",
+   "en": "Zakiganj, Sylhet",
+   "bn": "জকিগঞ্জ, সিলেট",
+   "region": "haor",
+   "north": false,
+   "district": "SYLHET",
+   "name_en": "Zakiganj",
+   "name_bn": "জকিগঞ্জ"
+  },
+  {
+   "code": "TANGAIL-BASAIL",
+   "en": "Basail, Tangail",
+   "bn": "বাসাইল, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Basail",
+   "name_bn": "বাসাইল"
+  },
+  {
+   "code": "TANGAIL-BHUAPUR",
+   "en": "Bhuapur, Tangail",
+   "bn": "ভুয়াপুর, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Bhuapur",
+   "name_bn": "ভুয়াপুর"
+  },
+  {
+   "code": "TANGAIL-DELDUAR",
+   "en": "Delduar, Tangail",
+   "bn": "দেলদুয়ার, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Delduar",
+   "name_bn": "দেলদুয়ার"
+  },
+  {
+   "code": "TANGAIL-DHANBARI",
+   "en": "Dhanbari, Tangail",
+   "bn": "ধনবাড়ী, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Dhanbari",
+   "name_bn": "ধনবাড়ী"
+  },
+  {
+   "code": "TANGAIL-GHATAIL",
+   "en": "Ghatail, Tangail",
+   "bn": "ঘাটাইল, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Ghatail",
+   "name_bn": "ঘাটাইল"
+  },
+  {
+   "code": "TANGAIL-GOPALPUR",
+   "en": "Gopalpur, Tangail",
+   "bn": "গোপালপুর, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Gopalpur",
+   "name_bn": "গোপালপুর"
+  },
+  {
+   "code": "TANGAIL-KALIHATI",
+   "en": "Kalihati, Tangail",
+   "bn": "কালিহাতী, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Kalihati",
+   "name_bn": "কালিহাতী"
+  },
+  {
+   "code": "TANGAIL-MADHUPUR",
+   "en": "Madhupur, Tangail",
+   "bn": "মধুপুর, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Madhupur",
+   "name_bn": "মধুপুর"
+  },
+  {
+   "code": "TANGAIL-MIRZAPUR",
+   "en": "Mirzapur, Tangail",
+   "bn": "মির্জাপুর, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Mirzapur",
+   "name_bn": "মির্জাপুর"
+  },
+  {
+   "code": "TANGAIL-NAGARPUR",
+   "en": "Nagarpur, Tangail",
+   "bn": "নাগরপুর, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Nagarpur",
+   "name_bn": "নাগরপুর"
+  },
+  {
+   "code": "TANGAIL-SAKHIPUR",
+   "en": "Sakhipur, Tangail",
+   "bn": "সখিপুর, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Sakhipur",
+   "name_bn": "সখিপুর"
+  },
+  {
+   "code": "TANGAIL-TANGAIL-SADAR",
+   "en": "Tangail Sadar, Tangail",
+   "bn": "টাঙ্গাইল সদর, টাঙ্গাইল",
+   "region": "floodplain",
+   "north": false,
+   "district": "TANGAIL",
+   "name_en": "Tangail Sadar",
+   "name_bn": "টাঙ্গাইল সদর"
+  },
+  {
+   "code": "THAKURGAON-BALIADANGI",
+   "en": "Baliadangi, Thakurgaon",
+   "bn": "বালিয়াডাঙ্গী, ঠাকুরগাঁও",
+   "region": "floodplain",
+   "north": true,
+   "district": "THAKURGAON",
+   "name_en": "Baliadangi",
+   "name_bn": "বালিয়াডাঙ্গী"
+  },
+  {
+   "code": "THAKURGAON-HARIPUR",
+   "en": "Haripur, Thakurgaon",
+   "bn": "হরিপুর, ঠাকুরগাঁও",
+   "region": "floodplain",
+   "north": true,
+   "district": "THAKURGAON",
+   "name_en": "Haripur",
+   "name_bn": "হরিপুর"
+  },
+  {
+   "code": "THAKURGAON-PIRGANJ",
+   "en": "Pirganj, Thakurgaon",
+   "bn": "পীরগঞ্জ, ঠাকুরগাঁও",
+   "region": "floodplain",
+   "north": true,
+   "district": "THAKURGAON",
+   "name_en": "Pirganj",
+   "name_bn": "পীরগঞ্জ"
+  },
+  {
+   "code": "THAKURGAON-RANISANKAIL",
+   "en": "Ranisankail, Thakurgaon",
+   "bn": "রাণীশংকৈল, ঠাকুরগাঁও",
+   "region": "floodplain",
+   "north": true,
+   "district": "THAKURGAON",
+   "name_en": "Ranisankail",
+   "name_bn": "রাণীশংকৈল"
+  },
+  {
+   "code": "THAKURGAON-THAKURGAON-SADAR",
+   "en": "Thakurgaon Sadar, Thakurgaon",
+   "bn": "ঠাকুরগাঁও সদর, ঠাকুরগাঁও",
+   "region": "floodplain",
+   "north": true,
+   "district": "THAKURGAON",
+   "name_en": "Thakurgaon Sadar",
+   "name_bn": "ঠাকুরগাঁও সদর"
   }
  ],
  "varieties": [
   {
-   "id": "dhan52",
-   "en": "BRRI dhan52",
-   "bn": "ব্রি ধান৫২",
-   "type": "sub1",
-   "season": "aman"
+   "id": "unknown",
+   "en": "Local / don't know",
+   "bn": "স্থানীয় / জানি না",
+   "type": "unknown",
+   "group": "unknown"
   },
   {
-   "id": "dhan49",
+   "id": "BRRI dhan51",
+   "en": "BRRI dhan51 (flood-tolerant)",
+   "bn": "ব্রি ধান৫১ (বন্যা-সহনশীল)",
+   "type": "sub1",
+   "season": "aman",
+   "group": "flood"
+  },
+  {
+   "id": "BRRI dhan52",
+   "en": "BRRI dhan52 (flood-tolerant)",
+   "bn": "ব্রি ধান৫২ (বন্যা-সহনশীল)",
+   "type": "sub1",
+   "season": "aman",
+   "group": "flood"
+  },
+  {
+   "id": "BRRI dhan79",
+   "en": "BRRI dhan79 (flood-tolerant)",
+   "bn": "ব্রি ধান৭৯ (বন্যা-সহনশীল)",
+   "type": "sub1",
+   "season": "aman",
+   "group": "flood"
+  },
+  {
+   "id": "BINA dhan11",
+   "en": "BINA dhan11 (flood-tolerant)",
+   "bn": "বিনা ধান১১ (বন্যা-সহনশীল)",
+   "type": "sub1",
+   "season": "aman",
+   "group": "flood"
+  },
+  {
+   "id": "BINA dhan12",
+   "en": "BINA dhan12 (flood-tolerant)",
+   "bn": "বিনা ধান১২ (বন্যা-সহনশীল)",
+   "type": "sub1",
+   "season": "aman",
+   "group": "flood"
+  },
+  {
+   "id": "BR1",
+   "en": "BR1",
+   "bn": "বিআর১",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR2",
+   "en": "BR2",
+   "bn": "বিআর২",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR3",
+   "en": "BR3",
+   "bn": "বিআর৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR4",
+   "en": "BR4",
+   "bn": "বিআর৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR5",
+   "en": "BR5",
+   "bn": "বিআর৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR6",
+   "en": "BR6",
+   "bn": "বিআর৬",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR7",
+   "en": "BR7",
+   "bn": "বিআর৭",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR8",
+   "en": "BR8",
+   "bn": "বিআর৮",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR9",
+   "en": "BR9",
+   "bn": "বিআর৯",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR10",
+   "en": "BR10",
+   "bn": "বিআর১০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR11",
+   "en": "BR11",
+   "bn": "বিআর১১",
+   "type": "conventional",
+   "season": "aman",
+   "group": "brri"
+  },
+  {
+   "id": "BR12",
+   "en": "BR12",
+   "bn": "বিআর১২",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR13",
+   "en": "BR13",
+   "bn": "বিআর১৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR14",
+   "en": "BR14",
+   "bn": "বিআর১৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR15",
+   "en": "BR15",
+   "bn": "বিআর১৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR16",
+   "en": "BR16",
+   "bn": "বিআর১৬",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR17",
+   "en": "BR17",
+   "bn": "বিআর১৭",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR18",
+   "en": "BR18",
+   "bn": "বিআর১৮",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR19",
+   "en": "BR19",
+   "bn": "বিআর১৯",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR20",
+   "en": "BR20",
+   "bn": "বিআর২০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR21",
+   "en": "BR21",
+   "bn": "বিআর২১",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR22",
+   "en": "BR22",
+   "bn": "বিআর২২",
+   "type": "conventional",
+   "season": "aman",
+   "group": "brri"
+  },
+  {
+   "id": "BR23",
+   "en": "BR23",
+   "bn": "বিআর২৩",
+   "type": "conventional",
+   "season": "aman",
+   "group": "brri"
+  },
+  {
+   "id": "BR24",
+   "en": "BR24",
+   "bn": "বিআর২৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR25",
+   "en": "BR25",
+   "bn": "বিআর২৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BR26",
+   "en": "BR26",
+   "bn": "বিআর২৬",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan27",
+   "en": "BRRI dhan27",
+   "bn": "ব্রি ধান২৭",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan28",
+   "en": "BRRI dhan28",
+   "bn": "ব্রি ধান২৮",
+   "type": "conventional",
+   "season": "boro",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan29",
+   "en": "BRRI dhan29",
+   "bn": "ব্রি ধান২৯",
+   "type": "conventional",
+   "season": "boro",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan30",
+   "en": "BRRI dhan30",
+   "bn": "ব্রি ধান৩০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan31",
+   "en": "BRRI dhan31",
+   "bn": "ব্রি ধান৩১",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan32",
+   "en": "BRRI dhan32",
+   "bn": "ব্রি ধান৩২",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan33",
+   "en": "BRRI dhan33",
+   "bn": "ব্রি ধান৩৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan34",
+   "en": "BRRI dhan34",
+   "bn": "ব্রি ধান৩৪",
+   "type": "conventional",
+   "season": "aman",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan35",
+   "en": "BRRI dhan35",
+   "bn": "ব্রি ধান৩৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan36",
+   "en": "BRRI dhan36",
+   "bn": "ব্রি ধান৩৬",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan37",
+   "en": "BRRI dhan37",
+   "bn": "ব্রি ধান৩৭",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan38",
+   "en": "BRRI dhan38",
+   "bn": "ব্রি ধান৩৮",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan39",
+   "en": "BRRI dhan39",
+   "bn": "ব্রি ধান৩৯",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan40",
+   "en": "BRRI dhan40",
+   "bn": "ব্রি ধান৪০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan41",
+   "en": "BRRI dhan41",
+   "bn": "ব্রি ধান৪১",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan42",
+   "en": "BRRI dhan42",
+   "bn": "ব্রি ধান৪২",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan43",
+   "en": "BRRI dhan43",
+   "bn": "ব্রি ধান৪৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan44",
+   "en": "BRRI dhan44",
+   "bn": "ব্রি ধান৪৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan45",
+   "en": "BRRI dhan45",
+   "bn": "ব্রি ধান৪৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan46",
+   "en": "BRRI dhan46",
+   "bn": "ব্রি ধান৪৬",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan47",
+   "en": "BRRI dhan47 (salt-tolerant)",
+   "bn": "ব্রি ধান৪৭ (লবণ-সহনশীল)",
+   "type": "conventional",
+   "group": "brri",
+   "flag": "salt"
+  },
+  {
+   "id": "BRRI dhan48",
+   "en": "BRRI dhan48",
+   "bn": "ব্রি ধান৪৮",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan49",
    "en": "BRRI dhan49",
    "bn": "ব্রি ধান৪৯",
    "type": "conventional",
-   "season": "aman"
+   "season": "aman",
+   "group": "brri"
   },
   {
-   "id": "local",
-   "en": "Local/unknown",
-   "bn": "স্থানীয়/জানি না",
-   "type": "unknown"
+   "id": "BRRI dhan50",
+   "en": "BRRI dhan50",
+   "bn": "ব্রি ধান৫০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan53",
+   "en": "BRRI dhan53",
+   "bn": "ব্রি ধান৫৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan54",
+   "en": "BRRI dhan54",
+   "bn": "ব্রি ধান৫৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan55",
+   "en": "BRRI dhan55",
+   "bn": "ব্রি ধান৫৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan56",
+   "en": "BRRI dhan56 (drought-tolerant)",
+   "bn": "ব্রি ধান৫৬ (খরা-সহনশীল)",
+   "type": "conventional",
+   "season": "aman",
+   "flag": "drought",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan57",
+   "en": "BRRI dhan57",
+   "bn": "ব্রি ধান৫৭",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan58",
+   "en": "BRRI dhan58",
+   "bn": "ব্রি ধান৫৮",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan59",
+   "en": "BRRI dhan59",
+   "bn": "ব্রি ধান৫৯",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan60",
+   "en": "BRRI dhan60",
+   "bn": "ব্রি ধান৬০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan61",
+   "en": "BRRI dhan61 (salt-tolerant)",
+   "bn": "ব্রি ধান৬১ (লবণ-সহনশীল)",
+   "type": "conventional",
+   "group": "brri",
+   "flag": "salt"
+  },
+  {
+   "id": "BRRI dhan62",
+   "en": "BRRI dhan62",
+   "bn": "ব্রি ধান৬২",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan63",
+   "en": "BRRI dhan63",
+   "bn": "ব্রি ধান৬৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan64",
+   "en": "BRRI dhan64",
+   "bn": "ব্রি ধান৬৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan65",
+   "en": "BRRI dhan65",
+   "bn": "ব্রি ধান৬৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan66",
+   "en": "BRRI dhan66",
+   "bn": "ব্রি ধান৬৬",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan67",
+   "en": "BRRI dhan67 (salt-tolerant)",
+   "bn": "ব্রি ধান৬৭ (লবণ-সহনশীল)",
+   "type": "conventional",
+   "group": "brri",
+   "flag": "salt"
+  },
+  {
+   "id": "BRRI dhan68",
+   "en": "BRRI dhan68",
+   "bn": "ব্রি ধান৬৮",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan69",
+   "en": "BRRI dhan69",
+   "bn": "ব্রি ধান৬৯",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan70",
+   "en": "BRRI dhan70",
+   "bn": "ব্রি ধান৭০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan71",
+   "en": "BRRI dhan71 (drought-tolerant)",
+   "bn": "ব্রি ধান৭১ (খরা-সহনশীল)",
+   "type": "conventional",
+   "season": "aman",
+   "flag": "drought",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan72",
+   "en": "BRRI dhan72",
+   "bn": "ব্রি ধান৭২",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan73",
+   "en": "BRRI dhan73",
+   "bn": "ব্রি ধান৭৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan74",
+   "en": "BRRI dhan74",
+   "bn": "ব্রি ধান৭৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan75",
+   "en": "BRRI dhan75",
+   "bn": "ব্রি ধান৭৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan76",
+   "en": "BRRI dhan76",
+   "bn": "ব্রি ধান৭৬",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan77",
+   "en": "BRRI dhan77",
+   "bn": "ব্রি ধান৭৭",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan78",
+   "en": "BRRI dhan78",
+   "bn": "ব্রি ধান৭৮",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan80",
+   "en": "BRRI dhan80",
+   "bn": "ব্রি ধান৮০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan81",
+   "en": "BRRI dhan81",
+   "bn": "ব্রি ধান৮১",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan82",
+   "en": "BRRI dhan82",
+   "bn": "ব্রি ধান৮২",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan83",
+   "en": "BRRI dhan83",
+   "bn": "ব্রি ধান৮৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan84",
+   "en": "BRRI dhan84",
+   "bn": "ব্রি ধান৮৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan85",
+   "en": "BRRI dhan85",
+   "bn": "ব্রি ধান৮৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan86",
+   "en": "BRRI dhan86",
+   "bn": "ব্রি ধান৮৬",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan87",
+   "en": "BRRI dhan87",
+   "bn": "ব্রি ধান৮৭",
+   "type": "conventional",
+   "season": "aman",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan88",
+   "en": "BRRI dhan88",
+   "bn": "ব্রি ধান৮৮",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan89",
+   "en": "BRRI dhan89",
+   "bn": "ব্রি ধান৮৯",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan90",
+   "en": "BRRI dhan90",
+   "bn": "ব্রি ধান৯০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan91",
+   "en": "BRRI dhan91",
+   "bn": "ব্রি ধান৯১",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan92",
+   "en": "BRRI dhan92",
+   "bn": "ব্রি ধান৯২",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan93",
+   "en": "BRRI dhan93",
+   "bn": "ব্রি ধান৯৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan94",
+   "en": "BRRI dhan94",
+   "bn": "ব্রি ধান৯৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan95",
+   "en": "BRRI dhan95",
+   "bn": "ব্রি ধান৯৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan96",
+   "en": "BRRI dhan96",
+   "bn": "ব্রি ধান৯৬",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan97",
+   "en": "BRRI dhan97 (salt-tolerant)",
+   "bn": "ব্রি ধান৯৭ (লবণ-সহনশীল)",
+   "type": "conventional",
+   "season": "boro",
+   "flag": "salt",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan98",
+   "en": "BRRI dhan98",
+   "bn": "ব্রি ধান৯৮",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan99",
+   "en": "BRRI dhan99 (salt-tolerant)",
+   "bn": "ব্রি ধান৯৯ (লবণ-সহনশীল)",
+   "type": "conventional",
+   "season": "boro",
+   "flag": "salt",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan100",
+   "en": "BRRI dhan100",
+   "bn": "ব্রি ধান১০০",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan101",
+   "en": "BRRI dhan101",
+   "bn": "ব্রি ধান১০১",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan102",
+   "en": "BRRI dhan102",
+   "bn": "ব্রি ধান১০২",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan103",
+   "en": "BRRI dhan103",
+   "bn": "ব্রি ধান১০৩",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan104",
+   "en": "BRRI dhan104",
+   "bn": "ব্রি ধান১০৪",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BRRI dhan105",
+   "en": "BRRI dhan105",
+   "bn": "ব্রি ধান১০৫",
+   "type": "conventional",
+   "group": "brri"
+  },
+  {
+   "id": "BINA dhan4",
+   "en": "BINA dhan4",
+   "bn": "বিনা ধান৪",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan5",
+   "en": "BINA dhan5",
+   "bn": "বিনা ধান৫",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan6",
+   "en": "BINA dhan6",
+   "bn": "বিনা ধান৬",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan7",
+   "en": "BINA dhan7",
+   "bn": "বিনা ধান৭",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan8",
+   "en": "BINA dhan8",
+   "bn": "বিনা ধান৮",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan9",
+   "en": "BINA dhan9",
+   "bn": "বিনা ধান৯",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan10",
+   "en": "BINA dhan10",
+   "bn": "বিনা ধান১০",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan13",
+   "en": "BINA dhan13",
+   "bn": "বিনা ধান১৩",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan14",
+   "en": "BINA dhan14",
+   "bn": "বিনা ধান১৪",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan15",
+   "en": "BINA dhan15",
+   "bn": "বিনা ধান১৫",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan16",
+   "en": "BINA dhan16",
+   "bn": "বিনা ধান১৬",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan17",
+   "en": "BINA dhan17",
+   "bn": "বিনা ধান১৭",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan18",
+   "en": "BINA dhan18",
+   "bn": "বিনা ধান১৮",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan19",
+   "en": "BINA dhan19",
+   "bn": "বিনা ধান১৯",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan20",
+   "en": "BINA dhan20",
+   "bn": "বিনা ধান২০",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan21",
+   "en": "BINA dhan21",
+   "bn": "বিনা ধান২১",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan22",
+   "en": "BINA dhan22",
+   "bn": "বিনা ধান২২",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan23",
+   "en": "BINA dhan23",
+   "bn": "বিনা ধান২৩",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan24",
+   "en": "BINA dhan24",
+   "bn": "বিনা ধান২৪",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BINA dhan25",
+   "en": "BINA dhan25",
+   "bn": "বিনা ধান২৫",
+   "type": "conventional",
+   "group": "bina"
+  },
+  {
+   "id": "BRRI hybrid dhan1",
+   "en": "BRRI hybrid dhan1",
+   "bn": "ব্রি হাইব্রিড ধান১",
+   "type": "conventional",
+   "group": "hybrid"
+  },
+  {
+   "id": "BRRI hybrid dhan2",
+   "en": "BRRI hybrid dhan2",
+   "bn": "ব্রি হাইব্রিড ধান২",
+   "type": "conventional",
+   "group": "hybrid"
+  },
+  {
+   "id": "BRRI hybrid dhan3",
+   "en": "BRRI hybrid dhan3",
+   "bn": "ব্রি হাইব্রিড ধান৩",
+   "type": "conventional",
+   "group": "hybrid"
+  },
+  {
+   "id": "BRRI hybrid dhan4",
+   "en": "BRRI hybrid dhan4",
+   "bn": "ব্রি হাইব্রিড ধান৪",
+   "type": "conventional",
+   "group": "hybrid"
+  },
+  {
+   "id": "BRRI hybrid dhan5",
+   "en": "BRRI hybrid dhan5",
+   "bn": "ব্রি হাইব্রিড ধান৫",
+   "type": "conventional",
+   "group": "hybrid"
+  },
+  {
+   "id": "BRRI hybrid dhan6",
+   "en": "BRRI hybrid dhan6",
+   "bn": "ব্রি হাইব্রিড ধান৬",
+   "type": "conventional",
+   "group": "hybrid"
+  },
+  {
+   "id": "BRRI hybrid dhan7",
+   "en": "BRRI hybrid dhan7",
+   "bn": "ব্রি হাইব্রিড ধান৭",
+   "type": "conventional",
+   "group": "hybrid"
+  },
+  {
+   "id": "hybrid_other",
+   "en": "Other hybrid (any company)",
+   "bn": "অন্য হাইব্রিড (যেকোনো কোম্পানি)",
+   "type": "conventional",
+   "group": "hybrid"
+  },
+  {
+   "id": "Nizersail",
+   "en": "Nizersail",
+   "bn": "নাইজারশাইল",
+   "type": "conventional",
+   "group": "local"
+  },
+  {
+   "id": "Swarna",
+   "en": "Swarna",
+   "bn": "স্বর্ণা",
+   "type": "conventional",
+   "group": "local"
+  },
+  {
+   "id": "Guti Swarna",
+   "en": "Guti Swarna",
+   "bn": "গুটি স্বর্ণা",
+   "type": "conventional",
+   "group": "local"
+  },
+  {
+   "id": "Kalijira",
+   "en": "Kalijira",
+   "bn": "কালিজিরা",
+   "type": "conventional",
+   "group": "local"
+  },
+  {
+   "id": "Chinigura",
+   "en": "Chinigura",
+   "bn": "চিনিগুঁড়া",
+   "type": "conventional",
+   "group": "local"
+  },
+  {
+   "id": "Kataribhog",
+   "en": "Kataribhog",
+   "bn": "কাটারিভোগ",
+   "type": "conventional",
+   "group": "local"
+  },
+  {
+   "id": "Binni",
+   "en": "Binni (sticky rice)",
+   "bn": "বিন্নি",
+   "type": "conventional",
+   "group": "local"
+  },
+  {
+   "id": "Pajam",
+   "en": "Pajam",
+   "bn": "পাজাম",
+   "type": "conventional",
+   "group": "local"
+  },
+  {
+   "id": "other",
+   "en": "Other variety (not in list)",
+   "bn": "অন্য জাত (তালিকায় নেই)",
+   "type": "unknown",
+   "group": "other"
   }
  ]
 }

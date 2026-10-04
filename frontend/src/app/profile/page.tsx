@@ -8,7 +8,7 @@ import { AppShell } from "@/components/app/shell";
 import { seasonFromDate, stageFromTransplant } from "@/lib/engine/context";
 import type { Season } from "@/lib/engine/types";
 import { useLang } from "@/lib/i18n";
-import { PLACES } from "@/lib/places";
+import { UpazilaPicker, VarietyPicker } from "@/components/app/pickers";
 import { useEffectiveDate } from "@/lib/settings";
 import { getProfile, saveProfile, type Profile } from "@/lib/store/db";
 
@@ -46,29 +46,8 @@ export default function ProfilePage() {
       </p>
       {loaded && (
         <div className="flex flex-col gap-6">
-          <label className="flex flex-col gap-2">
-            <span className="text-lg font-semibold">{t("profile_upazila")}</span>
-            <select className={selectCls} style={chevron} value={p.upazila ?? ""} onChange={(e) => setP({ ...p, upazila: e.target.value || undefined })}>
-              <option value="">—</option>
-              {PLACES.upazilas.map((u) => (
-                <option key={u.code} value={u.code}>
-                  {tx(u)}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label className="flex flex-col gap-2">
-            <span className="text-lg font-semibold">{t("profile_variety")}</span>
-            <select className={selectCls} style={chevron} value={p.variety ?? ""} onChange={(e) => setP({ ...p, variety: e.target.value || undefined })}>
-              <option value="">—</option>
-              {PLACES.varieties.map((v) => (
-                <option key={v.id} value={v.id}>
-                  {tx(v)}
-                </option>
-              ))}
-            </select>
-          </label>
+          <UpazilaPicker value={p.upazila} onChange={(v) => setP({ ...p, upazila: v })} />
+          <VarietyPicker value={p.variety} onChange={(v) => setP({ ...p, variety: v })} />
 
           <Choice<Season>
             clip="Q-SEASON"

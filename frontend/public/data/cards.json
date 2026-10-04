@@ -1,392 +1,239 @@
 {
- "version": "standin",
- "shared": {
-  "SH-SPRAY": {
-   "bn": "ওষুধ দিতে হলে: শুধু আপনার কৃষি অফিসার যে কৃষি সম্প্রসারণ অধিদপ্তরে নিবন্ধিত ওষুধের নাম বলবেন, সেটাই দিন। গায়ের লেবেল পড়ুন। হাতমোজা আর মাস্ক পরুন। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।",
-   "en": "ওষুধ দিতে হলে: শুধু আপনার কৃষি অফিসার যে কৃষি সম্প্রসারণ অধিদপ্তরে নিবন্ধিত ওষুধের নাম বলবেন, সেটাই দিন। গায়ের লেবেল পড়ুন। হাতমোজা আর মাস্ক পরুন। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।"
-  },
-  "SH-SPRAY-VIRUS": {
-   "bn": "কোনো ওষুধে টুংরো সারে না। যে পোকা এই রোগ ছড়ায়, তার জন্য ওষুধ দেবেন কিনা, সেটা আপনার কৃষি অফিসার ঠিক করবেন। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।",
-   "en": "কোনো ওষুধে টুংরো সারে না। যে পোকা এই রোগ ছড়ায়, তার জন্য ওষুধ দেবেন কিনা, সেটা আপনার কৃষি অফিসার ঠিক করবেন। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।"
-  },
-  "SH-SPRAY-BLB": {
-   "bn": "এই রোগে কোনো ওষুধ ভালো কাজ করে না। এর জন্য ওষুধ কিনবেন না। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।",
-   "en": "এই রোগে কোনো ওষুধ ভালো কাজ করে না। এর জন্য ওষুধ কিনবেন না। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।"
-  },
-  "SH-SPRAY-FLOOD": {
-   "bn": "ওষুধ দিয়ে বন্যার ক্ষতি সারে না। কৃষি অফিসার বললে তবেই ওষুধ দিন। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।",
-   "en": "ওষুধ দিয়ে বন্যার ক্ষতি সারে না। কৃষি অফিসার বললে তবেই ওষুধ দিন। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।"
-  },
-  "SH-ASK": {
-   "bn": "ইউনিয়ন কৃষি অফিসে আপনার কৃষি অফিসারকে জিজ্ঞেস করুন। অথবা এক ছয় এক দুই তিন নম্বরে ফোন করুন, সকাল ৮টা থেকে রাত ৮টা। শুক্রবার, শনিবার আর ছুটির দিনে বন্ধ।",
-   "en": "ইউনিয়ন কৃষি অফিসে আপনার কৃষি অফিসারকে জিজ্ঞেস করুন। অথবা এক ছয় এক দুই তিন নম্বরে ফোন করুন, সকাল ৮টা থেকে রাত ৮টা। শুক্রবার, শনিবার আর ছুটির দিনে বন্ধ।"
-  },
-  "SH-FOOT-PHOTO": {
-   "bn": "এটা ছবি দেখে কম্পিউটারের পরামর্শ। ভুল হতে পারে। এটা আপনার কৃষি অফিসারের বিকল্প নয়।",
-   "en": "এটা ছবি দেখে কম্পিউটারের পরামর্শ। ভুল হতে পারে। এটা আপনার কৃষি অফিসারের বিকল্প নয়।"
-  },
-  "SH-FOOT-RULE": {
-   "bn": "এই পরামর্শ ব্রি আর কৃষি সম্প্রসারণ অধিদপ্তরের নির্দিষ্ট নিয়ম থেকে, আপনার জমি দেখে নয়। ভুল হতে পারে। সিদ্ধান্ত নেবেন আপনি আর আপনার কৃষি অফিসার।",
-   "en": "এই পরামর্শ ব্রি আর কৃষি সম্প্রসারণ অধিদপ্তরের নির্দিষ্ট নিয়ম থেকে, আপনার জমি দেখে নয়। ভুল হতে পারে। সিদ্ধান্ত নেবেন আপনি আর আপনার কৃষি অফিসার।"
-  }
- },
- "reasons": {
-  "cutoff_grey_zone": {
-   "bn": "শেষ রোপণের তারিখ এলাকাভেদে আলাদা।",
-   "en": "শেষ রোপণের তারিখ এলাকাভেদে আলাদা।",
-   "clip": "A6-R-DATE"
-  },
-  "missing_input": {
-   "bn": "কিছু উত্তর বাকি আছে।",
-   "en": "কিছু উত্তর বাকি আছে।",
-   "clip": "A6-R-MISSING"
-  },
-  "reproductive_stage_full": {
-   "bn": "ধানে শীষ বা দানা আসার সময় বন্যা হয়েছে।",
-   "en": "ধানে শীষ বা দানা আসার সময় বন্যা হয়েছে।",
-   "clip": "A6-R-GRAIN"
-  },
-  "haor_out_of_scope": {
-   "bn": "হাওরের বন্যার জন্য স্থানীয় পরামর্শ দরকার।",
-   "en": "হাওরের বন্যার জন্য স্থানীয় পরামর্শ দরকার।",
-   "clip": "A6-R-HAOR"
-  },
-  "possible_salt_water": {
-   "bn": "পানি লোনা হয়ে থাকতে পারে।",
-   "en": "পানি লোনা হয়ে থাকতে পারে।",
-   "clip": "A6-R-SALT"
-  },
-  "outlook_unknown": {
-   "bn": "এই উত্তরগুলো থেকে আমরা বলতে পারছি না।",
-   "en": "এই উত্তরগুলো থেকে আমরা বলতে পারছি না।",
-   "clip": "A6-R-GENERIC"
-  },
-  "drought": {
-   "bn": "এই উত্তরগুলো থেকে আমরা বলতে পারছি না।",
-   "en": "এই উত্তরগুলো থেকে আমরা বলতে পারছি না।",
-   "clip": "A6-R-GENERIC"
-  }
- },
- "cards": {
-  "C1": {
-   "kind": "photo",
-   "tone": "ok",
-   "clip": "C1-HEALTHY",
-   "title": {
-    "bn": "Healthy",
-    "en": "Healthy"
-   },
-   "parts": [
-    {
-     "bn": "পাতাটা সুস্থ মনে হচ্ছে, তবে নিশ্চিত নই। ছবিতে শুধু একটা পাতা দেখা যায়। গাছের গোড়ায় বা শীষে সমস্যা লুকিয়ে থাকতে পারে। পুরো জমি ঘুরে দেখুন। অন্য গাছ, গোড়া আর শীষ দেখুন। এক সপ্তাহ পরে আবার দেখুন। সুস্থ গাছে ওষুধ দেবেন না।",
-     "en": "পাতাটা সুস্থ মনে হচ্ছে, তবে নিশ্চিত নই। ছবিতে শুধু একটা পাতা দেখা যায়। গাছের গোড়ায় বা শীষে সমস্যা লুকিয়ে থাকতে পারে। পুরো জমি ঘুরে দেখুন। অন্য গাছ, গোড়া আর শীষ দেখুন। এক সপ্তাহ পরে আবার দেখুন। সুস্থ গাছে ওষুধ দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "C2": {
-   "kind": "photo",
-   "tone": "warn",
-   "clip": "C2-BLAST",
-   "title": {
-    "bn": "Blast",
-    "en": "Blast"
-   },
-   "parts": [
-    {
-     "bn": "দেখে ব্লাস্ট রোগ মনে হচ্ছে, তবে নিশ্চিত নই। বাদামি দাগ রোগও হতে পারে। ব্লাস্টের দাগের দুই মাথা সরু, মাঝখানটা ছাই রঙের। নিশ্চিত হতে শীষের গোড়ার ছবি পাঠান। জমিতে পানি ধরে রাখুন। বাড়তি ইউরিয়া দেবেন না। দুই থেকে তিন দিন পরে আবার দেখুন। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।",
-     "en": "দেখে ব্লাস্ট রোগ মনে হচ্ছে, তবে নিশ্চিত নই। বাদামি দাগ রোগও হতে পারে। ব্লাস্টের দাগের দুই মাথা সরু, মাঝখানটা ছাই রঙের। নিশ্চিত হতে শীষের গোড়ার ছবি পাঠান। জমিতে পানি ধরে রাখুন। বাড়তি ইউরিয়া দেবেন না। দুই থেকে তিন দিন পরে আবার দেখুন। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "C3": {
-   "kind": "photo",
-   "tone": "warn",
-   "clip": "C3-BROWNSPOT",
-   "title": {
-    "bn": "Brown spot",
-    "en": "Brown spot"
-   },
-   "parts": [
-    {
-     "bn": "দেখে বাদামি দাগ রোগ মনে হচ্ছে, তবে নিশ্চিত নই। ব্লাস্ট, অথবা দস্তা বা পটাশের অভাবও হতে পারে। বাদামি দাগগুলো গোল, মাঝখানে ছাই রং, কিনারা লালচে-বাদামি। মাটি দুর্বল হলে রোগ বাড়ে। জমিতে পানি ধরে রাখুন। মাটি পরীক্ষার কথা কৃষি অফিসারকে জিজ্ঞেস করুন। দুই থেকে তিন দিন পরে আবার দেখুন। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।",
-     "en": "দেখে বাদামি দাগ রোগ মনে হচ্ছে, তবে নিশ্চিত নই। ব্লাস্ট, অথবা দস্তা বা পটাশের অভাবও হতে পারে। বাদামি দাগগুলো গোল, মাঝখানে ছাই রং, কিনারা লালচে-বাদামি। মাটি দুর্বল হলে রোগ বাড়ে। জমিতে পানি ধরে রাখুন। মাটি পরীক্ষার কথা কৃষি অফিসারকে জিজ্ঞেস করুন। দুই থেকে তিন দিন পরে আবার দেখুন। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "C4": {
-   "kind": "photo",
-   "tone": "warn",
-   "clip": "C4-SHEATH",
-   "title": {
-    "bn": "Sheath blight",
-    "en": "Sheath blight"
-   },
-   "parts": [
-    {
-     "bn": "দেখে খোলপোড়া রোগ মনে হচ্ছে, তবে নিশ্চিত নই। কাণ্ড পচা রোগ বা মাজরা পোকাও হতে পারে। এটা পানির কাছে কাণ্ডে শুরু হয়। শুধু পাতার ছবি যথেষ্ট নয়। গাছের গোড়ার ছবি পাঠান। আইলের আগাছা তুলে ফেলুন। বাড়তি ইউরিয়া দেবেন না। দুই থেকে তিন দিন পরে আবার দেখুন। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।",
-     "en": "দেখে খোলপোড়া রোগ মনে হচ্ছে, তবে নিশ্চিত নই। কাণ্ড পচা রোগ বা মাজরা পোকাও হতে পারে। এটা পানির কাছে কাণ্ডে শুরু হয়। শুধু পাতার ছবি যথেষ্ট নয়। গাছের গোড়ার ছবি পাঠান। আইলের আগাছা তুলে ফেলুন। বাড়তি ইউরিয়া দেবেন না। দুই থেকে তিন দিন পরে আবার দেখুন। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "C5": {
-   "kind": "photo",
-   "tone": "warn",
-   "clip": "C5-TUNGRO",
-   "title": {
-    "bn": "Tungro",
-    "en": "Tungro"
-   },
-   "parts": [
-    {
-     "bn": "দেখে টুংরো রোগ মনে হচ্ছে, তবে নিশ্চিত নই। নাইট্রোজেন বা দস্তার অভাব, ঠান্ডা বা লবণেও পাতা হলদে-কমলা হতে পারে। টুংরো একটা ভাইরাস রোগ, ছোট সবুজ পাতাফড়িং এটা ছড়ায়। পুরো গাছের ছবি পাঠান। হলুদ, খাটো গাছ তুলে মাটিতে পুঁতে ফেলুন। তাড়াতাড়ি কৃষি অফিসারকে জানান। যে বীজতলায় হলুদ চারা আছে, সেখানকার চারা লাগাবেন না।",
-     "en": "দেখে টুংরো রোগ মনে হচ্ছে, তবে নিশ্চিত নই। নাইট্রোজেন বা দস্তার অভাব, ঠান্ডা বা লবণেও পাতা হলদে-কমলা হতে পারে। টুংরো একটা ভাইরাস রোগ, ছোট সবুজ পাতাফড়িং এটা ছড়ায়। পুরো গাছের ছবি পাঠান। হলুদ, খাটো গাছ তুলে মাটিতে পুঁতে ফেলুন। তাড়াতাড়ি কৃষি অফিসারকে জানান। যে বীজতলায় হলুদ চারা আছে, সেখানকার চারা লাগাবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "C6": {
-   "kind": "photo",
-   "tone": "warn",
-   "clip": "C6-BLB",
-   "title": {
-    "bn": "BLB",
-    "en": "BLB"
-   },
-   "parts": [
-    {
-     "bn": "দেখে ব্যাকটেরিয়াজনিত পাতাপোড়া রোগ মনে হচ্ছে, তবে নিশ্চিত নই। পাতার রেখা রোগ বা পাতা ঝলসানোও হতে পারে। একটা পরীক্ষা: অসুস্থ পাতা কেটে পরিষ্কার পানিতে রাখুন। কয়েক মিনিট পরে পানি ঘোলা হলে পাতাপোড়া হওয়ার সম্ভাবনা বেশি। পারলে জমির বাড়তি পানি বের করে দিন। আগাছা আর পুরনো নাড়া সরিয়ে ফেলুন। কৃষি অফিসার না বলা পর্যন্ত ইউরিয়া দেবেন না।",
-     "en": "দেখে ব্যাকটেরিয়াজনিত পাতাপোড়া রোগ মনে হচ্ছে, তবে নিশ্চিত নই। পাতার রেখা রোগ বা পাতা ঝলসানোও হতে পারে। একটা পরীক্ষা: অসুস্থ পাতা কেটে পরিষ্কার পানিতে রাখুন। কয়েক মিনিট পরে পানি ঘোলা হলে পাতাপোড়া হওয়ার সম্ভাবনা বেশি। পারলে জমির বাড়তি পানি বের করে দিন। আগাছা আর পুরনো নাড়া সরিয়ে ফেলুন। কৃষি অফিসার না বলা পর্যন্ত ইউরিয়া দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "C7": {
-   "kind": "photo",
-   "tone": "warn",
-   "clip": "C7-SCALD",
-   "title": {
-    "bn": "Leaf scald",
-    "en": "Leaf scald"
-   },
-   "parts": [
-    {
-     "bn": "দেখে পাতা ঝলসানো রোগ মনে হচ্ছে, তবে নিশ্চিত নই। ব্যাকটেরিয়াজনিত পাতাপোড়াও হতে পারে। এই রোগে পাতার আগা থেকে হালকা আর গাঢ় বাদামি ডোরা হয়। পানির পরীক্ষায় পানি ঘোলা হয় না। বাড়তি ইউরিয়া দেবেন না। আগাছা আর পুরনো নাড়া সরিয়ে ফেলুন। দুই থেকে তিন দিন পরে আবার দেখুন। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।",
-     "en": "দেখে পাতা ঝলসানো রোগ মনে হচ্ছে, তবে নিশ্চিত নই। ব্যাকটেরিয়াজনিত পাতাপোড়াও হতে পারে। এই রোগে পাতার আগা থেকে হালকা আর গাঢ় বাদামি ডোরা হয়। পানির পরীক্ষায় পানি ঘোলা হয় না। বাড়তি ইউরিয়া দেবেন না। আগাছা আর পুরনো নাড়া সরিয়ে ফেলুন। দুই থেকে তিন দিন পরে আবার দেখুন। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "C8": {
-   "kind": "photo",
-   "tone": "unsure",
-   "clip": "C8-NOTSURE",
-   "title": {
-    "bn": "Not sure - ask your SAAO",
-    "en": "Not sure - ask your SAAO"
-   },
-   "parts": [
-    {
-     "bn": "নিশ্চিত নই। এটা আমাদের চেনা ধানপাতার মতো লাগছে না, অথবা ছবি পরিষ্কার নয়। আমরা আন্দাজে বলব না। ভুল উত্তরে আপনার টাকা নষ্ট হতে পারে। দিনের আলোয় নতুন ছবি তুলুন: একটা পাতা, কাছ থেকে, পরিষ্কার করে। অথবা গাছটা কৃষি অফিসারকে দেখান। এই অ্যাপের কথায় কোনো ওষুধ দেবেন না বা কিনবেন না।",
-     "en": "নিশ্চিত নই। এটা আমাদের চেনা ধানপাতার মতো লাগছে না, অথবা ছবি পরিষ্কার নয়। আমরা আন্দাজে বলব না। ভুল উত্তরে আপনার টাকা নষ্ট হতে পারে। দিনের আলোয় নতুন ছবি তুলুন: একটা পাতা, কাছ থেকে, পরিষ্কার করে। অথবা গাছটা কৃষি অফিসারকে দেখান। এই অ্যাপের কথায় কোনো ওষুধ দেবেন না বা কিনবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "C9": {
-   "kind": "photo",
-   "tone": "unsure",
-   "clip": "C9-LOCATION",
-   "title": {
-    "bn": "Photo can't show this",
-    "en": "Photo can't show this"
-   },
-   "parts": [
-    {
-     "bn": "আপনি বলেছেন সমস্যাটা কাণ্ডে, শীষে বা গাছের গোড়ায়। পাতার ছবি দিয়ে সেটা বোঝা যায় না। এটা খোলপোড়া, মাজরা পোকা বা বাদামি গাছফড়িং হতে পারে। এগুলো মানুষকে চোখে দেখতে হয়। ওই জায়গার কাছ থেকে ছবি তুলে রাখুন। গাছের গোড়ায় টোকা দিন: অনেক ছোট বাদামি পোকা পানিতে লাফিয়ে পড়লে তাড়াতাড়ি কৃষি অফিসারকে জানান। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।",
-     "en": "আপনি বলেছেন সমস্যাটা কাণ্ডে, শীষে বা গাছের গোড়ায়। পাতার ছবি দিয়ে সেটা বোঝা যায় না। এটা খোলপোড়া, মাজরা পোকা বা বাদামি গাছফড়িং হতে পারে। এগুলো মানুষকে চোখে দেখতে হয়। ওই জায়গার কাছ থেকে ছবি তুলে রাখুন। গাছের গোড়ায় টোকা দিন: অনেক ছোট বাদামি পোকা পানিতে লাফিয়ে পড়লে তাড়াতাড়ি কৃষি অফিসারকে জানান। কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "A1": {
-   "kind": "rule",
-   "tone": "ok",
-   "clip": "A1-SURVIVE-USUAL",
-   "title": {
-    "bn": "Likely survives",
-    "en": "Likely survives"
-   },
-   "parts": [
-    {
-     "bn": "আপনার দেওয়া তথ্য স্ক্রিনে দেখানো আছে। ইরি আর কৃষি মন্ত্রণালয়ের পরামর্শ: এমন গাছ সাধারণত বেঁচে যায়। পানি নেমে যাওয়ার পর ৫ থেকে ৭ দিন অপেক্ষা করুন। নতুন সবুজ পাতা আসে কিনা দেখুন। পাতার কাদা ধুয়ে দিন। প্রায় ১০ দিন কোনো সার দেবেন না। দেখার আগে জমি চাষ বা নতুন করে রোপণ করবেন না।",
-     "en": "আপনার দেওয়া তথ্য স্ক্রিনে দেখানো আছে। ইরি আর কৃষি মন্ত্রণালয়ের পরামর্শ: এমন গাছ সাধারণত বেঁচে যায়। পানি নেমে যাওয়ার পর ৫ থেকে ৭ দিন অপেক্ষা করুন। নতুন সবুজ পাতা আসে কিনা দেখুন। পাতার কাদা ধুয়ে দিন। প্রায় ১০ দিন কোনো সার দেবেন না। দেখার আগে জমি চাষ বা নতুন করে রোপণ করবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": [],
-   "extra": {
-    "usually_survives": {
-     "bn": "সাধারণত বেঁচে যায়",
-     "en": "usually survives"
+  "version": "2026-10-03.1",
+  "review": "English = docs/action-cards.md. Bangla = CLAUDE DRAFT, Zoha must review every line (search for bn). C9 is new (location guard) and must be added to action-cards.md.",
+  "shared": {
+    "SH-SPRAY": {
+      "en": "If spraying is needed: use only a DAE-registered product your SAAO names. Read the label. Wear gloves and a mask. Never use banned products like carbofuran.",
+      "bn": "ওষুধ দিতে হলে: শুধু আপনার কৃষি অফিসার (SAAO) যে DAE-নিবন্ধিত ওষুধের নাম বলবেন, সেটাই দিন। গায়ের লেবেল পড়ুন। হাতমোজা আর মাস্ক পরুন। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।"
     },
-    "not_sure": {
-     "bn": "নিশ্চিত নই",
-     "en": "not sure",
-     "clip": "A1-SURVIVE-UNSURE"
+    "SH-SPRAY-VIRUS": {
+      "en": "No spray cures tungro. Spraying for the insects that spread it is your SAAO's decision. Never use banned products like carbofuran.",
+      "bn": "কোনো ওষুধে টুংরো সারে না। যে পোকা এই রোগ ছড়ায়, তার জন্য ওষুধ দেবেন কিনা, সেটা আপনার কৃষি অফিসার ঠিক করবেন। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।"
     },
-    "backup": {
-     "bn": "হাতে বাড়তি চারা তৈরি রাখুন।",
-     "en": "হাতে বাড়তি চারা তৈরি রাখুন।",
-     "clip": "A1-BACKUP"
+    "SH-SPRAY-BLB": {
+      "en": "No spray works well against this disease. Do not buy one for it. Never use banned products like carbofuran.",
+      "bn": "এই রোগে কোনো ওষুধ ভালো কাজ করে না। এর জন্য ওষুধ কিনবেন না। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।"
+    },
+    "SH-SPRAY-FLOOD": {
+      "en": "Spraying does not fix flood damage. Spray only if your SAAO tells you to. Never use banned products like carbofuran.",
+      "bn": "ওষুধ দিয়ে বন্যার ক্ষতি সারে না। কৃষি অফিসার বললে তবেই ওষুধ দিন। কার্বোফুরানের মতো নিষিদ্ধ ওষুধ কখনো দেবেন না।"
+    },
+    "SH-ASK": {
+      "en": "Ask your SAAO at the union agriculture office. Or call 16123, from 8 in the morning to 8 at night. It is closed on Friday, Saturday and holidays.",
+      "bn": "ইউনিয়ন কৃষি অফিসে আপনার কৃষি অফিসারকে (SAAO) জিজ্ঞেস করুন। অথবা ১৬১২৩ নম্বরে ফোন করুন, সকাল ৮টা থেকে রাত ৮টা। শুক্রবার, শনিবার আর ছুটির দিনে বন্ধ।"
+    },
+    "SH-FOOT-PHOTO": {
+      "en": "This is computer advice from a photo. It can be wrong. It does not replace your agriculture officer.",
+      "bn": "এটা ছবি দেখে কম্পিউটারের পরামর্শ। ভুল হতে পারে। এটা আপনার কৃষি অফিসারের বিকল্প নয়।"
+    },
+    "SH-FOOT-RULE": {
+      "en": "This advice comes from fixed BRRI and DAE rules, not from your field. It can be wrong. You and your agriculture officer decide.",
+      "bn": "এই পরামর্শ BRRI আর DAE-এর নির্দিষ্ট নিয়ম থেকে, আপনার জমি দেখে নয়। ভুল হতে পারে। সিদ্ধান্ত নেবেন আপনি আর আপনার কৃষি অফিসার।"
     }
-   }
   },
-  "A2": {
-   "kind": "rule",
-   "tone": "warn",
-   "clip": "A2-GAPFILL",
-   "title": {
-    "bn": "Gap fill",
-    "en": "Gap fill"
-   },
-   "parts": [
-    {
-     "bn": "আপনি বলেছেন বেশিরভাগ গোছা বেঁচে উঠেছে, মাঝে মাঝে ফাঁকা। কৃষি মন্ত্রণালয়ের পরামর্শ: ফাঁকা পূরণ কাজে দেয় শুধু স্ক্রিনে দেখানো তারিখের আগে। সুস্থ গোছা থেকে বাড়তি কুশি তুলুন, প্রতি গোছায় দুই থেকে তিনটা রাখুন, আর শিকড়সহ সাথে সাথে লাগান। হলুদ বা অসুস্থ গাছ থেকে কুশি নেবেন না।",
-     "en": "আপনি বলেছেন বেশিরভাগ গোছা বেঁচে উঠেছে, মাঝে মাঝে ফাঁকা। কৃষি মন্ত্রণালয়ের পরামর্শ: ফাঁকা পূরণ কাজে দেয় শুধু স্ক্রিনে দেখানো তারিখের আগে। সুস্থ গোছা থেকে বাড়তি কুশি তুলুন, প্রতি গোছায় দুই থেকে তিনটা রাখুন, আর শিকড়সহ সাথে সাথে লাগান। হলুদ বা অসুস্থ গাছ থেকে কুশি নেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
+  "reasons": {
+    "missing_input": { "clip": "A6-R-MISSING", "en": "Some answers are missing.", "bn": "কিছু উত্তর বাকি আছে।" },
+    "reproductive_stage_full": { "clip": "A6-R-GRAIN", "en": "The flood came when the rice was making grain.", "bn": "ধানে শীষ বা দানা আসার সময় বন্যা হয়েছে।" },
+    "reproductive_stage_long": { "clip": "A6-R-GRAIN", "en": "The flood came when the rice was making grain.", "bn": "ধানে শীষ বা দানা আসার সময় বন্যা হয়েছে।" },
+    "haor_out_of_scope": { "clip": "A6-R-HAOR", "en": "Haor floods need local advice.", "bn": "হাওরের বন্যার জন্য স্থানীয় পরামর্শ দরকার।" },
+    "possible_salt_water": { "clip": "A6-R-SALT", "en": "The water may have been salty.", "bn": "পানি লোনা হয়ে থাকতে পারে।" },
+    "cutoff_grey_zone": { "clip": "A6-R-DATE", "en": "The last planting date is different in different areas.", "bn": "শেষ রোপণের তারিখ এলাকাভেদে আলাদা।" },
+    "outlook_unknown": { "clip": "A6-R-GENERIC", "en": "We cannot tell from these answers.", "bn": "এই উত্তরগুলো থেকে আমরা বলতে পারছি না।" },
+    "partial_loss": { "clip": "A6-R-GENERIC", "en": "We cannot tell from these answers.", "bn": "এই উত্তরগুলো থেকে আমরা বলতে পারছি না।" },
+    "no_rule": { "clip": "A6-R-GENERIC", "en": "We cannot tell from these answers.", "bn": "এই উত্তরগুলো থেকে আমরা বলতে পারছি না।" },
+    "not_aman_replant": { "clip": "A6-R-GENERIC", "en": "We cannot tell from these answers.", "bn": "এই উত্তরগুলো থেকে আমরা বলতে পারছি না।" },
+    "season_date_mismatch": { "clip": "A6-R-GENERIC", "en": "We cannot tell from these answers.", "bn": "এই উত্তরগুলো থেকে আমরা বলতে পারছি না।" }
   },
-  "A3": {
-   "kind": "rule",
-   "tone": "warn",
-   "clip": "A3-REPLANT",
-   "title": {
-    "bn": "Replant",
-    "en": "Replant"
-   },
-   "parts": [
-    {
-     "bn": "আপনি বলেছেন ফসল প্রায় পুরোটাই নষ্ট। ব্রি আর কৃষি সম্প্রসারণ অধিদপ্তরের ২০২৪ সালের বন্যা পরামর্শ: স্ক্রিনে দেখানো তারিখের মধ্যে আমন রোপণ করুন। নাবি জাত লাগান, যেমন বিআর২২, বিআর২৩, ব্রি ধান৪৬ বা ৫৪। বেশি বয়সের চারা, প্রতি গোছায় চার থেকে পাঁচটা, ঘন করে লাগান। চারা নিন কৃষি অফিসার, উপজেলা কৃষি অফিস বা বিএডিসি থেকে। স্ক্রিনে দেখানো তারিখের পরে রোপণ করবেন না।",
-     "en": "আপনি বলেছেন ফসল প্রায় পুরোটাই নষ্ট। ব্রি আর কৃষি সম্প্রসারণ অধিদপ্তরের ২০২৪ সালের বন্যা পরামর্শ: স্ক্রিনে দেখানো তারিখের মধ্যে আমন রোপণ করুন। নাবি জাত লাগান, যেমন বিআর২২, বিআর২৩, ব্রি ধান৪৬ বা ৫৪। বেশি বয়সের চারা, প্রতি গোছায় চার থেকে পাঁচটা, ঘন করে লাগান। চারা নিন কৃষি অফিসার, উপজেলা কৃষি অফিস বা বিএডিসি থেকে। স্ক্রিনে দেখানো তারিখের পরে রোপণ করবেন না।"
+  "cards": {
+    "C1": {
+      "kind": "photo", "tone": "ok", "clip": "C1-HEALTHY",
+      "title": { "en": "Looks healthy", "bn": "পাতা সুস্থ মনে হচ্ছে" },
+      "parts": [
+        { "en": "The leaf looks healthy (not certain).", "bn": "পাতাটা সুস্থ মনে হচ্ছে (নিশ্চিত নই)।" },
+        { "en": "The photo shows only one leaf. Problems can hide at the plant base or in the panicle.", "bn": "ছবিতে শুধু একটা পাতা দেখা যায়। গাছের গোড়ায় বা শীষে সমস্যা লুকিয়ে থাকতে পারে।" },
+        { "en": "Walk the field. Check other plants, the base and the panicles. Check again in a week.", "bn": "পুরো জমি ঘুরে দেখুন। অন্য গাছ, গোড়া আর শীষ দেখুন। এক সপ্তাহ পরে আবার দেখুন।" },
+        { "en": "Do not spray healthy plants.", "bn": "সুস্থ গাছে ওষুধ দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY", "SH-ASK", "SH-FOOT-PHOTO"],
+      "sources": ["Red-team §3 (photo limits)"]
+    },
+    "C2": {
+      "kind": "photo", "tone": "warn", "clip": "C2-BLAST",
+      "title": { "en": "Looks like blast", "bn": "ব্লাস্ট রোগ মনে হচ্ছে" },
+      "parts": [
+        { "en": "Looks like blast (not certain). It could also be brown spot.", "bn": "দেখে ব্লাস্ট রোগ মনে হচ্ছে (নিশ্চিত নই)। বাদামি দাগ রোগও হতে পারে।" },
+        { "en": "Blast spots are pointed at both ends, grey in the centre. To be sure, send a photo of the panicle neck.", "bn": "ব্লাস্টের দাগের দুই মাথা সরু, মাঝখানটা ছাই রঙের। নিশ্চিত হতে শীষের গোড়ার (ঘাড়ের) ছবি পাঠান।" },
+        { "en": "Keep water in the field. No extra urea. Check again in 2 to 3 days.", "bn": "জমিতে পানি ধরে রাখুন। বাড়তি ইউরিয়া দেবেন না। ২-৩ দিন পরে আবার দেখুন।" },
+        { "en": "Do not spray before talking to your SAAO.", "bn": "কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY", "SH-ASK", "SH-FOOT-PHOTO"],
+      "sources": ["IRRI Rice Knowledge Bank: Blast (leaf and collar)"]
+    },
+    "C3": {
+      "kind": "photo", "tone": "warn", "clip": "C3-BROWNSPOT",
+      "title": { "en": "Looks like brown spot", "bn": "বাদামি দাগ রোগ মনে হচ্ছে" },
+      "parts": [
+        { "en": "Looks like brown spot (not certain). It could also be blast, or low zinc or potassium.", "bn": "দেখে বাদামি দাগ রোগ মনে হচ্ছে (নিশ্চিত নই)। ব্লাস্ট, অথবা দস্তা বা পটাশের অভাবও হতে পারে।" },
+        { "en": "Brown spots are round, grey in the centre, red-brown at the edge. Poor soil makes it worse.", "bn": "বাদামি দাগগুলো গোল, মাঝখানে ছাই রং, কিনারা লালচে-বাদামি। মাটি দুর্বল হলে রোগ বাড়ে।" },
+        { "en": "Keep water in the field. Ask your SAAO about a soil test. Check again in 2 to 3 days.", "bn": "জমিতে পানি ধরে রাখুন। মাটি পরীক্ষার কথা কৃষি অফিসারকে জিজ্ঞেস করুন। ২-৩ দিন পরে আবার দেখুন।" },
+        { "en": "Do not spray before talking to your SAAO.", "bn": "কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY", "SH-ASK", "SH-FOOT-PHOTO"],
+      "sources": ["IRRI Rice Knowledge Bank: Brown spot"]
+    },
+    "C4": {
+      "kind": "photo", "tone": "warn", "clip": "C4-SHEATH",
+      "title": { "en": "Looks like sheath blight", "bn": "খোলপোড়া রোগ মনে হচ্ছে" },
+      "parts": [
+        { "en": "Looks like sheath blight (not certain). It could also be stem rot or stem borer.", "bn": "দেখে খোলপোড়া রোগ মনে হচ্ছে (নিশ্চিত নই)। কাণ্ড পচা রোগ বা মাজরা পোকাও হতে পারে।" },
+        { "en": "It starts on the stem, near the water. A leaf photo is not enough. Send a photo of the plant base.", "bn": "এটা পানির কাছে কাণ্ডে শুরু হয়। শুধু পাতার ছবি যথেষ্ট নয়। গাছের গোড়ার ছবি পাঠান।" },
+        { "en": "Pull weeds on the bunds. No extra urea. Check again in 2 to 3 days.", "bn": "আইলের আগাছা তুলে ফেলুন। বাড়তি ইউরিয়া দেবেন না। ২-৩ দিন পরে আবার দেখুন।" },
+        { "en": "Do not spray before talking to your SAAO.", "bn": "কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY", "SH-ASK", "SH-FOOT-PHOTO"],
+      "sources": ["IRRI Rice Knowledge Bank: Sheath blight"]
+    },
+    "C5": {
+      "kind": "photo", "tone": "warn", "clip": "C5-TUNGRO",
+      "title": { "en": "Looks like tungro", "bn": "টুংরো রোগ মনে হচ্ছে" },
+      "parts": [
+        { "en": "Looks like tungro (not certain). Yellow-orange leaves can also come from low nitrogen or zinc, cold, or salt.", "bn": "দেখে টুংরো রোগ মনে হচ্ছে (নিশ্চিত নই)। নাইট্রোজেন বা দস্তার অভাব, ঠান্ডা বা লবণেও পাতা হলদে-কমলা হতে পারে।" },
+        { "en": "Tungro is a virus spread by small green insects. Send a photo of the whole plant.", "bn": "টুংরো একটা ভাইরাস রোগ, ছোট সবুজ পাতাফড়িং এটা ছড়ায়। পুরো গাছের ছবি পাঠান।" },
+        { "en": "Pull out yellow, stunted plants and bury them. Tell your SAAO soon.", "bn": "হলুদ, খাটো গাছ তুলে মাটিতে পুঁতে ফেলুন। তাড়াতাড়ি কৃষি অফিসারকে জানান।" },
+        { "en": "Do not use seedlings from a seedbed with yellow plants.", "bn": "যে বীজতলায় হলুদ চারা আছে, সেখানকার চারা লাগাবেন না।" }
+      ],
+      "shared": ["SH-SPRAY-VIRUS", "SH-ASK", "SH-FOOT-PHOTO"],
+      "sources": ["IRRI Rice Knowledge Bank: Tungro"]
+    },
+    "C6": {
+      "kind": "photo", "tone": "warn", "clip": "C6-BLB",
+      "title": { "en": "Looks like bacterial leaf blight", "bn": "পাতাপোড়া রোগ (BLB) মনে হচ্ছে" },
+      "parts": [
+        { "en": "Looks like bacterial leaf blight (not certain). It could also be leaf streak or leaf scald.", "bn": "দেখে ব্যাকটেরিয়াজনিত পাতাপোড়া রোগ মনে হচ্ছে (নিশ্চিত নই)। পাতার রেখা রোগ বা পাতা ঝলসানোও হতে পারে।" },
+        { "en": "A test: put a cut sick leaf in clear water. Cloudy liquid after a few minutes means blight is likely.", "bn": "একটা পরীক্ষা: অসুস্থ পাতা কেটে পরিষ্কার পানিতে রাখুন। কয়েক মিনিট পরে পানি ঘোলা হলে পাতাপোড়া হওয়ার সম্ভাবনা বেশি।" },
+        { "en": "Drain extra water if you can. Remove weeds and old stubble.", "bn": "পারলে জমির বাড়তি পানি বের করে দিন। আগাছা আর পুরনো নাড়া সরিয়ে ফেলুন।" },
+        { "en": "Do not add urea until your SAAO says so.", "bn": "কৃষি অফিসার না বলা পর্যন্ত ইউরিয়া দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY-BLB", "SH-ASK", "SH-FOOT-PHOTO"],
+      "sources": ["IRRI Rice Knowledge Bank: Bacterial blight"]
+    },
+    "C7": {
+      "kind": "photo", "tone": "warn", "clip": "C7-SCALD",
+      "title": { "en": "Looks like leaf scald", "bn": "পাতা ঝলসানো রোগ মনে হচ্ছে" },
+      "parts": [
+        { "en": "Looks like leaf scald (not certain). It could also be bacterial leaf blight.", "bn": "দেখে পাতা ঝলসানো রোগ (লিফ স্ক্যাল্ড) মনে হচ্ছে (নিশ্চিত নই)। ব্যাকটেরিয়াজনিত পাতাপোড়াও হতে পারে।" },
+        { "en": "Scald makes light and dark brown bands from the leaf tip. In the clear-water test it gives no cloudy liquid.", "bn": "এই রোগে পাতার আগা থেকে হালকা আর গাঢ় বাদামি ডোরা হয়। পানির পরীক্ষায় পানি ঘোলা হয় না।" },
+        { "en": "No extra urea. Remove weeds and old stubble. Check again in 2 to 3 days.", "bn": "বাড়তি ইউরিয়া দেবেন না। আগাছা আর পুরনো নাড়া সরিয়ে ফেলুন। ২-৩ দিন পরে আবার দেখুন।" },
+        { "en": "Do not spray before talking to your SAAO.", "bn": "কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY", "SH-ASK", "SH-FOOT-PHOTO"],
+      "sources": ["IRRI Rice Knowledge Bank: Leaf scald"]
+    },
+    "C8": {
+      "kind": "photo", "tone": "unsure", "clip": "C8-NOTSURE",
+      "title": { "en": "Not sure — show your SAAO", "bn": "নিশ্চিত নই — কৃষি অফিসারকে দেখান" },
+      "parts": [
+        { "en": "Not sure. This does not look like a rice leaf we know, or the photo is not clear.", "bn": "নিশ্চিত নই। এটা আমাদের চেনা ধানপাতার মতো লাগছে না, অথবা ছবি পরিষ্কার নয়।" },
+        { "en": "We will not guess. A wrong answer could cost you money.", "bn": "আমরা আন্দাজে বলব না। ভুল উত্তরে আপনার টাকা নষ্ট হতে পারে।" },
+        { "en": "Take a new photo in daylight: one leaf, close and sharp. Or show the plant to your SAAO.", "bn": "দিনের আলোয় নতুন ছবি তুলুন: একটা পাতা, কাছ থেকে, পরিষ্কার করে। অথবা গাছটা কৃষি অফিসারকে দেখান।" },
+        { "en": "Do not spray or buy anything because of this app.", "bn": "এই অ্যাপের কথায় কোনো ওষুধ দেবেন না বা কিনবেন না।" }
+      ],
+      "shared": ["SH-SPRAY", "SH-ASK", "SH-FOOT-PHOTO"],
+      "sources": ["Red-team §1.5 and §3: not sure, ask a person"]
+    },
+    "C9": {
+      "kind": "photo", "tone": "unsure", "clip": "C9-LOCATION",
+      "title": { "en": "A leaf photo can't show this", "bn": "পাতার ছবিতে এটা বোঝা যায় না" },
+      "parts": [
+        { "en": "You said the problem is on the stem, the panicle or the plant base. A leaf photo cannot show that.", "bn": "আপনি বলেছেন সমস্যাটা কাণ্ডে, শীষে বা গাছের গোড়ায়। পাতার ছবি দিয়ে সেটা বোঝা যায় না।" },
+        { "en": "It could be sheath blight, stem borer or brown planthopper. These need a person to look.", "bn": "এটা খোলপোড়া, মাজরা পোকা বা বাদামি গাছফড়িং হতে পারে। এগুলো মানুষকে চোখে দেখতে হয়।" },
+        { "en": "Take a close photo of that part. Tap the plant base: if many small brown insects jump onto the water, tell your SAAO quickly.", "bn": "ওই জায়গার কাছ থেকে ছবি তুলে রাখুন। গাছের গোড়ায় টোকা দিন: অনেক ছোট বাদামি পোকা পানিতে লাফিয়ে পড়লে তাড়াতাড়ি কৃষি অফিসারকে জানান।" },
+        { "en": "Do not spray before talking to your SAAO.", "bn": "কৃষি অফিসারের সাথে কথা না বলে ওষুধ দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY", "SH-ASK", "SH-FOOT-PHOTO"],
+      "sources": ["docs/knowledge/rice-leaf-health.md (location guard)", "IRRI: Brown planthopper, Stem borer"]
+    },
+    "A1": {
+      "kind": "rule", "tone": "ok", "clip": "A1-SURVIVE-USUAL",
+      "title": { "en": "Wait, then check for new leaves", "bn": "অপেক্ষা করুন, তারপর নতুন পাতা দেখুন" },
+      "parts": [
+        { "en": "You told us: {variety}, {submergence} under water {days} days, {stage}. Date: {date}.", "bn": "আপনি বলেছেন: {variety}, {days} দিন {submergence} পানির নিচে, {stage}। তারিখ: {date}।" },
+        { "en": "IRRI and Ministry of Agriculture advice: plants like this {outlook}.", "bn": "IRRI আর কৃষি মন্ত্রণালয়ের পরামর্শ: এমন গাছ {outlook}।" },
+        { "en": "Wait 5 to 7 days after the water goes. Look for new green leaves. Wash mud off the leaves. No fertiliser for about 10 days.", "bn": "পানি নেমে যাওয়ার পর ৫ থেকে ৭ দিন অপেক্ষা করুন। নতুন সবুজ পাতা আসে কিনা দেখুন। পাতার কাদা ধুয়ে দিন। প্রায় ১০ দিন কোনো সার দেবেন না।" },
+        { "en": "Do not plough or replant before you check.", "bn": "দেখার আগে জমি চাষ বা নতুন করে রোপণ করবেন না।" }
+      ],
+      "shared": ["SH-SPRAY-FLOOD", "SH-ASK", "SH-FOOT-RULE"],
+      "extra": {
+        "backup": { "clip": "A1-BACKUP", "en": "Keep spare seedlings ready.", "bn": "হাতে বাড়তি চারা তৈরি রাখুন।" },
+        "usually_survives": { "en": "usually survive", "bn": "সাধারণত বেঁচে যায়" },
+        "not_sure": { "en": "may not survive", "bn": "নাও বাঁচতে পারে", "clip": "A1-SURVIVE-UNSURE" }
+      }
+    },
+    "A2": {
+      "kind": "rule", "tone": "ok", "clip": "A2-GAPFILL",
+      "title": { "en": "Fill the gaps", "bn": "ফাঁকা জায়গা পূরণ করুন" },
+      "parts": [
+        { "en": "You told us most hills came back, with gaps. Date: {date}.", "bn": "আপনি বলেছেন বেশিরভাগ গোছা বেঁচে উঠেছে, মাঝে মাঝে ফাঁকা। তারিখ: {date}।" },
+        { "en": "Ministry of Agriculture advice: gap filling helps only before {deadline}.", "bn": "কৃষি মন্ত্রণালয়ের পরামর্শ: ফাঁকা পূরণ কাজে দেয় শুধু {deadline}-এর আগে।" },
+        { "en": "Take extra tillers from healthy hills, keep 2 or 3 per hill, and plant them at once with roots.", "bn": "সুস্থ গোছা থেকে বাড়তি কুশি তুলুন, প্রতি গোছায় ২-৩টা রাখুন, আর শিকড়সহ সাথে সাথে লাগান।" },
+        { "en": "Do not take tillers from yellow or sick plants.", "bn": "হলুদ বা অসুস্থ গাছ থেকে কুশি নেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY-FLOOD", "SH-ASK", "SH-FOOT-RULE"]
+    },
+    "A3": {
+      "kind": "rule", "tone": "warn", "clip": "A3-REPLANT",
+      "title": { "en": "Replant a late variety", "bn": "নাবি জাতের চারা আবার রোপণ করুন" },
+      "parts": [
+        { "en": "You told us the crop is mostly lost. Date: {date}.", "bn": "আপনি বলেছেন ফসল প্রায় পুরোটাই নষ্ট। তারিখ: {date}।" },
+        { "en": "BRRI and DAE flood advice, 2024: transplant Aman by {deadline}.", "bn": "BRRI আর DAE-এর ২০২৪ সালের বন্যা পরামর্শ: {deadline}-এর মধ্যে আমন রোপণ করুন।" },
+        { "en": "Plant a late variety like BR22, BR23, BRRI dhan46 or 54. Use older seedlings, 4 or 5 per hill, closer together. Get seedlings from your SAAO, upazila office or BADC.", "bn": "নাবি জাত লাগান, যেমন বিআর২২, বিআর২৩, ব্রি ধান৪৬ বা ৫৪। বেশি বয়সের চারা, প্রতি গোছায় ৪-৫টা, ঘন করে লাগান। চারা নিন কৃষি অফিসার, উপজেলা কৃষি অফিস বা বিএডিসি থেকে।" },
+        { "en": "Do not plant after {deadline}.", "bn": "{deadline}-এর পরে রোপণ করবেন না।" }
+      ],
+      "shared": ["SH-SPRAY-FLOOD", "SH-ASK", "SH-FOOT-RULE"]
+    },
+    "A4": {
+      "kind": "rule", "tone": "warn", "clip": "A4-DIRECTSEED",
+      "title": { "en": "Sow sprouted seed directly", "bn": "অঙ্কুরিত বীজ সরাসরি বুনুন" },
+      "parts": [
+        { "en": "You told us: crop lost, no seedlings. Date: {date}.", "bn": "আপনি বলেছেন: ফসল নষ্ট, চারা নেই। তারিখ: {date}।" },
+        { "en": "BRRI advice for the 2024 floods. Only for higher land that will not flood again.", "bn": "২০২৪ সালের বন্যায় BRRI-এর পরামর্শ। শুধু উঁচু জমির জন্য, যেখানে আবার বন্যা হবে না।" },
+        { "en": "By {deadline}, sow sprouted seed of BRRI dhan33, 57, 66, 71 or 75, or BINA dhan7 or 17. Ask your SAAO for seed.", "bn": "{deadline}-এর মধ্যে ব্রি ধান৩৩, ৫৭, ৬৬, ৭১ বা ৭৫, অথবা বিনা ধান৭ বা ১৭-এর অঙ্কুরিত বীজ সরাসরি বুনুন। বীজের জন্য কৃষি অফিসারকে জিজ্ঞেস করুন।" },
+        { "en": "Do not sow on low land that may flood again.", "bn": "যে নিচু জমিতে আবার বন্যা হতে পারে, সেখানে বুনবেন না।" }
+      ],
+      "shared": ["SH-SPRAY-FLOOD", "SH-ASK", "SH-FOOT-RULE"]
+    },
+    "A5": {
+      "kind": "rule", "tone": "bad", "clip": "A5-TOOLATE",
+      "title": { "en": "Too late for Aman this year", "bn": "এ বছর আমনের জন্য দেরি হয়ে গেছে" },
+      "parts": [
+        { "en": "You told us the crop is lost. Date: {date}.", "bn": "আপনি বলেছেন ফসল নষ্ট। তারিখ: {date}।" },
+        { "en": "BRRI and DAE advice: Aman planted after mid-September usually fails. The last date was {deadline}.", "bn": "BRRI আর DAE-এর পরামর্শ: সেপ্টেম্বরের মাঝামাঝির পরে লাগানো আমন সাধারণত ভালো হয় না। শেষ তারিখ ছিল {deadline}।" },
+        { "en": "Ask your SAAO about an early winter (Rabi) crop, then Boro, and about seed and flood help.", "bn": "আগাম রবি ফসল, তারপর বোরো, আর বীজ ও বন্যা-সহায়তার কথা কৃষি অফিসারকে জিজ্ঞেস করুন।" },
+        { "en": "Do not buy Aman seedlings now. Do not plough under living plants before your SAAO sees them.", "bn": "এখন আমনের চারা কিনবেন না। কৃষি অফিসার দেখার আগে বেঁচে থাকা গাছ চাষ দিয়ে মাটিতে মিশিয়ে দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY-FLOOD", "SH-ASK", "SH-FOOT-RULE"]
+    },
+    "A6": {
+      "kind": "rule", "tone": "unsure", "clip": "A6-NOTSURE",
+      "title": { "en": "Not sure — ask your SAAO", "bn": "নিশ্চিত নই — কৃষি অফিসারকে জিজ্ঞেস করুন" },
+      "parts": [
+        { "en": "Your case is outside what our rules cover. {reason}", "bn": "আপনার অবস্থা আমাদের নিয়মের বাইরে। {reason}" },
+        { "en": "We will not guess. A wrong answer could cost you your crop.", "bn": "আমরা আন্দাজে বলব না। ভুল উত্তরে আপনার ফসল নষ্ট হতে পারে।" },
+        { "en": "Take photos of the field and the plants. Show them to your SAAO. Keep spare seedlings if you can.", "bn": "জমি আর গাছের ছবি তুলে রাখুন। কৃষি অফিসারকে দেখান। পারলে বাড়তি চারা রাখুন।" },
+        { "en": "Do not plough, replant or spray until you have asked.", "bn": "জিজ্ঞেস না করে চাষ, নতুন রোপণ বা ওষুধ দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY-FLOOD", "SH-ASK", "SH-FOOT-RULE"]
+    },
+    "A7": {
+      "kind": "rule", "tone": "unsure", "clip": "A7-DROUGHT",
+      "title": { "en": "Dry spell — ask your SAAO", "bn": "খরা — কৃষি অফিসারকে জিজ্ঞেস করুন" },
+      "parts": [
+        { "en": "You told us the Aman crop is in a dry spell.", "bn": "আপনি বলেছেন আমন ফসল খরায় পড়েছে।" },
+        { "en": "We cannot judge the damage from these answers.", "bn": "এই উত্তরগুলো থেকে ক্ষতি কতটা, তা আমরা বলতে পারছি না।" },
+        { "en": "If you have a pump or a canal, give the field water now. For next season, ask your SAAO about drought-tolerant varieties, like BRRI dhan56 or BRRI dhan71.", "bn": "পাম্প বা খাল থাকলে এখনই জমিতে পানি দিন। পরের মৌসুমের জন্য খরা-সহনশীল জাতের কথা কৃষি অফিসারকে জিজ্ঞেস করুন, যেমন ব্রি ধান৫৬ বা ব্রি ধান৭১।" },
+        { "en": "Do not plough the crop under before your SAAO sees it.", "bn": "কৃষি অফিসার দেখার আগে ফসল চাষ দিয়ে মাটিতে মিশিয়ে দেবেন না।" }
+      ],
+      "shared": ["SH-SPRAY-FLOOD", "SH-ASK", "SH-FOOT-RULE"]
     }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "A4": {
-   "kind": "rule",
-   "tone": "warn",
-   "clip": "A4-DIRECTSEED",
-   "title": {
-    "bn": "Direct seed",
-    "en": "Direct seed"
-   },
-   "parts": [
-    {
-     "bn": "আপনি বলেছেন: ফসল নষ্ট, চারা নেই। ২০২৪ সালের বন্যায় ব্রির পরামর্শ। শুধু উঁচু জমির জন্য, যেখানে আবার বন্যা হবে না। স্ক্রিনে দেখানো তারিখের মধ্যে ব্রি ধান৩৩, ৫৭, ৬৬, ৭১ বা ৭৫, অথবা বিনা ধান৭ বা ১৭-এর অঙ্কুরিত বীজ সরাসরি বুনুন। বীজের জন্য কৃষি অফিসারকে জিজ্ঞেস করুন। যে নিচু জমিতে আবার বন্যা হতে পারে, সেখানে বুনবেন না।",
-     "en": "আপনি বলেছেন: ফসল নষ্ট, চারা নেই। ২০২৪ সালের বন্যায় ব্রির পরামর্শ। শুধু উঁচু জমির জন্য, যেখানে আবার বন্যা হবে না। স্ক্রিনে দেখানো তারিখের মধ্যে ব্রি ধান৩৩, ৫৭, ৬৬, ৭১ বা ৭৫, অথবা বিনা ধান৭ বা ১৭-এর অঙ্কুরিত বীজ সরাসরি বুনুন। বীজের জন্য কৃষি অফিসারকে জিজ্ঞেস করুন। যে নিচু জমিতে আবার বন্যা হতে পারে, সেখানে বুনবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "A5": {
-   "kind": "rule",
-   "tone": "bad",
-   "clip": "A5-TOOLATE",
-   "title": {
-    "bn": "Too late for Aman",
-    "en": "Too late for Aman"
-   },
-   "parts": [
-    {
-     "bn": "আপনি বলেছেন ফসল নষ্ট। ব্রি আর কৃষি সম্প্রসারণ অধিদপ্তরের পরামর্শ: সেপ্টেম্বরের মাঝামাঝির পরে লাগানো আমন সাধারণত ভালো হয় না। শেষ তারিখ স্ক্রিনে দেখানো আছে। আগাম রবি ফসল, তারপর বোরো, আর বীজ ও বন্যা-সহায়তার কথা কৃষি অফিসারকে জিজ্ঞেস করুন। এখন আমনের চারা কিনবেন না। কৃষি অফিসার দেখার আগে বেঁচে থাকা গাছ চাষ দিয়ে মাটিতে মিশিয়ে দেবেন না।",
-     "en": "আপনি বলেছেন ফসল নষ্ট। ব্রি আর কৃষি সম্প্রসারণ অধিদপ্তরের পরামর্শ: সেপ্টেম্বরের মাঝামাঝির পরে লাগানো আমন সাধারণত ভালো হয় না। শেষ তারিখ স্ক্রিনে দেখানো আছে। আগাম রবি ফসল, তারপর বোরো, আর বীজ ও বন্যা-সহায়তার কথা কৃষি অফিসারকে জিজ্ঞেস করুন। এখন আমনের চারা কিনবেন না। কৃষি অফিসার দেখার আগে বেঁচে থাকা গাছ চাষ দিয়ে মাটিতে মিশিয়ে দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "A6": {
-   "kind": "rule",
-   "tone": "unsure",
-   "clip": "A6-NOTSURE",
-   "title": {
-    "bn": "Not sure - ask your SAAO",
-    "en": "Not sure - ask your SAAO"
-   },
-   "parts": [
-    {
-     "bn": "আপনার অবস্থা আমাদের নিয়মের বাইরে। আমরা আন্দাজে বলব না। ভুল উত্তরে আপনার ফসল নষ্ট হতে পারে। জমি আর গাছের ছবি তুলে রাখুন। কৃষি অফিসারকে দেখান। পারলে বাড়তি চারা রাখুন। জিজ্ঞেস না করে চাষ, নতুন রোপণ বা ওষুধ দেবেন না।",
-     "en": "আপনার অবস্থা আমাদের নিয়মের বাইরে। আমরা আন্দাজে বলব না। ভুল উত্তরে আপনার ফসল নষ্ট হতে পারে। জমি আর গাছের ছবি তুলে রাখুন। কৃষি অফিসারকে দেখান। পারলে বাড়তি চারা রাখুন। জিজ্ঞেস না করে চাষ, নতুন রোপণ বা ওষুধ দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
-  },
-  "A7": {
-   "kind": "rule",
-   "tone": "unsure",
-   "clip": "A7-DROUGHT",
-   "title": {
-    "bn": "Drought",
-    "en": "Drought"
-   },
-   "parts": [
-    {
-     "bn": "আপনি বলেছেন আমন ফসল খরায় পড়েছে। এই উত্তরগুলো থেকে ক্ষতি কতটা, তা আমরা বলতে পারছি না। পাম্প বা খাল থাকলে এখনই জমিতে পানি দিন। পরের মৌসুমের জন্য খরা-সহনশীল জাতের কথা কৃষি অফিসারকে জিজ্ঞেস করুন, যেমন ব্রি ধান৫৬ বা ব্রি ধান৭১। কৃষি অফিসার দেখার আগে ফসল চাষ দিয়ে মাটিতে মিশিয়ে দেবেন না।",
-     "en": "আপনি বলেছেন আমন ফসল খরায় পড়েছে। এই উত্তরগুলো থেকে ক্ষতি কতটা, তা আমরা বলতে পারছি না। পাম্প বা খাল থাকলে এখনই জমিতে পানি দিন। পরের মৌসুমের জন্য খরা-সহনশীল জাতের কথা কৃষি অফিসারকে জিজ্ঞেস করুন, যেমন ব্রি ধান৫৬ বা ব্রি ধান৭১। কৃষি অফিসার দেখার আগে ফসল চাষ দিয়ে মাটিতে মিশিয়ে দেবেন না।"
-    }
-   ],
-   "shared": [
-    "SH-ASK"
-   ],
-   "sources": []
   }
- }
 }

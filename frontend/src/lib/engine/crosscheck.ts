@@ -47,9 +47,12 @@ const GUARD_ASK: Record<string, string> = {
   pattern_whole_field_dying: "q_tap_base_hoppers",
 };
 
-function score(info: ClassInfo | undefined, ctx: Set<string>) {
+/** Farmer's own "no problem" answer supports a healthy result (kept in code so knowledge.json stays as reviewed). */
+const EXTRA_FAVOURS: Record<string, string[]> = { healthy: ["no_problem_seen"] };
+
+function score(info: ClassInfo | undefined, ctx: Set<string>, cls?: string) {
   return {
-    favours: (info?.favours ?? []).filter((c) => ctx.has(c)),
+    favours: [...(info?.favours ?? []), ...(cls ? (EXTRA_FAVOURS[cls] ?? []) : [])].filter((c) => ctx.has(c)),
     conflicts: (info?.unlikely_if ?? []).filter((c) => ctx.has(c)),
   };
 }
@@ -65,8 +68,8 @@ export function crossCheck(
 ): CrossResult {
   const ctx = new Set(conditions);
   const { top1, p1, top2, p2 } = pred;
-  const s1 = score(kb.classes[top1], ctx);
-  const s2 = score(kb.classes[top2], ctx);
+  const s1 = score(kb.classes[top1], ctx, top1);
+  const s2 = score(kb.classes[top2], ctx, top2);
   const support = { [top1]: s1, [top2]: s2 };
   const ask1 = kb.classes[top1]?.ask ?? [];
   const ask2 = kb.classes[top2]?.ask ?? [];

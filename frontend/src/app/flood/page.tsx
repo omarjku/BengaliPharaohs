@@ -4,7 +4,8 @@ import { CalendarDays, Loader2, Minus, Plus } from "lucide-react";
 import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BigButton, Choice, QuestionTitle, SelectField, Steps } from "@/components/app/choice";
+import { BigButton, Choice, QuestionTitle, Steps } from "@/components/app/choice";
+import { UpazilaPicker } from "@/components/app/pickers";
 import { AppShell } from "@/components/app/shell";
 import { advisorCard } from "@/lib/engine/cards";
 import { seasonFromDate, stageFromTransplant } from "@/lib/engine/context";
@@ -121,14 +122,7 @@ export default function FloodPage() {
                   { value: "drought", label: t("event_drought"), icon: "☀️" },
                 ]}
               />
-              <SelectField
-                clip="Q-UPAZILA"
-                label={t("profile_upazila")}
-                value={profile.upazila}
-                highlight
-                onChange={(v) => setProfile((p) => ({ ...p, upazila: v }))}
-                options={PLACES.upazilas.map((u) => ({ value: u.code, label: tx(u) }))}
-              />
+              <UpazilaPicker highlight value={profile.upazila} onChange={(v) => setProfile((p) => ({ ...p, upazila: v }))} />
               {/* Both answers can be given in any order; nothing moves on until "Next". */}
               <BigButton
                 disabled={!event || !profile.upazila || busy}

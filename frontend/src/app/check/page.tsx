@@ -4,7 +4,8 @@ import { Camera, ImageIcon, Loader2, RotateCcw } from "lucide-react";
 import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { BigButton, Choice, MultiChoice, QuestionTitle, SelectField, Speak, Steps } from "@/components/app/choice";
+import { BigButton, Choice, MultiChoice, QuestionTitle, Speak, Steps } from "@/components/app/choice";
+import { UpazilaPicker, VarietyPicker } from "@/components/app/pickers";
 import { CameraSheet } from "@/components/app/camera-sheet";
 import { AppShell } from "@/components/app/shell";
 import { conditionsFrom, INSECTS, seasonFromDate, stageFromTransplant, type LeafAnswers } from "@/lib/engine/context";
@@ -13,7 +14,7 @@ import type { Prediction, Season } from "@/lib/engine/types";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
 import { classify, loadModel, shrinkPhoto, type ThresholdFile } from "@/lib/model/classify";
-import { PLACES, upazilaByCode } from "@/lib/places";
+import { upazilaByCode } from "@/lib/places";
 import { useEffectiveDate } from "@/lib/settings";
 import { getProfile, newId, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
 import type { StringKey } from "@/lib/strings";
@@ -290,21 +291,8 @@ export default function CheckPage() {
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">{t("field_sub")}</p>
               </div>
-              <SelectField
-                clip="Q-VARIETY"
-                label={t("profile_variety")}
-                hint={t("variety_hint")}
-                value={a.variety}
-                onChange={(v) => set("variety", v)}
-                options={PLACES.varieties.map((v) => ({ value: v.id, label: tx(v) }))}
-              />
-              <SelectField
-                clip="Q-UPAZILA"
-                label={t("profile_upazila")}
-                value={profile.upazila}
-                onChange={(v) => setProfile((p) => ({ ...p, upazila: v }))}
-                options={PLACES.upazilas.map((u) => ({ value: u.code, label: tx(u) }))}
-              />
+              <VarietyPicker hint={t("variety_hint")} value={a.variety} onChange={(v) => set("variety", v)} />
+              <UpazilaPicker value={profile.upazila} onChange={(v) => setProfile((p) => ({ ...p, upazila: v }))} />
               <Choice<Season>
                 clip="Q-SEASON"
                 question={t("profile_season")}
@@ -339,18 +327,22 @@ export default function CheckPage() {
                   { value: "sheath", label: t("where_sheath"), icon: "🌊" },
                   { value: "panicle", label: t("where_panicle"), icon: "🌾" },
                   { value: "base", label: t("where_base"), icon: "🪴" },
+                  { value: "none", label: t("where_none"), icon: "✅" },
                 ]}
+                exclusive={["none"]}
               />
               <Choice
                 clip="Q-PATTERN"
                 question={t("q_pattern")}
+                hint={t("q_pattern_hint")}
                 value={a.pattern}
                 onChange={(v) => set("pattern", v)}
                 options={[
-                  { value: "one_hill", label: t("pattern_one_hill"), icon: "•" },
-                  { value: "patches", label: t("pattern_patches"), icon: "⁘" },
-                  { value: "whole_field", label: t("pattern_whole_field"), icon: "▦" },
-                  { value: "whole_field_dying", label: t("pattern_whole_field_dying"), icon: "🥀" },
+                  { value: "one_hill", label: t("pattern_one_hill"), icon: "🌱" },
+                  { value: "patches", label: t("pattern_patches"), icon: "🟤" },
+                  { value: "whole_field", label: t("pattern_whole_field"), icon: "🌾" },
+                  { value: "whole_field_dying", label: t("pattern_whole_field_dying"), hint: t("pattern_whole_field_dying_h"), icon: "🥀" },
+                  { value: "none", label: t("pattern_none"), icon: "✅" },
                 ]}
               />
               <BigButton onClick={() => setStep(4)}>{t("next")}</BigButton>
@@ -367,6 +359,7 @@ export default function CheckPage() {
                 options={[
                   { value: "old", label: t("first_old"), icon: "⬇️" },
                   { value: "new", label: t("first_new"), icon: "⬆️" },
+                  { value: "none", label: t("first_none"), icon: "✅" },
                 ]}
               />
               <MultiChoice

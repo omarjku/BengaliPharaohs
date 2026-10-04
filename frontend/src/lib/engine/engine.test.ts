@@ -100,6 +100,13 @@ describe("cross-check X01–X19", () => {
 });
 
 describe("farmer answers → conditions", () => {
+  it("'no problem' answers add no disease condition and support healthy", () => {
+    const c = conditionsFrom({ where: ["none"], pattern: "none", first: "none" }, {});
+    expect(c).toEqual(["no_problem_seen"]);
+    const r = crossCheck(p("healthy", 0.85, "blast", 0.1), c);
+    expect(r.support.healthy.favours).toContain("no_problem_seen");
+    expect(r.cls).toBe("healthy");
+  });
   it("multi-select places and insects all count; don't-know adds nothing", () => {
     const c = conditionsFrom({ where: ["tip_edge", "sheath"], insects: ["green_leafhopper", "bph", "hispa"] }, {});
     expect(c).toEqual(expect.arrayContaining(["symptom_tip_edge", "symptom_sheath", "insects_leafhoppers", "insects_hoppers_base", "insects_hispa"]));
