@@ -1,24 +1,24 @@
 "use client";
 
-import { Camera, ImageIcon, Loader2, RotateCcw } from "lucide-react";
+import { Loader2, RotateCcw } from "lucide-react";
 import * as m from "motion/react-m";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BigButton, Choice, MultiChoice, QuestionTitle, Speak, Steps } from "@/components/app/choice";
 import { UpazilaPicker, VarietyPicker } from "@/components/app/pickers";
-import { CameraSheet } from "@/components/app/camera-sheet";
+import { FieldWalk, type WalkSpot } from "@/components/app/field-walk";
 import { AppShell } from "@/components/app/shell";
 import { conditionsFrom, INSECTS, seasonFromDate, stageFromTransplant, type LeafAnswers } from "@/lib/engine/context";
 import { crossCheck, DEFAULT_THRESHOLDS, KNOWLEDGE } from "@/lib/engine/crosscheck";
 import type { Prediction, Season } from "@/lib/engine/types";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
-import { classify, loadModel, onModelStage, shrinkPhoto, type ModelStage, type ThresholdFile } from "@/lib/model/classify";
-import { combinePredictions } from "@/lib/model/combine";
+import { loadModel, onModelStage, type ModelStage, type ThresholdFile } from "@/lib/model/classify";
+import { combineForEngine, patternFromSpread, summarizeField } from "@/lib/model/field";
 import { upazilaByCode, varietyById } from "@/lib/places";
 import { useEffectiveDate } from "@/lib/settings";
-import { DB_BLOCKED_EVENT, getCase, getPhoto, getProfile, newId, photoKey, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
+import { DB_BLOCKED_EVENT, getCase, getPhoto, getProfile, newId, photoKey, saveCase, saveProfile, savePhoto, type CaseRecord, type Profile } from "@/lib/store/db";
 import type { StringKey } from "@/lib/strings";
 
 /** Canonical order. Which steps appear depends on the answers (see planSteps); back keeps every answer. */
@@ -27,14 +27,13 @@ type StepId = (typeof CANON)[number];
 const after = (a: StepId, b: StepId) => CANON.indexOf(a) > CANON.indexOf(b);
 
 type ModelOut = { pred: Prediction; ms: number; dummy: boolean; th: ThresholdFile; perPhoto?: { top1: string; p1: number }[] } | { error: string };
-const MAX_PHOTOS = 3;
 
-/** Several photos -> one answer: average the probabilities (src/lib/model/combine.ts). */
+/** Several photos -> one answer: average the probabilities of the confident photos (src/lib/model/field.ts). */
 function mergeOuts(outs: ModelOut[]): ModelOut {
   const ok = outs.filter((o): o is Exclude<ModelOut, { error: string }> => "pred" in o);
   if (!ok.length) return outs[0];
   return {
-    pred: combinePredictions(ok.map((o) => o.pred)),
+    pred: combineForEngine(ok.map((o) => o.pred), ok[0].th),
     ms: Math.max(...ok.map((o) => o.ms)),
     dummy: ok.some((o) => o.dummy),
     th: ok[0].th,
@@ -110,27 +109,23 @@ export default function CheckPage() {
   const { date, simulated } = useEffectiveDate();
   const [trail, setTrail] = useState<StepId[]>(["photo"]);
   const step = trail[trail.length - 1];
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [caseId, setCaseId] = useState(newId);
   const [editing, setEditing] = useState(false);
   const [editField, setEditField] = useState(false);
   const [followQs, setFollowQs] = useState<string[]>([]);
-  const [model, setModel] = useState<ModelOut | null>(null);
   const [busy, setBusy] = useState(false);
-  const [dragging, setDragging] = useState(false);
-  const [camOpen, setCamOpen] = useState(false);
-  const [processing, setProcessing] = useState(false);
   const [photoError, setPhotoError] = useState<string | null>(null);
   const [a, setA] = useState<LeafAnswers>({});
   const [profile, setProfile] = useState<Profile>({});
-  const camRef = useRef<HTMLInputElement>(null);
-  const galRef = useRef<HTMLInputElement>(null);
-  const modelRun = useRef<Promise<ModelOut> | null>(null);
-  // Photos 2 and 3 (optional). Every photo gets its own model run; the answer averages them.
-  const [extras, setExtras] = useState<string[]>([]);
-  const runs = useRef<Promise<ModelOut>[]>([]);
-  const photos = useRef<Blob[]>([]); // all photos of this check, so "Try again" re-checks every one
-  const addMode = useRef(false);
+  // The field walk (3-10 spots) lives in <FieldWalk>; it reports every spot with its model result.
+  const [walk, setWalk] = useState<WalkSpot[]>([]);
+  const [seed, setSeed] = useState<Blob[] | undefined>();
+  const autoPattern = useRef<string | undefined>(undefined); // last pattern we pre-selected (so a farmer's own choice is never overwritten)
+  const model: ModelOut | null = useMemo(() => (walk.length && walk.every((s) => s.out) ? mergeOuts(walk.map((s) => s.out!)) : null), [walk]);
+  const modelRef = useRef(model);
+  useEffect(() => {
+    modelRef.current = model;
+  }, [model]);
   const [modelStage, setModelStage] = useState<ModelStage | null>(null);
   useEffect(() => onModelStage(setModelStage), []);
 
@@ -141,13 +136,6 @@ export default function CheckPage() {
     }).catch(() => {});
     loadModel().catch(() => {}); // warm up while the farmer frames the photo
   }, []);
-  useEffect(() => () => void (photoUrl && URL.revokeObjectURL(photoUrl)), [photoUrl]);
-  // Photos 2-3: revoke what is still shown when leaving the page (list changes keep earlier URLs alive).
-  const extrasNow = useRef<string[]>([]);
-  useEffect(() => {
-    extrasNow.current = extras;
-  }, [extras]);
-  useEffect(() => () => extrasNow.current.forEach(URL.revokeObjectURL), []);
   useEffect(() => {
     const onBlocked = () => setPhotoError(t("db_blocked"));
     window.addEventListener(DB_BLOCKED_EVENT, onBlocked);
@@ -160,82 +148,38 @@ export default function CheckPage() {
   const place = upazilaByCode(profile.upazila);
   const set = <K extends keyof LeafAnswers>(k: K, v: LeafAnswers[K]) => setA((x) => ({ ...x, [k]: v }));
 
-  // Camera photos on some Androids arrive with an empty type, so only reject files that are clearly not images.
-  const looksLikeImage = (f: Blob) => !f.type || f.type.startsWith("image/");
+  /** Wait for the walk's model runs (only needed when "Change answers" skipped the photo step). */
+  async function settled(): Promise<ModelOut> {
+    // ponytail: polling; each photo is read in ~1 s, so 60 s is far above any real wait.
+    for (let i = 0; i < 600 && !modelRef.current; i++) await new Promise((r) => setTimeout(r, 100));
+    return modelRef.current ?? { error: "timeout: reading the photos" };
+  }
 
-  async function onFile(f: Blob | undefined) {
+  /** Leaving the walk: keep the photos on the phone, pre-select the spread answer, go on. */
+  async function walkNext() {
+    setBusy(true);
     setPhotoError(null);
-    if (!f) return;
-    if (!looksLikeImage(f)) return setPhotoError(t("photo_not_image"));
-    if (addMode.current) return addExtra(f);
-    setProcessing(true);
-    try {
-      const small = await shrinkPhoto(f);
-      // Start the model right away; it never waits for storage.
-      startModel(small);
-      // Keep the photo on the phone (on 1 GB phones the page can be killed). If storage is stuck
-      // (e.g. an old copy of the app is still open), don't hang: say so and carry on.
-      const saved = await Promise.race([savePhoto(caseId, small).then(() => true), new Promise<boolean>((r) => setTimeout(() => r(false), 4000))]).catch(() => false);
-      if (!saved) setPhotoError(t("photo_not_saved"));
-      setPhotoUrl(URL.createObjectURL(small));
-      extras.forEach(URL.revokeObjectURL);
-      setExtras([]);
-      setFollowQs([]);
-      setTrail(["photo", needField ? "field" : "where"]);
-    } catch (e) {
-      // e.g. a format the browser can't open (some phones save HEIC). Show it instead of failing silently.
-      setPhotoError(`${t("photo_failed")} (${e instanceof Error ? e.message : String(e)})`);
-    } finally {
-      setProcessing(false);
+    // Keep the photos on the phone (on 1 GB phones the page can be killed). If storage is stuck, don't hang: say so and carry on.
+    const saved = await Promise.race([
+      Promise.all(walk.map((s, i) => savePhoto(i === 0 ? caseId : photoKey(caseId, i + 1), s.blob))).then(() => true),
+      new Promise<boolean>((r) => setTimeout(() => r(false), 4000)),
+    ]).catch(() => false);
+    if (!saved) setPhotoError(t("photo_not_saved"));
+    const pat = patternFromSpread(fieldNow()!.summary.spread);
+    if (pat && (!a.pattern || a.pattern === autoPattern.current)) {
+      set("pattern", pat);
+      autoPattern.current = pat;
     }
+    setFollowQs([]);
+    setBusy(false);
+    setTrail(["photo", needField ? "field" : "where"]);
   }
 
-  /** Native file inputs don't fire again for the same file unless the value is cleared. */
-  const fromInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
-    e.target.value = "";
-    onFile(f);
-  };
-
-  /** keep = add this photo to the ones already checked (photos 2-3); otherwise start over with this one. */
-  function startModel(photo: Blob, keep = false) {
-    if (!keep) {
-      runs.current = [];
-      photos.current = [];
-    }
-    photos.current.push(photo);
-    runs.current.push(classify(photo).catch((e: Error) => ({ error: e.message })));
-    watchRuns();
-  }
-
-  function watchRuns() {
-    setModel(null);
-    const all = Promise.all(runs.current).then(mergeOuts);
-    modelRun.current = all;
-    all.then((m) => modelRun.current === all && setModel(m));
-  }
-
-  /** "Try again" after a model error or timeout: check every photo again. */
-  function retryModel() {
-    runs.current = photos.current.map((ph) => classify(ph).catch((e: Error) => ({ error: e.message })));
-    watchRuns();
-  }
-
-  async function addExtra(f: Blob) {
-    addMode.current = false;
-    const n = extras.length + 2; // photo 1 is the first one
-    if (n > MAX_PHOTOS) return;
-    setProcessing(true);
-    try {
-      const small = await shrinkPhoto(f);
-      startModel(small, true);
-      await Promise.race([savePhoto(photoKey(caseId, n), small), new Promise((r) => setTimeout(r, 4000))]).catch(() => {});
-      setExtras((x) => [...x, URL.createObjectURL(small)]);
-    } catch (e) {
-      setPhotoError(`${t("photo_failed")} (${e instanceof Error ? e.message : String(e)})`);
-    } finally {
-      setProcessing(false);
-    }
+  /** Per-spot results -> the field summary (null while any spot is still being read). */
+  function fieldNow() {
+    const th = model && "th" in model ? model.th : DEFAULT_THRESHOLDS;
+    if (!walk.length || walk.some((s) => !s.out)) return null;
+    return { th, spots: walk, summary: summarizeField(walk.map((s) => (s.out && "pred" in s.out ? s.out.pred : undefined)), th) };
   }
 
   async function openForEdit(id: string, c: Awaited<ReturnType<typeof getCase>>, photo: Blob | undefined) {
@@ -249,18 +193,15 @@ export default function CheckPage() {
       await savePhoto(target, photo);
     }
     setCaseId(target);
-    setPhotoUrl(URL.createObjectURL(photo));
-    startModel(photo);
-    // Extra photos of that check come back too (and are checked again).
-    const more: string[] = [];
+    // Every photo of that check comes back (and is read again).
+    const blobs = [photo];
     for (let n = 2; n <= (c.photo_count ?? 1); n++) {
       const b = await getPhoto(photoKey(id, n));
       if (!b) continue;
-      if (target !== id) await savePhoto(photoKey(target, more.length + 2), b);
-      startModel(b, true);
-      more.push(URL.createObjectURL(b));
+      if (target !== id) await savePhoto(photoKey(target, blobs.length + 1), b);
+      blobs.push(b);
     }
-    setExtras(more);
+    setSeed(blobs);
     setTrail(["where"]);
   }
   // "Change answers" from the result card: /check/?edit=<case id> reopens that check with its answers and photo.
@@ -310,8 +251,8 @@ export default function CheckPage() {
 
   /** After the last planned step: ask 1–3 targeted questions only if the photo leaves a close call. */
   async function targetedQuestions(): Promise<string[]> {
-    const out = model ?? (modelRun.current ? await modelRun.current : null);
-    if (!out || "error" in out) return [];
+    const out = await settled();
+    if ("error" in out) return [];
     const th = { ...DEFAULT_THRESHOLDS, min_prob: out.th.min_prob, min_margin: out.th.min_margin };
     const cross = crossCheck(out.pred, conditionsNow(), th);
     if (cross.decision === "location_guard" || cross.reasons.includes("model_confident")) return [];
@@ -354,8 +295,14 @@ export default function CheckPage() {
     router.push(`/result/?id=${caseId}`);
   }
 
+  function fieldCase(): CaseRecord["field"] {
+    const f = fieldNow();
+    if (!f) return undefined;
+    return { summary: f.summary, spots: f.spots.map((s) => ({ spot: s.id, top1: s.out && "pred" in s.out ? s.out.pred.top1 : null, p1: s.out && "pred" in s.out ? Number(s.out.pred.p1.toFixed(3)) : null })) };
+  }
+
   async function save() {
-    const out = model ?? (await modelRun.current!);
+    const out = await settled();
     const conditions = conditionsNow();
     const base = {
       id: caseId,
@@ -385,8 +332,9 @@ export default function CheckPage() {
         cross,
         model_ms: out.ms,
         model_dummy: out.dummy,
-        photo_count: 1 + extras.length,
+        photo_count: walk.length,
         photo_preds: out.perPhoto,
+        field: fieldCase(),
       });
     }
   }
@@ -400,47 +348,21 @@ export default function CheckPage() {
   return (
     <AppShell title={t("check_title")} onBack={goBack}>
       <Steps step={order.filter((s) => !after(s, step)).length} total={order.length} />
-      <input ref={camRef} type="file" accept="image/*" capture="environment" hidden onChange={fromInput} />
-      <input ref={galRef} type="file" accept="image/*" hidden onChange={fromInput} />
-      {camOpen && (
-        <CameraSheet
-          onPhoto={(b) => {
-            setCamOpen(false);
-            onFile(b);
-          }}
-          onClose={() => {
-            addMode.current = false;
-            setCamOpen(false);
-          }}
-          onFallback={() => {
-            // No in-page camera (permission refused, old browser): use the phone's camera app instead.
-            setCamOpen(false);
-            camRef.current?.click();
-          }}
-        />
-      )}
-
-      {photoUrl && step !== "photo" && (
-        <div className="mb-4 flex items-center gap-3 rounded-2xl border bg-card p-2 pr-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={photoUrl} alt="" className="size-16 rounded-xl object-cover" />
-          {extras.map((u) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img key={u} src={u} alt="" className="size-12 rounded-lg object-cover" />
-          ))}
-          <div className="min-w-0 flex-1 text-sm">
+      {walk.length > 0 && step !== "photo" && (
+        <div className="mb-4 flex items-center gap-3 rounded-2xl border bg-card p-2 pe-3">
+          <div className="flex min-w-0 flex-1 flex-wrap gap-1">
+            {walk.map((s) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={s.id} src={s.url} alt="" className={cn("rounded-lg object-cover", walk.length > 3 ? "size-9" : "size-12")} />
+            ))}
+          </div>
+          <div className="min-w-0 text-sm">
             {!model ? (
               <span className="flex items-center gap-2 font-medium text-muted-foreground">
                 <Loader2 className="size-4 shrink-0 animate-spin" /> {t(modelStage ? `stage_${modelStage}` : "photo_reading")}
               </span>
             ) : "error" in model ? (
-              <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                <span className="font-medium text-bad">{t("model_failed")}</span>
-                <button type="button" className="min-h-9 rounded-full bg-primary px-3 text-sm font-semibold text-primary-foreground" onClick={retryModel}>
-                  {t("try_again")}
-                </button>
-                <span className="w-full text-xs text-muted-foreground">{model.error}</span>
-              </span>
+              <span className="font-medium text-bad">{t("model_failed")}</span>
             ) : (
               <span className="font-medium text-ok">✓ {t("photo_saved_local")}</span>
             )}
@@ -450,86 +372,14 @@ export default function CheckPage() {
           </button>
         </div>
       )}
-      {photoUrl && step !== "photo" && 1 + extras.length < MAX_PHOTOS && (
-        <div className="-mt-2 mb-4 rounded-2xl bg-secondary/50 px-3 py-2.5">
-          <p className="mb-2 text-sm text-muted-foreground">{t("photo_add_hint")}</p>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              disabled={processing}
-              onClick={() => {
-                addMode.current = true;
-                setCamOpen(true);
-              }}
-              className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border-2 border-primary/30 bg-card text-sm font-semibold text-primary disabled:opacity-50"
-            >
-              <Camera className="size-5" /> {t("photo_add")} · {t("photo_add_camera")}
-            </button>
-            <button
-              type="button"
-              disabled={processing}
-              onClick={() => {
-                addMode.current = true;
-                galRef.current?.click();
-              }}
-              className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl border-2 border-primary/30 bg-card text-sm font-semibold text-primary disabled:opacity-50"
-            >
-              <ImageIcon className="size-5" /> {t("photo_add_gallery")}
-            </button>
-          </div>
-        </div>
-      )}
+
+      {/* Always mounted (only hidden after the photo step) so the spots and their results survive Back. */}
+      <div hidden={step !== "photo"}>
+        <FieldWalk seed={seed} onChange={setWalk} onNext={walkNext} />
+        {photoError && <p className="mt-4 rounded-2xl bg-bad-soft px-4 py-3 text-sm font-medium text-bad">{photoError}</p>}
+      </div>
 
         <m.div key={step} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
-          {step === "photo" && (
-            <div className="flex flex-col gap-4">
-              <h2 className="flex items-center justify-between gap-3 text-2xl font-bold">
-                {t("photo_title")}
-                <Speak clip="Q-PHOTO" />
-              </h2>
-              {/* Tap opens the gallery; on a laptop a photo can also be dragged here. */}
-              <button
-                type="button"
-                onClick={() => galRef.current?.click()}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setDragging(true);
-                }}
-                onDragLeave={() => setDragging(false)}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  setDragging(false);
-                  onFile(e.dataTransfer.files[0]);
-                }}
-                className={cn(
-                  "flex aspect-[4/3] flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed p-6 text-center transition-colors",
-                  dragging ? "border-primary bg-secondary" : "border-primary/30 bg-secondary/40",
-                )}
-              >
-                <svg viewBox="0 0 120 60" className="w-40 text-primary" aria-hidden>
-                  <path d="M6 40 C 40 10, 80 10, 114 30 C 80 40, 40 50, 6 40 Z" fill="currentColor" opacity="0.18" />
-                  <path d="M6 40 C 40 10, 80 10, 114 30" stroke="currentColor" strokeWidth="2.5" fill="none" />
-                  <ellipse cx="62" cy="26" rx="7" ry="3.5" fill="oklch(0.55 0.12 50)" />
-                  <ellipse cx="82" cy="27" rx="5" ry="2.5" fill="oklch(0.55 0.12 50)" />
-                </svg>
-                <p className="text-base text-muted-foreground">{t("photo_tips")}</p>
-                <p className="hidden text-sm font-medium text-primary md:block">{t("photo_drop")}</p>
-              </button>
-              {photoError && <p className="rounded-2xl bg-bad-soft px-4 py-3 text-sm font-medium text-bad">{photoError}</p>}
-              {processing && (
-                <p className="flex items-center justify-center gap-2 text-muted-foreground">
-                  <Loader2 className="size-5 animate-spin" /> {t("photo_reading")}
-                </p>
-              )}
-              <BigButton onClick={() => { addMode.current = false; setCamOpen(true); }} disabled={processing}>
-                <Camera className="size-6" /> {t("photo_camera")}
-              </BigButton>
-              <BigButton variant="outline" onClick={() => { addMode.current = false; galRef.current?.click(); }} disabled={processing}>
-                <ImageIcon className="size-6" /> {t("photo_gallery")}
-              </BigButton>
-            </div>
-          )}
-
           {step === "field" && (
             <div className="flex flex-col gap-6">
               <div>

@@ -2,6 +2,7 @@
 // Nothing here leaves the phone unless the farmer taps "share" (consent) — see src/lib/sync.ts.
 import { openDB, type DBSchema, type IDBPDatabase } from "idb";
 import type { LeafAnswers } from "../engine/context";
+import type { FieldSummary } from "../model/field";
 import type { AdvisorInput, AdvisorResult, CardId, CrossResult, Prediction, Season } from "../engine/types";
 
 export type Profile = {
@@ -41,9 +42,11 @@ export type CaseRecord = {
   conditions?: string[];
   model_ms?: number;
   model_dummy?: boolean;
-  /** Up to 3 leaf photos (photo 1 under the case id, photos 2-3 under photoKey(id, n)); the model averages them. */
+  /** Up to 10 leaf photos (photo 1 under the case id, photos 2+ under photoKey(id, n)); the model averages them. */
   photo_count?: number;
   photo_preds?: { top1: string; p1: number }[];
+  /** Field walk (3-10 spots): what each spot showed (null = not sure / unreadable) and the summary. Absent on older cases. */
+  field?: { summary: FieldSummary; spots: { spot: string; top1: string | null; p1: number | null }[] };
   // flood path
   advisor_input?: AdvisorInput;
   advisor?: AdvisorResult;
