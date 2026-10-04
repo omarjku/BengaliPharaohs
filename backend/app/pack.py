@@ -23,10 +23,11 @@ def _hash(obj: object) -> str:
 
 def _known_codes() -> set[str]:
     """Every upazila code the app can send (places.json: ~494 "DISTRICT-NAME" codes plus the 4 old aliases)."""
+    # Railway deploys backend/ only, so frontend/public/data is absent there: keep our own copy of the code list
+    # (mocks/upazila_codes.json, generated from places.json). Without it every real code was a 404 on the live site.
     try:
-        d = json.loads((APP_DATA / "places.json").read_text())
-        return {u["code"] for u in d["upazilas"]} | set(d.get("aliases", {}))
-    except (OSError, ValueError, KeyError):
+        return set(json.loads((MOCKS.parent / "upazila_codes.json").read_text()))
+    except (OSError, ValueError):
         return set()
 
 
@@ -97,6 +98,33 @@ def _etag_response(request: Request, body: dict) -> Response:
     return Response(json.dumps(body, default=str), media_type="application/json", headers=headers)
 
 
+PRIORITY = ["case_replies", "flood", "forecast", "advisories", "prices"]  # what a short connection window fetches first
+
+
+def changed_parts(session: Session, upazila: str, device_id: str, have: dict[str, str]) -> dict:
+    """Burst delta: only the parts whose version differs from what the phone has, in priority order.
+    Versions match the manifest's (hash of data; case_replies = global reply counter), so burst and manifest agree."""
+    _check_upazila(upazila)
+    out: dict[str, dict] = {}
+    for name in PRIORITY:
+        if name == "case_replies":
+            version = str(session.exec(select(Reply.id).order_by(Reply.id.desc())).first() or 0)
+            if have.get(name) == version:
+                continue
+            part = _part(name, upazila, session, device_id)
+        else:
+            part = _part(name, upazila, session, None)
+            version = _hash(part["data"])
+            if have.get(name) == version:
+                continue
+        out[name] = {"version": version, **part}
+    return {
+        "upazila": upazila,
+        "versions": {n: _file_hash(n)["version"] for n in ("rules", "cards")},
+        "parts": out,
+    }
+
+
 @router.get("/manifest")
 def manifest(request: Request, upazila: str, session: Session = Depends(get_session)) -> Response:
     _check_upazila(upazila)
@@ -114,7 +142,8 @@ def manifest(request: Request, upazila: str, session: Session = Depends(get_sess
     etag_resp = _etag_response(request, body)
     if etag_resp.status_code == 200:
         body["generated_at"] = datetime.now(timezone.utc).isoformat()
-        etag_resp = Response(json.dumps(body), media_type="application/json", headers=etag_resp.headers)
+        # fresh headers: reusing etag_resp.headers would carry the OLD Content-Length (body grew by generated_at)
+        etag_resp = Response(json.dumps(body), media_type="application/json", headers={k: v for k, v in etag_resp.headers.items() if k.lower() in ("etag", "cache-control")})
     return etag_resp
 
 

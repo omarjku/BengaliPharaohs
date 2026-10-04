@@ -44,6 +44,11 @@ The stored bytes with the original content type; `404` if absent.
 ### POST /api/cases/{case_id}/reply
 Request `{"text": string (1-500), "by": "saao"}` -> `200 {"id", "case_id", "text", "by", "created_at"}`. `404` unknown case. Shows up in pack part `case_replies`.
 
+### POST /api/burst
+One round trip for a short connection window (docs/burst-sync.md). Request `{"device_id", "upazila"?: code, "pack_versions": {part: version}, "cases": [<same case objects as /api/cases/batch>, max 20]}`.
+Response `{"accepted": [case_id], "rejected": [{case_id, reason}], "pack": null | {"upazila", "versions": {rules, cards}, "parts": {part: {"version", "source", "fetched_at", "valid_until", "seeded", "data"}}}, "server_time"}`.
+`parts` holds only parts whose version differs from `pack_versions`, in priority order case_replies, flood, forecast, advisories, prices. Cases are saved even if `pack` is null (unknown/missing upazila). `version` equals the manifest's version for that part. Responses are gzipped. Old backends answer 404: the app falls back to batch + pack GETs.
+
 ### GET /api/pack/manifest?upazila={code}
 `200 {"upazila", "version", "generated_at", "parts": {forecast|flood|advisories|prices|case_replies|rules|cards: {"version", "size", "valid_until"}}}` with `ETag`; `If-None-Match` -> `304`. `case_replies` version is a global counter (its content is per device), size 0.
 
