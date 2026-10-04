@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { LangProvider } from "@/lib/i18n";
 import { persistStorage } from "@/lib/store/db";
-import { syncQueued } from "@/lib/sync";
+import { startSync, syncQueued } from "@/lib/sync";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -27,13 +27,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
         .catch(() => {});
     }
     persistStorage();
-    const trySync = () =>
-      syncQueued().then((r) => {
-        if (r.sent) toast.success(`✓ ${r.sent}`);
-      });
-    if (navigator.onLine) trySync();
-    window.addEventListener("online", trySync);
-    return () => window.removeEventListener("online", trySync);
+    const toastSent = (r: { sent: number }) => {
+      if (r.sent) toast.success(`✓ ${r.sent}`);
+    };
+    syncQueued().then(toastSent); // app start: also (re)queues anything saved before the outbox existed
+    return startSync(toastSent); // pageshow, online, visible, every 60 s
   }, []);
 
   return (
