@@ -32,6 +32,8 @@ export const S = {
   your_field: { bn: "আপনার জমি", en: "Your field" },
   followup_title: { bn: "আর দু-একটা প্রশ্ন", en: "A couple more questions" },
   followup_sub: { bn: "ছবিটা দুটো সমস্যার মাঝামাঝি — এই উত্তরগুলো পার্থক্য বুঝতে সাহায্য করবে", en: "The photo could be one of two problems — these answers help tell them apart" },
+  db_blocked: { bn: "অ্যাপটি অন্য একটি ট্যাব বা উইন্ডোতেও খোলা আছে — সেটি বন্ধ করে আবার চেষ্টা করুন", en: "The app is also open in another tab or window — close it and try again" },
+  photo_not_saved: { bn: "ছবিটা ফোনে রাখা যায়নি, তবু পরীক্ষা চলছে", en: "Couldn't keep the photo on the phone, but the check continues" },
   change_answers: { bn: "উত্তর বদলান", en: "Change answers" },
   dont_know: { bn: "জানি না", en: "Don't know" },
   yes: { bn: "হ্যাঁ", en: "Yes" },

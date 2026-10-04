@@ -16,7 +16,7 @@ import { useLang } from "@/lib/i18n";
 import { classify, loadModel, shrinkPhoto, type ThresholdFile } from "@/lib/model/classify";
 import { upazilaByCode, varietyById } from "@/lib/places";
 import { useEffectiveDate } from "@/lib/settings";
-import { getCase, getPhoto, getProfile, newId, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
+import { DB_BLOCKED_EVENT, getCase, getPhoto, getProfile, newId, saveCase, saveProfile, savePhoto, type Profile } from "@/lib/store/db";
 import type { StringKey } from "@/lib/strings";
 
 /** Canonical order. Which steps appear depends on the answers (see planSteps); back keeps every answer. */
@@ -120,6 +120,11 @@ export default function CheckPage() {
   }, []);
   useEffect(() => () => void (photoUrl && URL.revokeObjectURL(photoUrl)), [photoUrl]);
   useEffect(() => {
+    const onBlocked = () => setPhotoError(t("db_blocked"));
+    window.addEventListener(DB_BLOCKED_EVENT, onBlocked);
+    return () => window.removeEventListener(DB_BLOCKED_EVENT, onBlocked);
+  }, [t]);
+  useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [step]); // each step starts at the top on small screens
 
@@ -135,11 +140,14 @@ export default function CheckPage() {
     if (!looksLikeImage(f)) return setPhotoError(t("photo_not_image"));
     setProcessing(true);
     try {
-      // Save first: on 1 GB phones the page can be killed; the photo must already be safe.
       const small = await shrinkPhoto(f);
-      await savePhoto(caseId, small);
-      setPhotoUrl(URL.createObjectURL(small));
+      // Start the model right away; it never waits for storage.
       startModel(small);
+      // Keep the photo on the phone (on 1 GB phones the page can be killed). If storage is stuck
+      // (e.g. an old copy of the app is still open), don't hang: say so and carry on.
+      const saved = await Promise.race([savePhoto(caseId, small).then(() => true), new Promise<boolean>((r) => setTimeout(() => r(false), 4000))]).catch(() => false);
+      if (!saved) setPhotoError(t("photo_not_saved"));
+      setPhotoUrl(URL.createObjectURL(small));
       setFollowQs([]);
       setTrail(["photo", needField ? "field" : "where"]);
     } catch (e) {
@@ -163,9 +171,7 @@ export default function CheckPage() {
     modelRun.current.then(setModel);
   }
 
-  async function openForEdit(id: string) {
-    const c = await getCase(id);
-    const photo = await getPhoto(id);
+  async function openForEdit(id: string, c: Awaited<ReturnType<typeof getCase>>, photo: Blob | undefined) {
     if (!c || c.kind !== "leaf" || !photo) return;
     setA(c.answers ?? {});
     setEditing(true);
@@ -183,7 +189,7 @@ export default function CheckPage() {
   // "Change answers" from the result card: /check/?edit=<case id> reopens that check with its answers and photo.
   useEffect(() => {
     const editId = new URLSearchParams(window.location.search).get("edit");
-    if (editId) openForEdit(editId);
+    if (editId) Promise.all([getCase(editId), getPhoto(editId)]).then(([c, photo]) => openForEdit(editId, c, photo));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
