@@ -55,6 +55,14 @@ describe("combineForEngine / pattern", () => {
     expect(r.top1).toBe("blast");
     expect(r.p1).toBeCloseTo(0.925);
   });
+  it("healthy spots don't dilute the diagnosis of the sick ones (blast, blast, healthy → blast)", () => {
+    const r = combineForEngine([P("blast", 0.9), P("blast", 0.95), P("healthy", 0.97)], th);
+    expect(r.top1).toBe("blast");
+    expect(r.p1).toBeCloseTo(0.925);
+  });
+  it("all healthy → healthy", () => {
+    expect(combineForEngine([P("healthy", 0.9), P("healthy", 0.95), P("healthy", 0.97)], th).top1).toBe("healthy");
+  });
   it("falls back to all photos when none is confident", () => {
     expect(combineForEngine([P("blast", 0.5), P("blast", 0.6)], th).p1).toBeCloseTo(0.55);
   });

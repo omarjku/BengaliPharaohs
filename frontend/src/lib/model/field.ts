@@ -56,9 +56,13 @@ export function summarizeField(spots: (Prediction | undefined)[], th: Th): Field
 }
 
 /** The engine's single prediction: average of the confident photos (all readable ones if none is confident). */
+/** The diagnosis answers "what do the sick leaves have?": average the confidently sick photos.
+ *  Healthy spots still count in the spread ("how much of the field"), not in the diagnosis.
+ *  No confident disease → confident photos (e.g. all healthy) → all photos. */
 export function combineForEngine(preds: Prediction[], th: Th): Prediction {
   const sure = preds.filter((p) => confidentClass(p, th));
-  return combinePredictions(sure.length ? sure : preds);
+  const sick = sure.filter((p) => confidentClass(p, th) !== "healthy");
+  return combinePredictions(sick.length ? sick : sure.length ? sure : preds);
 }
 
 /** Pre-selected answer for "how is it spread in the field?" (still editable). */
