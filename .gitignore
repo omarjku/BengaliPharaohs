@@ -15,3 +15,5 @@ notes/audio/
 /data/
 runs/
 .venv-ml/
+
+.vercel

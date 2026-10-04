@@ -1,0 +1,25 @@
+# Deploys the app to Vercel production on every push to main, whoever pushed.
+# Needed because Vercel's Hobby plan blocks Git deployments of commits by people outside the Vercel account.
+# Secrets: VERCEL_TOKEN (vercel.com/account/tokens), VERCEL_ORG_ID, VERCEL_PROJECT_ID.
+name: Deploy frontend
+on:
+  push:
+    branches: [main]
+    paths: ["frontend/**", ".github/workflows/deploy-frontend.yml"]
+  workflow_dispatch:
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Deploy (Vercel builds it with the project settings: root frontend, npm run build, out)
+        run: npx --yes vercel@latest deploy --prod --yes --token "${{ secrets.VERCEL_TOKEN }}"
