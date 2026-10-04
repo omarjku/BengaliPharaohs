@@ -83,6 +83,12 @@ describe("cross-check X01–X19", () => {
     expect(crossCheck(pred, []).decision).toBe("not_sure");
     expect(crossCheck(pred, [], { ...DEFAULT_THRESHOLDS, min_prob: 0.35, min_margin: 0 }).cls).toBe("blast");
   });
+  it("not_rice on top is NOT SURE (C8), even confident and even if context favours top-2", () => {
+    for (const pr of [p("not_rice", 0.95, "blast", 0.02), p("not_rice", 0.6, "blast", 0.38)]) {
+      const r = crossCheck(pr, ["symptom_tip_edge", "season_aman", "stage_heading", "humid_cloudy"], { ...DEFAULT_THRESHOLDS, min_prob: 0.8, min_margin: 0 });
+      expect([r.decision, r.card, r.cls]).toEqual(["not_sure", "C8", null]);
+    }
+  });
   it("a scattered prediction (not a rice leaf) is not sure even with context", () => {
     expect(crossCheck(p("blast", 0.3, "brown_spot", 0.2), ["cold_nights", "urea_high", "season_boro"]).card).toBe("C8");
   });

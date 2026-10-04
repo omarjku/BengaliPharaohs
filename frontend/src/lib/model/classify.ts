@@ -68,15 +68,19 @@ async function run(m: Model, input: Float32Array) {
 /** Resize short side → resize_short_side, centre-crop size×size, normalise, NCHW. Must match ml/common.py exactly. */
 export async function toTensor(img: Blob, pre: Preprocess): Promise<Float32Array> {
   const bmp = await createImageBitmap(img);
-  const scale = pre.resize_short_side / Math.min(bmp.width, bmp.height);
-  const crop = pre.size / scale; // crop side in source pixels
-  const sx = (bmp.width - crop) / 2;
-  const sy = (bmp.height - crop) / 2;
+  // Same integer geometry as torchvision Resize(short side) + CenterCrop: whole-pixel sizes and offsets
+  // (a fractional crop offset blurs the image by half a pixel and flips low-confidence predictions).
+  const k = pre.resize_short_side / Math.min(bmp.width, bmp.height);
+  const nw = bmp.width <= bmp.height ? pre.resize_short_side : Math.trunc(bmp.width * k);
+  const nh = bmp.width <= bmp.height ? Math.trunc(bmp.height * k) : pre.resize_short_side;
+  const halfEven = (x: number) => (x % 1 === 0.5 && Math.floor(x) % 2 === 0 ? Math.floor(x) : Math.round(x)); // Python round()
+  const left = halfEven((nw - pre.size) / 2);
+  const top = halfEven((nh - pre.size) / 2);
   const canvas = document.createElement("canvas");
   canvas.width = canvas.height = pre.size;
   const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
   ctx.imageSmoothingQuality = "high";
-  ctx.drawImage(bmp, sx, sy, crop, crop, 0, 0, pre.size, pre.size);
+  ctx.drawImage(bmp, -left, -top, nw, nh);
   bmp.close();
   const { data } = ctx.getImageData(0, 0, pre.size, pre.size);
   const n = pre.size * pre.size;
