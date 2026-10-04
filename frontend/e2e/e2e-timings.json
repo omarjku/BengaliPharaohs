@@ -1,0 +1,23 @@
+{
+ "ONLINE: inference blast-1 (ms, preprocess+ort+softmax)": 15,
+ "ONLINE: leaf wizard, confident blast photo -> result card + Bangla audio (ms)": 1446,
+ "ONLINE: inference healthy-1 (ms)": 12,
+ "ONLINE: healthy photo -> C1 (ms)": 1276,
+ "ONLINE: inference not_rice-1.jpg (ms)": 12,
+ "ONLINE: inference not_rice-3.jpg (ms)": 12,
+ "ONLINE: non-rice (bean) photo -> NOT SURE card C8 (ms)": 2532,
+ "ONLINE: honesty: unsure blb photo never answers confidently wrong (ms)": 1281,
+ "ONLINE: after-flood advisor (simulated 2026-08-20): 2 d -> A1, 9 d -> A3, then T07 date -> A5 (ms)": 5720,
+ "ONLINE: share with SAAO: consent dialog -> offline queue (ms)": 1003,
+ "OFFLINE: model load incl. fetch from cache + warm-up (ms)": 63,
+ "OFFLINE: inference blast-1 (ms, preprocess+ort+softmax)": 11,
+ "OFFLINE: leaf wizard, confident blast photo -> result card + Bangla audio (ms)": 1327,
+ "OFFLINE: inference healthy-1 (ms)": 12,
+ "OFFLINE: healthy photo -> C1 (ms)": 1277,
+ "OFFLINE: inference not_rice-1.jpg (ms)": 11,
+ "OFFLINE: inference not_rice-3.jpg (ms)": 11,
+ "OFFLINE: non-rice (bean) photo -> NOT SURE card C8 (ms)": 2639,
+ "OFFLINE: honesty: unsure blb photo never answers confidently wrong (ms)": 1258,
+ "OFFLINE: after-flood advisor (simulated 2026-08-20): 2 d -> A1, 9 d -> A3, then T07 date -> A5 (ms)": 5716,
+ "OFFLINE: share with SAAO: consent dialog -> offline queue (ms)": 1000
+}

@@ -5,6 +5,6 @@
  "max_prob_diff": 0.0676,
  "mean_max_prob_diff": 0.0044,
  "miss": [],
- "load_ms": 445,
+ "load_ms": 392,
  "preprocess_plus_infer_ms_median": 7
 }

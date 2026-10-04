@@ -6,7 +6,8 @@
     "dev": "node scripts/copy-ort.mjs && next dev",
     "build": "node scripts/copy-ort.mjs && next build && node scripts/gen-precache.mjs",
     "start": "npx serve out -l 3000",
-    "test": "vitest run",
+    "test": "vitest run src",
+    "e2e": "playwright test",
     "lint": "eslint"
   },
   "dependencies": {
