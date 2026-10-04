@@ -158,3 +158,29 @@ export function packToContext(pack: Pack | undefined, date: Date = new Date()): 
     price: mk ? { paddy_tk_per_maund: mk.paddy_tk_per_maund, market: mk.name, as_of: pr!.fetched_at } : null,
   };
 }
+
+// ---- burst: parts arrive inline in POST /api/burst; same atomic rule as refreshPack (one put, all or nothing).
+/** part -> version we hold, to send to /api/burst. Empty if the stored pack is for another upazila. */
+export async function getPackVersions(upazila: string): Promise<Record<string, string>> {
+  const p = await getPack(upazila);
+  return Object.fromEntries(Object.entries(p?.parts ?? {}).map(([k, v]) => [k, v!.version]));
+}
+
+type Replies = { replies?: { id: number }[] };
+/** Merge changed parts into the stored pack with ONE write. Returns the part names that changed and how many SAAO replies are new. */
+export async function applyBurstPack(upazila: string, bp: NonNullable<import("../sync/types").BurstResult["pack"]>, now = new Date()): Promise<{ received: string[]; newReplies: number }> {
+  const cur = await getPack(upazila);
+  const received = Object.keys(bp.parts).filter((n) => (FETCH_PARTS as readonly string[]).includes(n));
+  if (!received.length && !cur) return { received: [], newReplies: 0 };
+  const parts: Pack["parts"] = { ...cur?.parts };
+  for (const n of received) {
+    const x = bp.parts[n];
+    parts[n as PartName] = { version: x.version, source: x.source, seeded: x.seeded, fetched_at: x.fetched_at ?? now.toISOString(), valid_until: x.valid_until ?? undefined, data: x.data };
+  }
+  const seen = new Set(((cur?.parts.case_replies?.data as Replies | undefined)?.replies ?? []).map((r) => r.id));
+  const newReplies = ((bp.parts.case_replies?.data as Replies | undefined)?.replies ?? []).filter((r) => !seen.has(r.id)).length;
+  const versions = { rules: bp.versions?.rules ?? cur?.versions.rules, cards: bp.versions?.cards ?? cur?.versions.cards };
+  await setKv(KEY, { upazila, version: cur?.version ?? "burst", manifest_etag: undefined, fetched_at: now.toISOString(), versions, model_update_available: cur?.model_update_available ?? false, parts } satisfies Pack);
+  if (received.length && typeof window !== "undefined") window.dispatchEvent(new CustomEvent(PACK_EVENT));
+  return { received, newReplies };
+}

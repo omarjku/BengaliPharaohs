@@ -1,6 +1,6 @@
 import "fake-indexeddb/auto";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { drain } from "./drain";
+import { drain, resetBurstSupport } from "./drain";
 import { timeoutSignal } from "../api";
 import { enqueue } from "./outbox";
 import { probe, resetProbe } from "./probe";
@@ -17,6 +17,7 @@ vi.mock("./compress", async (orig) => ({
 beforeEach(async () => {
   await deleteAllCases();
   resetProbe();
+  resetBurstSupport();
   vi.unstubAllGlobals();
 });
 
@@ -48,6 +49,7 @@ describe("robustness", () => {
       const path = new URL(url).pathname;
       if (path === "/api/health") return new Response("{}", { headers: { "X-Health": "1" } });
       if (path === "/api/probe.bin") return new Response(new Uint8Array(32768));
+      if (path === "/api/burst") return new Response("", { status: 404 });
       posted.push(path);
       return new Response(JSON.stringify({ accepted: JSON.parse(String(init!.body)).cases.map((x: { case_id: string }) => x.case_id), rejected: [] }));
     });

@@ -4,7 +4,7 @@ import { listCases, putOutbox, listOutbox } from "./store/db";
 import { drain, type DrainResult } from "./sync/drain";
 import { enqueue } from "./sync/outbox";
 
-export { drain, getSyncStatus, getCaseSyncStatus, startSync } from "./sync/drain";
+export { drain, getSyncStatus, getCaseSyncStatus, getLastSyncReport, startSync, SYNC_REPORT_EVENT } from "./sync/drain";
 export { enqueue } from "./sync/outbox";
 
 /** Queue every consented, unsent case (and give permanently failed items another chance), then drain. Never throws. */

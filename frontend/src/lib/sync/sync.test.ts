@@ -1,6 +1,6 @@
 import "fake-indexeddb/auto";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { drain, getCaseSyncStatus, getSyncStatus } from "./drain";
+import { drain, getCaseSyncStatus, getSyncStatus, resetBurstSupport } from "./drain";
 import { enqueue } from "./outbox";
 import { resetProbe } from "./probe";
 import { deleteAllCases, getCase, getOutbox, listOutbox, putBlob, saveCase, setKv, type CaseRecord } from "../store/db";
@@ -28,6 +28,7 @@ let kbps = 1000;
 
 const ok = (body: unknown = {}) => new Response(JSON.stringify(body), { status: 200 });
 function healthy(c: Call, init?: RequestInit): Response | Promise<Response> {
+  if (c.path === "/api/burst") return new Response("", { status: 404 }); // these tests cover the old calls; burst.test.ts covers /api/burst
   if (c.path === "/api/health") return new Response("{}", { status: 200, headers: { "X-Health": "1" } });
   if (c.path === "/api/probe.bin") return new Response(new Uint8Array(32768));
   if (c.path === "/api/cases/batch") {
@@ -42,6 +43,7 @@ beforeEach(async () => {
   kbps = 1000;
   handler = healthy;
   resetProbe();
+  resetBurstSupport();
   await deleteAllCases();
   await setKv("photos_wifi_only", false);
   vi.stubGlobal("fetch", async (url: string, init?: RequestInit) => {
@@ -62,7 +64,7 @@ async function shared(id: string, withVoice = false) {
   await saveCase(c);
   await enqueue(c);
 }
-const sent = () => calls.filter((c) => !c.path.startsWith("/api/health") && c.path !== "/api/probe.bin").map((c) => `${c.method} ${c.path}`);
+const sent = () => calls.filter((c) => !c.path.startsWith("/api/health") && c.path !== "/api/probe.bin" && c.path !== "/api/burst").map((c) => `${c.method} ${c.path}`);
 
 describe("outbox", () => {
   it("enqueue creates tiered items per consent flags and is idempotent", async () => {

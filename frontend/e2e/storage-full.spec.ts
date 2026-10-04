@@ -13,7 +13,9 @@ test("storage full: check stays on the page with a message; share keeps the case
   const full = (on: boolean) => page.evaluate((v) => ((window as unknown as { __full?: boolean }).__full = v), on);
 
   await page.goto("/check/");
-  await page.locator("input[type=file]:not([capture])").setInputFiles("public/samples/brown_spot-1.jpg");
+  await page.locator("input[type=file]:not([capture])").setInputFiles(Array(3).fill("public/samples/brown_spot-1.jpg"));
+  await page.getByRole("button", { name: "Next", exact: true }).click(); // field walk (3 spots) → field
+  await page.waitForTimeout(500); // step animation
   await page.getByRole("button", { name: "Next", exact: true }).click(); // field → where
   await page.getByRole("checkbox", { name: "Stem near the water" }).click(); // off-leaf only: shortest path to the end
   await full(true);

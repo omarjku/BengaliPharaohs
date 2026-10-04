@@ -14,10 +14,11 @@ export function resetProbe() {
   lastMeasured = 0;
 }
 
-export async function probe(): Promise<ProbeResult> {
+/** `bandwidth: false` = only the tiny health check (short connection windows time the bandwidth later, if it is needed). */
+export async function probe(opts: { timeoutMs?: number; bandwidth?: boolean } = {}): Promise<ProbeResult> {
   const saveData = !!conn().saveData;
   try {
-    const res = await fetch(`${API_URL}/api/health?t=${Date.now()}`, { cache: "no-store", signal: timeoutSignal(4000) });
+    const res = await fetch(`${API_URL}/api/health?t=${Date.now()}`, { cache: "no-store", signal: timeoutSignal(opts.timeoutMs ?? 4000) });
     // A captive portal answers 200 with its own HTML: only our server sets X-Health or answers {"ok":true}.
     // (Cross-origin, X-Health is only readable if the backend exposes it via CORS, so the JSON body counts too.)
     const ours = res.ok && (res.headers.get("X-Health") === "1" || (await res.json().catch(() => null))?.ok === true);
@@ -25,11 +26,17 @@ export async function probe(): Promise<ProbeResult> {
   } catch {
     return { status: "offline", kbps: 0, saveData };
   }
-  // Bandwidth: time a 32 KB download, at most every 30 s.
+  return opts.bandwidth === false ? { status: "ok", kbps: ewma || hintKbps(), saveData } : measureBandwidth(saveData);
+}
+
+const hintKbps = () => HINT_KBPS[conn().effectiveType ?? ""] ?? 0;
+
+/** Time a 32 KB download, at most every 30 s. Costs one round trip + ~2 s on 3G: only when photos/voice are waiting. */
+export async function measureBandwidth(saveData = !!conn().saveData, maxMs = 10_000): Promise<ProbeResult> {
   if (!ewma || Date.now() - lastMeasured > 30_000) {
     try {
       const t0 = performance.now();
-      const res = await fetch(`${API_URL}/api/probe.bin?t=${Date.now()}`, { cache: "no-store", signal: timeoutSignal(10_000) });
+      const res = await fetch(`${API_URL}/api/probe.bin?t=${Date.now()}`, { cache: "no-store", signal: timeoutSignal(maxMs) });
       const bytes = (await res.arrayBuffer()).byteLength;
       const ms = Math.max(1, performance.now() - t0);
       if (res.ok && bytes) {
@@ -41,6 +48,5 @@ export async function probe(): Promise<ProbeResult> {
       // keep the old estimate; fall through to the hint
     }
   }
-  const hint = HINT_KBPS[conn().effectiveType ?? ""] ?? 0;
-  return { status: "ok", kbps: ewma || hint, saveData };
+  return { status: "ok", kbps: ewma || hintKbps(), saveData };
 }

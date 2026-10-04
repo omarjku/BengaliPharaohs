@@ -1,5 +1,14 @@
 # PROGRESS
 
+## 2026-10-04 field-walk branch
+- Leaf check is now a guided field walk: 3-10 spot photos (sketch with 4 corners, middle, worst, +extras), each read at once -> badge; Next needs >=3. Result opens with "Your field" summary (counts, spread bar, spread label, one fixed action). Pattern question pre-selected from the spread.
+- Files: frontend/src/lib/model/field.ts (+test), src/components/app/{field-walk,field-summary}.tsx, check/result pages, CaseRecord.field, taps.field_summary (outbox.ts), e2e/field-walk.spec.ts. Bangla strings at END of strings.ts are Claude drafts - Zoha to check.
+- Pending: Zoha reviews Bangla; real-phone test; backend stores taps.field_summary as free-form taps only.
+
+## 2026-10-04 burst-sync branch
+- Burst sync: POST /api/burst, time-budgeted drain (15 s), sync report + banner, area news rewrite (loadArea, always ends in a state). Fixed live 404 on real upazila codes (backend/mocks/upazila_codes.json). Details: docs/burst-sync.md.
+- Pending: Zoha reviews Bangla (burst_*/area_* strings at end of strings.ts); redeploy Railway so live gets /api/burst; real-phone LTE test.
+
 ## 2026-10-04 ~02:30
 - **v2 shipped** to `frontend/public/model/` (commit ea3addc): fine-tuned MobileNetV3-Small, 7 classes incl. not_rice, fp32 6.1 MB, min_prob 0.80 (95% rule on validation), T 0.85.
   Val macro-F1 0.912 · held-out AgML_BD 57% top-1, answers 63%, 74% right when answering · unseen bean leaves 100% NOT SURE.

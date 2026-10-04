@@ -25,7 +25,7 @@ const lastCase = async (page: Page) => (await cases(page)).at(-1)!;
 
 async function leafCheck(page: Page, sample: string) {
   await page.goto("/check/");
-  await page.locator('input[type=file]:not([capture])').setInputFiles(S + sample);
+  await page.locator('input[type=file]:not([capture])').setInputFiles(Array(3).fill(S + sample)); // field walk: the same leaf in the first 3 spots
   await expect(page.getByText("1/5").or(page.getByText("2/5"))).toBeVisible();
   // The wizard adapts to the answers (steps appear/disappear, follow-up questions only for close calls),
   // so walk it: "Next" until the result, or "See the result" on the follow-up step.

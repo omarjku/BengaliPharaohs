@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { AreaUpdate } from "@/components/app/area-update";
 import { BigButton } from "@/components/app/choice";
+import { FieldSummaryCard } from "@/components/app/field-summary";
 import { AppShell } from "@/components/app/shell";
 import { VoiceNote } from "@/components/app/voice-note";
 import { playClips, stopAudio } from "@/lib/audio/play";
@@ -270,6 +271,8 @@ function ResultView() {
           <FlaskConical className="size-4" /> {t("dummy_model")}
         </div>
       )}
+
+      {c.field && <FieldSummaryCard f={c.field.summary} />}
 
       <m.section
         initial={{ opacity: 0, y: 12 }}

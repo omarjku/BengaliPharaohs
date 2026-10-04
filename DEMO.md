@@ -13,6 +13,8 @@
 4. Laptop: dashboard open at `/saao`, code entered. Sample photos are in the phone gallery (copy `frontend/public/samples/*.jpg`).
 5. Backup: screen recording `demo/backup.mp4`. Rehearse 3x from airplane mode after a force-stop.
 
+**Field walk (leaf check).** The farmer walks the field and photographs one leaf in each of 3 to 10 spots (4 corners, middle, "where it looks worst", plus extras). Each spot is read at once and its dot turns into a badge (blast, healthy, or "?" for not sure). The result opens with a "Your field" block: how many spots show which problem, how widespread it is (only 1-2 spots / patches / whole field / unclear), and one fixed no-chemicals action for that spread. For the demo use `blast-1.jpg`, `blast-2.jpg`, `healthy-1.jpg` (summary "2 of 3 spots: blast", whole field). `healthy-1/2.jpg` + `healthy` alone gives "looks healthy everywhere". Mixed with `not_rice-1.jpg` twice it shows "not clear from the photos". A single-leaf check no longer exists: 3 photos minimum.
+
 ## Samples: which one shows what (verified on the live app, 4 Oct)
 | File | Result | Use it for |
 |---|---|---|
@@ -29,7 +31,7 @@
 |---|---|---|---|
 | 0:00 | Open installed app online, Home | Bangla UI, "Online" badge, offline-ready box | "Rahim's phone, installed once at the co-op." |
 | 0:10 | **Airplane mode on**, reopen app | Badge shows offline, app still loads | "No signal in the field. Everything from here runs on the phone." |
-| 0:20 | Leaf check -> gallery -> `blast-1.jpg`. Farm details pre-filled, tap "Middle of the leaf", "A few spots" | Result: "Looks like blast (not certain)", confidence bar "Higher, not certain", do now / do not / ask SAAO, Listen button plays Bangla voice | "6 MB model, about 12 ms on my laptop, on a phone it is still under a second [only say after the phone test]. It says not certain, never a percentage of belief." |
+| 0:20 | Leaf check = field walk. Gallery, pick `blast-1.jpg` + `blast-2.jpg` + `healthy-1.jpg` together (they fill 3 spots; Next opens at 3). Farm details pre-filled, tap "Middle of the leaf"; the spread question is already ticked | Result starts with "Your field: 2 of 3 spots: blast, 1 healthy, across the whole field, contact the SAAO today", then the leaf card: "Looks like blast (not certain)", confidence bar "Higher, not certain", do now / do not / ask SAAO, Listen button plays Bangla voice | "6 MB model, about 12 ms on my laptop, on a phone it is still under a second [only say after the phone test]. It says not certain, never a percentage of belief." |
 | 0:40 | New check -> `not_rice-1.jpg` (bean leaf), same taps, answer "Don't know" to follow-ups | "Not sure - show your SAAO", "We will not guess", no disease name | "This is the safety rule. 60 of 60 bean leaves it had never seen got NOT SURE." |
 | 0:55 | New check -> `blb-1.jpg` | After the taps: "A couple more questions" (two yes/no checks) -> answer Don't know -> NOT SURE card | "When the photo is unsure the app asks the farmer, it does not guess. Context can only keep, swap between the top two, or decline." |
 | 1:10 | Flood tab: Flood -> Sirajganj/Kazipur -> not flood-tolerant, whole plant under water -> 3 days -> Tillering -> hills alive "Don't know" -> See the result | Advice with BRRI source and year, "usually survives, check new leaves in 5-7 days" (SURVIVES_CHECK, card A1) | "Date used: 20 Aug, simulated, labelled on screen. This is a rule table from BRRI/DAE, deliberately not AI." |
