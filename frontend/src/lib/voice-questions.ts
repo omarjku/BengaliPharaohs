@@ -20,6 +20,7 @@ export const QUESTION_CLIPS = {
     opts: ["pattern_one_hill", "pattern_patches", "pattern_whole_field", "pattern_whole_field_dying", "pattern_none"],
   },
   "Q-MOULD": { q: ["q_mould", "q_mould_hint"], opts: ["mould_white", "mould_grey", "mould_black", "mould_orange", "mould_none"] },
+  "Q-LOOK": { q: ["q_look"], opts: ["look_eye", "look_round", "look_stripe_tip_edge", "look_thin_lines", "look_bands", "look_stem_patch", "look_yellow_orange", "look_dusty_rust", "look_brown_tips_old", "look_bronze", "look_pale", "look_none"] },
   "Q-FIRST": { q: ["q_first"], opts: ["first_old", "first_new", "first_none"] },
   "Q-INSECTS": {
     q: ["q_insects", "pick_many"],

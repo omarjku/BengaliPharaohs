@@ -2,6 +2,23 @@
 import type { Region, Season, Stage } from "./types";
 
 export type Unknown = "unknown";
+export const LOOKS = ["eye", "round", "stripe_tip_edge", "thin_lines", "bands", "stem_patch", "yellow_orange", "dusty_rust", "brown_tips_old", "bronze", "pale", "none"] as const;
+export type Look = (typeof LOOKS)[number];
+/** Look -> knowledge.json conditions (sourced favours/unlikely_if), plus 3 code-level signs (look_*) for look-alikes. */
+export const LOOK_CONDITIONS: Record<Look, string[]> = {
+  eye: ["lesion_eye_shaped"], // blast
+  round: ["lesion_not_eye_shaped"], // brown spot
+  stripe_tip_edge: ["symptom_tip_edge"], // BLB, leaf scald
+  thin_lines: ["streaks_translucent"], // bacterial leaf streak
+  bands: ["zonate_bands", "symptom_tip_edge"], // leaf scald
+  stem_patch: ["symptom_sheath"], // sheath blight (stem: location guard)
+  yellow_orange: ["look_yellow_orange"], // tungro
+  dusty_rust: ["khaira_patches", "new_leaves_first"], // zinc shortage (khaira)
+  brown_tips_old: ["symptom_tip_edge", "old_leaves_first"], // potassium shortage
+  bronze: ["look_bronze", "old_leaves_first"], // iron toxicity
+  pale: ["look_pale"], // nitrogen / sulphur shortage
+  none: ["no_problem_seen"],
+};
 export const NO_PROBLEM = "no_problem_seen";
 export type Where = "tip_edge" | "middle" | "sheath" | "panicle" | "base" | "whole_plant" | "grain" | "none";
 /** Pests Bangladeshi farmers know by name. Only hoppers, leafhoppers and stem borer change the engine; the rest go to the SAAO. */
@@ -26,6 +43,8 @@ export type LeafAnswers = {
   /** Several places can be affected at once; [] or ["unknown"] = not answered. */
   where?: (Where | Unknown)[];
   pattern?: "one_hill" | "patches" | "whole_field" | "whole_field_dying" | "none" | Unknown;
+  /** The key funnel question: what the problem looks like (each disease's signature look). */
+  look?: Look | Unknown;
   /** Visible mould colour: fungus clue (white = sheath blight, grey = blast, black = sooty mould on insect honeydew, orange = false smut). */
   mould?: "white" | "grey" | "black" | "orange" | "none" | Unknown;
   first?: "old" | "new" | "none" | Unknown;
@@ -86,6 +105,7 @@ export function conditionsFrom(a: LeafAnswers, p: { season?: Season; stage?: Sta
   // Grains / husk (e.g. glume blotch, grain discolouration) are not on the leaf: same guard as the panicle.
   if (a.where?.includes("grain")) c.push("symptom_panicle");
   if (a.mould && a.mould !== "unknown" && a.mould !== "none") c.push(`mould_${a.mould}`);
+  if (a.look && a.look !== "unknown") c.push(...LOOK_CONDITIONS[a.look]);
   if (a.mould === "orange") c.push("symptom_panicle"); // false smut balls are on the grains
   // The farmer sees nothing wrong: counts for "healthy" in the cross-check, never for a disease.
   if (a.where?.includes("none") || a.pattern === "none" || a.first === "none") c.push(NO_PROBLEM);

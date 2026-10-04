@@ -8,8 +8,9 @@ import { BigButton, Choice, MultiChoice, QuestionTitle, Speak, Steps } from "@/c
 import { UpazilaPicker, VarietyPicker } from "@/components/app/pickers";
 import { CameraSheet } from "@/components/app/camera-sheet";
 import { AppShell } from "@/components/app/shell";
-import { conditionsFrom, INSECTS, seasonFromDate, stageFromTransplant, type LeafAnswers } from "@/lib/engine/context";
+import { conditionsFrom, INSECTS, LOOKS, seasonFromDate, stageFromTransplant, type LeafAnswers, type Look } from "@/lib/engine/context";
 import { crossCheck, DEFAULT_THRESHOLDS, KNOWLEDGE } from "@/lib/engine/crosscheck";
+import { alreadyAnswered } from "@/lib/engine/explain";
 import type { Prediction, Season } from "@/lib/engine/types";
 import { cn } from "@/lib/utils";
 import { useLang } from "@/lib/i18n";
@@ -75,6 +76,19 @@ const INSECT_ICON: Record<(typeof INSECTS)[number], string> = {
   gall_midge: "🦟",
   grasshopper: "🦗",
 };
+
+const LOOK_ICON: Record<Look, string> = {
+  eye: "👁️", round: "🟤", stripe_tip_edge: "🟨", thin_lines: "〰️", bands: "🌊", stem_patch: "🟩",
+  yellow_orange: "🟧", dusty_rust: "🟫", brown_tips_old: "🍂", bronze: "🟠", pale: "💛", none: "✅",
+};
+/** Each model class's signature look; the photo's top-2 move to the top of the list (the funnel). */
+const LOOK_FOR_CLASS: Record<string, Look> = {
+  blast: "eye", brown_spot: "round", blb: "stripe_tip_edge", sheath_blight: "stem_patch", tungro: "yellow_orange", healthy: "none", leaf_scald: "bands",
+};
+function lookOrder(pred?: Prediction): Look[] {
+  const first = pred ? [LOOK_FOR_CLASS[pred.top1], LOOK_FOR_CLASS[pred.top2]].filter((l): l is Look => !!l) : [];
+  return [...new Set([...first, ...LOOKS])];
+}
 
 function Segmented<V extends string>({ label, value, options, onChange, clip }: { label: string; value?: V; options: { v: V; label: string }[]; onChange: (v: V) => void; clip?: string }) {
   return (
@@ -307,7 +321,9 @@ export default function CheckPage() {
     const th = { ...DEFAULT_THRESHOLDS, min_prob: out.th.min_prob, min_margin: out.th.min_margin };
     const cross = crossCheck(out.pred, conditionsNow(), th);
     if (cross.decision === "location_guard" || cross.reasons.includes("model_confident")) return [];
-    return cross.ask.filter((q) => !a.followups?.[q]).slice(0, 3);
+    // Never ask what the farmer already answered (e.g. the look answer settles "eye-shaped?").
+    const conds = conditionsNow();
+    return cross.ask.filter((q) => !a.followups?.[q] && !alreadyAnswered(q, conds)).slice(0, 3);
   }
 
   async function goNext() {
@@ -565,6 +581,15 @@ export default function CheckPage() {
                   </button>
                 </div>
               )}
+              <Choice
+                clip="Q-LOOK"
+                question={t("q_look")}
+                hint={t("q_look_hint")}
+                value={a.look}
+                onChange={(v) => set("look", v)}
+                cols={1}
+                options={lookOrder(pred).map((l) => ({ value: l, label: t(`look_${l}` as StringKey), icon: LOOK_ICON[l] }))}
+              />
               <MultiChoice
                 clip="Q-WHERE"
                 question={t("q_where")}

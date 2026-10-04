@@ -18,7 +18,9 @@ import { cn } from "@/lib/utils";
 import { formatDate, num, useLang } from "@/lib/i18n";
 import { varietyById } from "@/lib/places";
 import { LABEL_NAMES, labelName } from "@/lib/labels";
-import { getCase, getPhoto, getProfile, photoKey, saveCase, type CaseRecord } from "@/lib/store/db";
+import { getCase, getPhoto, getProfile, photoKey, saveCase, type CaseRecord, type Profile } from "@/lib/store/db";
+import { alreadyAnswered, candidates, CHECK_AGAIN_DAYS, contextTips, fitLines, stageTask, toldPhrases } from "@/lib/engine/explain";
+import { seasonFromDate, stageFromTransplant } from "@/lib/engine/context";
 import type { StringKey } from "@/lib/strings";
 import { syncQueued } from "@/lib/sync";
 
@@ -65,6 +67,84 @@ function Part({ icon: Icon, label, children, tone }: { icon: React.ElementType; 
   );
 }
 
+/** Plain-language, case-specific explanation: what the farmer said, how it fits, what to do in this field now. */
+function LeafExplanation({ c, profile }: { c: CaseRecord; profile: Profile }) {
+  const { t, tx, lang } = useLang();
+  const conds = c.conditions ?? [];
+  const cands = candidates(c.cross, c.prediction);
+  const told = toldPhrases(conds);
+  const fits = fitLines(conds, cands);
+  const tips = contextTips(conds, cands);
+  const task = stageTask(stageFromTransplant(profile.transplant_date, c.date_used), profile.season ?? seasonFromDate(c.date_used));
+  const days = CHECK_AGAIN_DAYS[c.card];
+  const again = days ? new Date(Date.parse(c.date_used) + days * 86_400_000).toISOString().slice(0, 10) : undefined;
+  if (!told.length && !fits.length && !tips.length && !task) return null;
+  return (
+    <section className="flex flex-col gap-4 rounded-3xl border bg-card p-4">
+      {told.length > 0 && (
+        <div>
+          <h3 className="mb-2 font-semibold">{t("told_title")}</h3>
+          <p className="text-[15px] leading-relaxed text-muted-foreground">{told.map((x) => tx(x)).join("; ")}{lang === "bn" ? "।" : "."}</p>
+        </div>
+      )}
+      {fits.length > 0 && (
+        <div>
+          <h3 className="mb-2 font-semibold">{t("fit_title")}</h3>
+          <div className="flex flex-col gap-3">
+            {fits.map((f) => (
+              <div key={f.code}>
+                <div className="mb-1 text-sm font-semibold text-primary">{tx(f.name)}</div>
+                <ul className="flex flex-col gap-1">
+                  {f.lines.map((l, i) => (
+                    <li key={i} className={cn("flex gap-2 text-[15px]", l.good ? "text-ok" : "text-bad")}>
+                      <span aria-hidden>{l.good ? "✓" : "✗"}</span>
+                      <span className="text-foreground">
+                        {tx(l.phrase)}
+                        {!l.good && <span className="text-xs text-muted-foreground"> ({t("fit_against")})</span>}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {(tips.length > 0 || task || again) && (
+        <div className="rounded-2xl bg-ok-soft/60 p-3">
+          <h3 className="mb-2 font-semibold text-ok">{t("tips_title")}</h3>
+          <ul className="flex flex-col gap-2 text-[15px] leading-relaxed">
+            {tips.map((tip, i) => (
+              <li key={i} className="flex gap-2">
+                <span aria-hidden>•</span>
+                <span>
+                  {tx(tip)} <span className="text-xs text-muted-foreground">({tip.src})</span>
+                </span>
+              </li>
+            ))}
+            {task && (
+              <li className="flex gap-2">
+                <span aria-hidden>📅</span>
+                <span>
+                  <b>{t("this_week")}:</b> {tx(task)}
+                </span>
+              </li>
+            )}
+            {again && (
+              <li className="flex gap-2 font-semibold">
+                <span aria-hidden>🔁</span>
+                <span>
+                  {t("check_again_on")}: {formatDate(again, lang)}
+                </span>
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function ResultView() {
   const { t, tx, lang } = useLang();
   const id = useSearchParams().get("id");
@@ -72,6 +152,7 @@ function ResultView() {
   const [photo, setPhoto] = useState<string | null>(null);
   const [morePhotos, setMorePhotos] = useState<string[]>([]);
   const [variety, setVariety] = useState<string | undefined>();
+  const [profile, setProfile] = useState<Profile>({});
   const [playing, setPlaying] = useState(false);
   const [missingAudio, setMissingAudio] = useState(false);
   const [consentOpen, setConsentOpen] = useState(false);
@@ -92,7 +173,10 @@ function ResultView() {
       setMorePhotos(urls);
     });
     getPhoto(id).then((b) => b && setPhoto(URL.createObjectURL(b)));
-    getProfile().then((p) => setVariety(p.variety));
+    getProfile().then((p) => {
+      setVariety(p.variety);
+      setProfile(p);
+    });
     return () => stopAudio();
   }, [id]);
 
@@ -224,11 +308,15 @@ function ResultView() {
         </Link>
       )}
 
-      {c.cross && c.cross.ask.length > 0 && (
+      {c.kind === "leaf" && c.conditions && (
+        <LeafExplanation c={c} profile={profile} />
+      )}
+
+      {c.cross && c.cross.ask.some((q) => !alreadyAnswered(q, c.conditions ?? [])) && (
         <section className="rounded-3xl border-2 border-dashed border-unsure/40 bg-unsure-soft/50 p-4">
           <h3 className="mb-2 font-semibold text-unsure">{t("check_more")}</h3>
           <ul className="flex flex-col gap-2">
-            {c.cross.ask.map((q) => (
+            {c.cross.ask.filter((q) => !alreadyAnswered(q, c.conditions ?? [])).map((q) => (
               <li key={q} className="flex gap-2 text-[16px]">
                 <span aria-hidden>•</span>
                 {tx(KNOWLEDGE.questions[q])}

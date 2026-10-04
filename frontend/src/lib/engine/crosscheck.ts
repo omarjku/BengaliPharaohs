@@ -48,11 +48,14 @@ const GUARD_ASK: Record<string, string> = {
 };
 
 /** Farmer's own "no problem" answer supports a healthy result (kept in code so knowledge.json stays as reviewed). */
-const EXTRA_FAVOURS: Record<string, string[]> = {
+export const EXTRA_FAVOURS: Record<string, string[]> = {
   healthy: ["no_problem_seen"],
   sheath_blight: ["mould_white"], // white cotton-like mycelium near the water (irri_sheathblight)
   blast: ["mould_grey"], // grey sporulation in the centre of spots (irri_blast)
+  tungro: ["look_yellow_orange"], // yellow-orange leaves from the tip (irri_tungro)
 };
+/** Same for look-alikes: plain pale leaves (N / S shortage), bronze leaves (iron toxicity). */
+export const EXTRA_LOOKALIKE: Record<string, string[]> = { n_def: ["look_pale"], s_def: ["look_pale"], fe_tox: ["look_bronze"] };
 
 function score(info: ClassInfo | undefined, ctx: Set<string>, cls?: string) {
   return {
@@ -94,7 +97,7 @@ export function crossCheck(
   // Strongest look-alike that is not one of our classes (nutrient, cold, salt, BPH...).
   let lookalike: { id: string; n: number; ask: string[] } | undefined;
   for (const [id, info] of Object.entries(kb.lookalikes)) {
-    const n = info.favours.filter((c) => ctx.has(c)).length;
+    const n = [...info.favours, ...(EXTRA_LOOKALIKE[id] ?? [])].filter((c) => ctx.has(c)).length;
     if (n >= 2 && (!lookalike || n > lookalike.n)) lookalike = { id, n, ask: info.ask };
   }
 
