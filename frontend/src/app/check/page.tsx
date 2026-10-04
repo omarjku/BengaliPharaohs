@@ -334,8 +334,8 @@ export default function CheckPage() {
               <span className="font-medium text-ok">✓ {t("photo_saved_local")}</span>
             )}
           </div>
-          <button onClick={() => setTrail(["photo"])} className="flex items-center gap-1 rounded-full px-2 py-1 text-sm text-primary" aria-label={t("photo_retake")}>
-            <RotateCcw className="size-4" />
+          <button onClick={() => setTrail(["photo"])} className="flex min-h-12 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-primary" aria-label={t("photo_retake")}>
+            <RotateCcw className="size-4" /> {t("photo_retake")}
           </button>
         </div>
       )}
@@ -569,7 +569,7 @@ export default function CheckPage() {
           )}
         </motion.div>
       {(step === "details" || step === "weather") && (
-        <button onClick={goNext} className="mt-3 w-full py-2 text-center text-sm text-muted-foreground underline">
+        <button onClick={goNext} className="mt-3 min-h-12 w-full text-center text-base text-muted-foreground underline">
           {t("skip")}
         </button>
       )}
