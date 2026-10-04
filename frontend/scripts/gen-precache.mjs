@@ -42,4 +42,7 @@ for (const f of files.sort()) {
 }
 const version = hash.digest("hex").slice(0, 12);
 writeFileSync(join(out, "precache-manifest.json"), JSON.stringify({ version, urls }, null, 0));
+// Phones only install a new service worker when sw.js changes byte-for-byte: stamp the version in, or they keep the old app forever.
+const sw = join(out, "sw.js");
+writeFileSync(sw, `// build ${version}\n` + readFileSync(sw, "utf8").replace(/^\/\/ build \w+\n/, ""));
 console.log(`precache: ${urls.length} urls, ${(bytes / 1e6).toFixed(1)} MB, version ${version}`);
