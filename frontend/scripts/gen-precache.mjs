@@ -5,7 +5,7 @@ import { copyFileSync, readdirSync, readFileSync, statSync, writeFileSync } from
 import { join, relative, sep } from "node:path";
 
 const out = new URL("../out/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
-const skip = new Set(["precache-manifest.json", "sw.js", "vercel.json"]);
+const skip = new Set(["precache-manifest.json", "sw.js", "vercel.json", "reset/index.html"]);
 const files = [];
 (function walk(dir) {
   for (const name of readdirSync(dir)) {

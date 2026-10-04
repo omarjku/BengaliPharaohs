@@ -36,6 +36,7 @@ const LABEL_NAMES: Record<string, { bn: string; en: string }> = {
   tungro: { bn: "টুংরো", en: "Tungro" },
   blb: { bn: "পাতাপোড়া (BLB)", en: "Bacterial leaf blight" },
   leaf_scald: { bn: "পাতা ঝলসানো", en: "Leaf scald" },
+  not_rice: { bn: "ধানপাতা নয়", en: "Not a rice leaf" },
 };
 
 function Confidence({ p, t }: { p: number | null; t: (k: StringKey) => string }) {

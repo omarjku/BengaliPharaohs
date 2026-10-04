@@ -101,7 +101,7 @@ async def main() -> None:
     if a.only:
         clips = [c for c in clips if c["id"] in a.only]
     chars = sum(len(c["text"]) for c in clips)
-    print(f"{len(clips)} clips, {chars} characters → {a.provider}")
+    print(f"{len(clips)} clips, {chars} characters -> {a.provider}")
     out = HERE / a.out
     out.mkdir(parents=True, exist_ok=True)
     make = make_elevenlabs if a.provider == "elevenlabs" else make_edge

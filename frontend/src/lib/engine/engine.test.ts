@@ -89,6 +89,11 @@ describe("cross-check X01–X19", () => {
       expect([r.decision, r.card, r.cls]).toEqual(["not_sure", "C8", null]);
     }
   });
+  it("context can never switch the answer to not_rice", () => {
+    const r = crossCheck(p("blast", 0.55, "not_rice", 0.4), ["urea_none", "field_dry", "pattern_whole_field"]);
+    expect(r.cls).not.toBe("not_rice");
+    expect(r.card).toBe("C8");
+  });
   it("a scattered prediction (not a rice leaf) is not sure even with context", () => {
     expect(crossCheck(p("blast", 0.3, "brown_spot", 0.2), ["cold_nights", "urea_high", "season_boro"]).card).toBe("C8");
   });

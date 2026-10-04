@@ -30,7 +30,7 @@ self.addEventListener("fetch", (event) => {
   const req = event.request;
   const url = new URL(req.url);
   if (req.method !== "GET" || url.origin !== self.location.origin) return; // API calls go straight to the network
-  if (url.pathname === "/precache-manifest.json" || url.pathname === "/sw.js") return;
+  if (url.pathname === "/precache-manifest.json" || url.pathname === "/sw.js" || url.pathname.startsWith("/reset")) return; // reset page must always come from the network
 
   event.respondWith(
     (async () => {

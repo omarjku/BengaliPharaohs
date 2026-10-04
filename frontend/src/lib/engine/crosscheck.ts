@@ -33,6 +33,7 @@ export const CLASS_CARD: Record<string, CardId> = {
   tungro: "C5",
   blb: "C6",
   leaf_scald: "C7",
+  not_rice: "C8",
 };
 
 /** Answers that mean "the problem is not on the leaf blade". Hoppers at the base (BPH) and stem borer are not leaf problems either. */
