@@ -1,0 +1,13 @@
+{
+ "source": "SEEDED (stand-in for FFWC)",
+ "fetched_at": "2026-10-04T06:00:00+06:00",
+ "valid_until": "2026-10-05T06:00:00+06:00",
+ "seeded": true,
+ "data": {
+  "station": "Sirajganj (Jamuna)",
+  "level_m": 13.1,
+  "danger_m": 13.35,
+  "trend": "rising",
+  "outlook_days": 3
+ }
+}

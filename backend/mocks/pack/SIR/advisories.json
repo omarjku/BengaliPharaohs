@@ -1,0 +1,12 @@
+{
+ "source": "SEEDED (stand-in for DAE/BAMIS)",
+ "fetched_at": "2026-10-04T06:00:00+06:00",
+ "valid_until": "2026-10-11T06:00:00+06:00",
+ "seeded": true,
+ "data": {
+  "card_ids": [
+   "C3",
+   "A2"
+  ]
+ }
+}

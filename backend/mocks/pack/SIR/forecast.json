@@ -1,0 +1,35 @@
+{
+ "source": "SEEDED (stand-in for BMD/BAMIS)",
+ "fetched_at": "2026-10-04T06:00:00+06:00",
+ "valid_until": "2026-10-05T06:00:00+06:00",
+ "seeded": true,
+ "data": {
+  "days": [
+   {
+    "day": 1,
+    "rain_mm": 12,
+    "temp_c": 31
+   },
+   {
+    "day": 2,
+    "rain_mm": 30,
+    "temp_c": 30
+   },
+   {
+    "day": 3,
+    "rain_mm": 8,
+    "temp_c": 32
+   },
+   {
+    "day": 4,
+    "rain_mm": 0,
+    "temp_c": 33
+   },
+   {
+    "day": 5,
+    "rain_mm": 2,
+    "temp_c": 32
+   }
+  ]
+ }
+}
