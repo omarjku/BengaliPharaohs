@@ -1,0 +1,905 @@
+{
+  "version": "0.1.0-draft",
+  "drafted": "2026-10-03",
+  "review_status": "DRAFT - not reviewed by an agronomist or SAAO",
+  "outputs": [
+    "SURVIVES_CHECK",
+    "GAP_FILL",
+    "REPLANT_SHORT_DURATION",
+    "DIRECT_SEED",
+    "TOO_LATE_AMAN",
+    "NOT_SURE_ASK_SAAO"
+  ],
+  "inputs": {
+    "season": {
+      "type": "enum",
+      "values": [
+        "aman",
+        "aus",
+        "boro"
+      ],
+      "required": true
+    },
+    "variety_type": {
+      "type": "enum",
+      "values": [
+        "sub1",
+        "conventional",
+        "unknown"
+      ],
+      "required": true
+    },
+    "submergence": {
+      "type": "enum",
+      "values": [
+        "full",
+        "partial"
+      ],
+      "required": true
+    },
+    "days_under_water": {
+      "type": "int",
+      "min": 0,
+      "max": 60,
+      "required": true
+    },
+    "stage": {
+      "type": "enum",
+      "values": [
+        "seedbed",
+        "early_tillering",
+        "tillering",
+        "pi_booting",
+        "flowering",
+        "grain_filling"
+      ],
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "region": {
+      "type": "enum",
+      "values": [
+        "floodplain",
+        "haor",
+        "coastal",
+        "barind"
+      ],
+      "required": true
+    },
+    "north": {
+      "type": "bool",
+      "required": false
+    },
+    "salty_water": {
+      "type": "enum",
+      "values": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "required": false
+    },
+    "hills_alive": {
+      "type": "enum",
+      "values": [
+        "most",
+        "about_half",
+        "few"
+      ],
+      "required": false
+    },
+    "seedlings_available": {
+      "type": "enum",
+      "values": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "required": false
+    }
+  },
+  "sub1_varieties": [
+    "BRRI dhan51",
+    "BRRI dhan52",
+    "BRRI dhan79",
+    "BINA dhan11",
+    "BINA dhan12"
+  ],
+  "vegetative_stages": [
+    "seedbed",
+    "early_tillering",
+    "tillering"
+  ],
+  "guards": [
+    {
+      "id": "G01",
+      "when": {
+        "_invalid_or_missing_required": true
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "missing_input"
+      },
+      "sources": [
+        "S_REDTEAM"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "G02",
+      "when": {
+        "season": {
+          "eq": "aman"
+        },
+        "md": {
+          "lte": "05-31"
+        }
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "season_date_mismatch"
+      },
+      "sources": [
+        "S_GAIN"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "G03",
+      "when": {
+        "region": {
+          "eq": "haor"
+        }
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "haor_out_of_scope"
+      },
+      "sources": [],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "G04",
+      "when": {
+        "region": {
+          "eq": "coastal"
+        },
+        "salty_water": {
+          "ne": "no"
+        }
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "possible_salt_water"
+      },
+      "sources": [],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "G05",
+      "when": {
+        "stage": {
+          "in": [
+            "pi_booting",
+            "flowering",
+            "grain_filling"
+          ]
+        },
+        "submergence": {
+          "eq": "full"
+        }
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "reproductive_stage_full"
+      },
+      "sources": [
+        "S_DHAN51",
+        "S_REDTEAM"
+      ],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "G06",
+      "when": {
+        "stage": {
+          "in": [
+            "pi_booting",
+            "flowering",
+            "grain_filling"
+          ]
+        },
+        "submergence": {
+          "eq": "partial"
+        },
+        "days_under_water": {
+          "lte": 7
+        }
+      },
+      "output": "SURVIVES_CHECK",
+      "params": {
+        "outlook": "not_sure",
+        "prepare_backup": false,
+        "check_after_days": [
+          5,
+          7
+        ]
+      },
+      "sources": [],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "G07",
+      "when": {
+        "stage": {
+          "in": [
+            "pi_booting",
+            "flowering",
+            "grain_filling"
+          ]
+        },
+        "submergence": {
+          "eq": "partial"
+        },
+        "days_under_water": {
+          "gte": 8
+        }
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "reproductive_stage_long"
+      },
+      "sources": [],
+      "status": "NEEDS-CHECK"
+    }
+  ],
+  "survival_table": [
+    {
+      "id": "O01",
+      "when": {
+        "submergence": {
+          "eq": "partial"
+        },
+        "days_under_water": {
+          "lte": 14
+        }
+      },
+      "outlook": "likely_survives",
+      "sources": [
+        "S_IRRI_CCR"
+      ],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "O02",
+      "when": {
+        "submergence": {
+          "eq": "partial"
+        },
+        "days_under_water": {
+          "gte": 15
+        }
+      },
+      "outlook": "unknown",
+      "sources": [],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "O03",
+      "when": {
+        "submergence": {
+          "eq": "full"
+        },
+        "variety_type": {
+          "eq": "sub1"
+        },
+        "days_under_water": {
+          "lte": 10
+        }
+      },
+      "outlook": "likely_survives",
+      "sources": [
+        "S_CG_SUB1",
+        "S_DHAN51"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "O04",
+      "when": {
+        "submergence": {
+          "eq": "full"
+        },
+        "variety_type": {
+          "eq": "sub1"
+        },
+        "days_under_water": {
+          "between": [
+            11,
+            14
+          ]
+        }
+      },
+      "outlook": "uncertain",
+      "sources": [
+        "S_CG_SUB1",
+        "S_IRRI_CCR"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "O05",
+      "when": {
+        "submergence": {
+          "eq": "full"
+        },
+        "variety_type": {
+          "eq": "sub1"
+        },
+        "days_under_water": {
+          "gte": 15
+        }
+      },
+      "outlook": "likely_lost",
+      "sources": [
+        "S_IRRI_CCR",
+        "S_DHAN79"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "O06",
+      "when": {
+        "submergence": {
+          "eq": "full"
+        },
+        "variety_type": {
+          "eq": "conventional"
+        },
+        "days_under_water": {
+          "lte": 3
+        }
+      },
+      "outlook": "likely_survives",
+      "sources": [
+        "S_IRRI_CCR"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "O07",
+      "when": {
+        "submergence": {
+          "eq": "full"
+        },
+        "variety_type": {
+          "eq": "conventional"
+        },
+        "days_under_water": {
+          "between": [
+            4,
+            6
+          ]
+        }
+      },
+      "outlook": "uncertain",
+      "sources": [
+        "S_IRRI_CCR"
+      ],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "O08",
+      "when": {
+        "submergence": {
+          "eq": "full"
+        },
+        "variety_type": {
+          "eq": "conventional"
+        },
+        "days_under_water": {
+          "gte": 7
+        }
+      },
+      "outlook": "likely_lost",
+      "sources": [
+        "S_IRRI_CCR",
+        "S_DHAN51"
+      ],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "O09",
+      "when": {
+        "submergence": {
+          "eq": "full"
+        },
+        "variety_type": {
+          "eq": "unknown"
+        },
+        "days_under_water": {
+          "lte": 3
+        }
+      },
+      "outlook": "likely_survives",
+      "sources": [
+        "S_IRRI_CCR"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "O10",
+      "when": {
+        "submergence": {
+          "eq": "full"
+        },
+        "variety_type": {
+          "eq": "unknown"
+        },
+        "days_under_water": {
+          "between": [
+            4,
+            14
+          ]
+        }
+      },
+      "outlook": "unknown",
+      "sources": [],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "O11",
+      "when": {
+        "submergence": {
+          "eq": "full"
+        },
+        "variety_type": {
+          "eq": "unknown"
+        },
+        "days_under_water": {
+          "gte": 15
+        }
+      },
+      "outlook": "likely_lost",
+      "sources": [
+        "S_IRRI_CCR"
+      ],
+      "status": "VERIFIED"
+    }
+  ],
+  "outlook_overrides": [
+    {
+      "id": "O12",
+      "when": {
+        "hills_alive": {
+          "eq": "few"
+        }
+      },
+      "outlook": "likely_lost",
+      "sources": [
+        "S_MOA"
+      ],
+      "status": "VERIFIED"
+    }
+  ],
+  "rules": [
+    {
+      "id": "D01",
+      "when": {
+        "hills_alive": {
+          "eq": "most"
+        },
+        "season": {
+          "eq": "aman"
+        },
+        "md": {
+          "lte": "09-15"
+        }
+      },
+      "output": "GAP_FILL",
+      "params": {
+        "deadline_md": "09-15",
+        "tillers_to_keep_per_hill": [
+          2,
+          3
+        ],
+        "method": [
+          "split_tillers_from_healthy_hills",
+          "spare_seedlings"
+        ]
+      },
+      "sources": [
+        "S_MOA",
+        "S_BARC",
+        "S_GAIN"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "D02",
+      "when": {
+        "hills_alive": {
+          "in": [
+            "most",
+            "about_half"
+          ]
+        }
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "partial_loss"
+      },
+      "sources": [],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "D03",
+      "when": {
+        "outlook": {
+          "eq": "likely_survives"
+        }
+      },
+      "output": "SURVIVES_CHECK",
+      "params": {
+        "outlook": "usually_survives",
+        "prepare_backup": false,
+        "check_after_days": [
+          5,
+          7
+        ],
+        "fertiliser_wait_days": 10
+      },
+      "sources": [
+        "S_MOA",
+        "S_IRRI_CCR"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "D04",
+      "when": {
+        "outlook": {
+          "eq": "uncertain"
+        },
+        "season": {
+          "eq": "aman"
+        },
+        "md": {
+          "lte": "09-15"
+        }
+      },
+      "output": "SURVIVES_CHECK",
+      "params": {
+        "outlook": "not_sure",
+        "prepare_backup": true,
+        "check_after_days": [
+          5,
+          7
+        ],
+        "fertiliser_wait_days": 10
+      },
+      "sources": [
+        "S_MOA",
+        "S_IRRI_CCR"
+      ],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "D05",
+      "when": {
+        "outlook": {
+          "eq": "uncertain"
+        }
+      },
+      "output": "SURVIVES_CHECK",
+      "params": {
+        "outlook": "not_sure",
+        "prepare_backup": false,
+        "check_after_days": [
+          5,
+          7
+        ],
+        "fertiliser_wait_days": 10
+      },
+      "sources": [
+        "S_MOA",
+        "S_IRRI_CCR"
+      ],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "D06",
+      "when": {
+        "outlook": {
+          "eq": "unknown"
+        }
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "outlook_unknown"
+      },
+      "sources": [],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "D07",
+      "when": {
+        "outlook": {
+          "eq": "likely_lost"
+        },
+        "season": {
+          "ne": "aman"
+        }
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "not_aman_replant"
+      },
+      "sources": [],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "D08",
+      "when": {
+        "outlook": {
+          "eq": "likely_lost"
+        },
+        "md": {
+          "lte": "08-31"
+        },
+        "seedlings_available": {
+          "eq": "no"
+        }
+      },
+      "output": "DIRECT_SEED",
+      "params": {
+        "deadline_md": "08-31",
+        "varieties": [
+          "BRRI dhan33",
+          "BRRI dhan57",
+          "BRRI dhan66",
+          "BRRI dhan71",
+          "BRRI dhan75",
+          "BINA dhan7",
+          "BINA dhan17"
+        ],
+        "land": "high_or_medium_high_only",
+        "advice_origin": "BRRI advice for the Aug 2024 eastern floods"
+      },
+      "sources": [
+        "S_GAIN",
+        "S_MOA"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "D09",
+      "when": {
+        "outlook": {
+          "eq": "likely_lost"
+        },
+        "md": {
+          "lte": "08-31"
+        }
+      },
+      "output": "REPLANT_SHORT_DURATION",
+      "params": {
+        "seedbed_deadline_md": "08-30",
+        "deadline_md": "09-15",
+        "varieties_late": [
+          "BR22",
+          "BR23",
+          "BRRI dhan34",
+          "BRRI dhan46",
+          "BRRI dhan54",
+          "Nizersail (local)"
+        ],
+        "varieties_short": [
+          "BRRI dhan57",
+          "BRRI dhan62"
+        ],
+        "seedlings_per_hill": [
+          4,
+          5
+        ],
+        "spacing_cm": [
+          20,
+          15
+        ],
+        "seedling_sources": [
+          "SAAO",
+          "upazila agriculture office",
+          "BADC",
+          "unflooded neighbour"
+        ],
+        "alternatives": [
+          "DIRECT_SEED"
+        ]
+      },
+      "sources": [
+        "S_MOA",
+        "S_GAIN",
+        "S_BRJ_PS"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "id": "D10",
+      "when": {
+        "outlook": {
+          "eq": "likely_lost"
+        },
+        "md": {
+          "between": [
+            "09-01",
+            "09-15"
+          ]
+        }
+      },
+      "output": "REPLANT_SHORT_DURATION",
+      "params": {
+        "deadline_md": "09-15",
+        "own_seedbed": false,
+        "varieties_late": [
+          "BR22",
+          "BR23",
+          "BRRI dhan46",
+          "BRRI dhan54"
+        ],
+        "seedling_age_days": [
+          30,
+          45
+        ],
+        "seedlings_per_hill": [
+          4,
+          5
+        ],
+        "spacing_cm": [
+          20,
+          15
+        ],
+        "seedling_sources": [
+          "SAAO",
+          "upazila agriculture office",
+          "BADC",
+          "unflooded neighbour"
+        ],
+        "alternatives": []
+      },
+      "sources": [
+        "S_MOA",
+        "S_AMAN_GUIDE",
+        "S_ALI2015",
+        "S_GAIN"
+      ],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "D11",
+      "when": {
+        "outlook": {
+          "eq": "likely_lost"
+        },
+        "md": {
+          "between": [
+            "09-16",
+            "09-20"
+          ]
+        },
+        "region": {
+          "ne": "barind"
+        },
+        "north": {
+          "ne": true
+        }
+      },
+      "output": "NOT_SURE_ASK_SAAO",
+      "params": {
+        "reason": "cutoff_grey_zone"
+      },
+      "sources": [
+        "S_MOA",
+        "S_GAIN"
+      ],
+      "status": "NEEDS-CHECK"
+    },
+    {
+      "id": "D12",
+      "when": {
+        "outlook": {
+          "eq": "likely_lost"
+        },
+        "md": {
+          "gte": "09-16"
+        }
+      },
+      "output": "TOO_LATE_AMAN",
+      "params": {
+        "cutoff_md": "09-15",
+        "cutoff_md_centre_south": "09-20",
+        "next": [
+          "early_rabi_crop",
+          "boro"
+        ]
+      },
+      "sources": [
+        "S_MOA",
+        "S_GAIN",
+        "S_AMAN_GUIDE"
+      ],
+      "status": "VERIFIED"
+    }
+  ],
+  "fallback": {
+    "id": "D99",
+    "output": "NOT_SURE_ASK_SAAO",
+    "params": {
+      "reason": "no_rule"
+    }
+  },
+  "sources": {
+    "S_REDTEAM": {
+      "title": "Team red-team review, docs/redteam/README.md",
+      "year": 2026,
+      "url": "docs/redteam/README.md"
+    },
+    "S_GAIN": {
+      "title": "USDA FAS GAIN BG2024-0009 Grain and Feed Update (citing BRRI)",
+      "year": 2024,
+      "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Grain+and+Feed+Update_Dhaka_Bangladesh_BG2024-0009"
+    },
+    "S_MOA": {
+      "title": "Ministry of Agriculture flood notice (Krishi Batayon)",
+      "year": null,
+      "url": "http://krishi.gov.bd/content/898"
+    },
+    "S_BRRI24": {
+      "title": "BRRI: urgent steps for late Aman in flood-affected areas",
+      "year": 2024,
+      "url": "http://brri.portal.gov.bd/pages/static-pages/6922e079933eb65569e273d3"
+    },
+    "S_AMAN_GUIDE": {
+      "title": "Aman production guide (secondary copy of BRRI advice)",
+      "year": 2024,
+      "url": "https://motshoprani.org/archives/14824"
+    },
+    "S_IRRI_CCR": {
+      "title": "IRRI Rice Knowledge Bank: Climate change-ready rice",
+      "year": null,
+      "url": "http://knowledgebank.irri.org/step-by-step-production/pre-planting/rice-varieties/item/climate-change-ready-rice"
+    },
+    "S_CG_SUB1": {
+      "title": "IRRI/CGIAR: Flood-tolerant rice varieties for Bangladesh (Sub1)",
+      "year": null,
+      "url": "https://cgspace.cgiar.org/server/api/core/bitstreams/9f81047a-c5e1-41b4-9039-ebf77ee1d094/content"
+    },
+    "S_DHAN51": {
+      "title": "Adoption of BRRI dhan51 (citing BRRI 2012)",
+      "year": 2013,
+      "url": "https://bea-bd.org/assets/articlesPhoto/VolNo_20230301122926.pdf"
+    },
+    "S_DHAN79": {
+      "title": "Shalahuddin et al., BRRI dhan79 for flash-flood ecosystems",
+      "year": 2024,
+      "url": "https://journalajrcs.com/index.php/AJRCS/article/view/253"
+    },
+    "S_BRJ_PS": {
+      "title": "Photosensitive varieties under delayed planting, Bangladesh Rice Journal",
+      "year": 2020,
+      "url": "https://www.banglajol.info/index.php/BRJ/article/view/46082"
+    },
+    "S_ALI2015": {
+      "title": "Ali, Sarkar & Paul, late transplant Aman (BR23), IJASBT",
+      "year": 2015,
+      "url": "https://nepjol.info/index.php/IJASBT/article/download/13978/11516"
+    },
+    "S_BARC": {
+      "title": "BARC Krishi Projukti Hatboi, rice chapter",
+      "year": null,
+      "url": "https://objectstorage.ap-dcc-gazipur-1.oraclecloud15.com/n/axvjbnqprylg/b/V2Ministry/o/office-barc/2024/12/053a0722429448d4903412ce683a7d06.pdf"
+    }
+  }
+}

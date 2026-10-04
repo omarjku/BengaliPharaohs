@@ -49,3 +49,4 @@ next-env.d.ts
 
 # ElevenLabs API key for scripts/tts.py — never commit
 /.env.elevenlabs
+.vitest/

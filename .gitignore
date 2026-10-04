@@ -11,6 +11,7 @@ demo/*.mp4
 .venv-rec/
 notes/audio/
 *.md.part
-data/
+# ML datasets at the repo root only (must not match frontend/public/data)
+/data/
 runs/
 .venv-ml/
