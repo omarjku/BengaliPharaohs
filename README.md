@@ -1,6 +1,6 @@
 <div align="center">
 
-# Rice-leaf advisor
+# Agronomy
 
 **A photo, an answer, and an honest "not sure".**<br>
 An offline advisor for rice farmers in flood-prone Bangladesh: an on-device leaf classifier plus BRRI's own rules, in Bangla, with a hand-off to the local agriculture officer whenever it isn't sure.
